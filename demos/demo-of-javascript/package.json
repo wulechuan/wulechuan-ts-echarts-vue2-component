@@ -3,6 +3,7 @@
   "description": "演示 @wulechuan/echarts-vue2-component 用法的 ECMAScript 项目。",
   "license": "WTFPL",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
     "start": "vue-cli-service  serve  --port 3569"
   },
