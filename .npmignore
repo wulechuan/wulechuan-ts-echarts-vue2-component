@@ -1,0 +1,7 @@
+.DS_Store
+.vscode
+/demos
+/documents/**/*.html
+node_modules
+.git-push-all.sh
+/ReadMe.html
