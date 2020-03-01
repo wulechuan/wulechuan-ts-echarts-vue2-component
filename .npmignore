@@ -1,6 +1,7 @@
 .DS_Store
 .vscode
 /demos
+/documents/styles
 /documents/**/*.html
 node_modules
 .git-push-all.sh
