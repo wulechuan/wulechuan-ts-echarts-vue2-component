@@ -17,6 +17,14 @@
   "scripts": {
     "start": "tsc  --outDir dist"
   },
+  "homepage": "https://github.com/wulechuan/wulechuan-ts-echarts-vue2-component#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wulechuan/wulechuan-ts-echarts-vue2-component.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wulechuan/wulechuan-ts-echarts-vue2-component/issues"
+  },
   "peerDependencies": {
     "vue": "^2.6.11"
   },
