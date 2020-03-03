@@ -15,8 +15,9 @@
   ],
   "main": "index.ts",
   "scripts": {
-    "prepublish": "npm  start",
-    "start": "tsc  --outDir dist"
+    "start": "tsc  --outDir dist",
+    "beforeGitCommit": "npm  start",
+    "prepublishOnly": "npm   start"
   },
   "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
   "repository": {
