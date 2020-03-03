@@ -22,10 +22,6 @@ import echarts, {
     EChartsTheme,
 } from 'echarts'
 
-
-
-
-
 import {
     SupportedZrenderEventTypes,
     SupportedEchartsInstanceEventTypes,
@@ -34,6 +30,8 @@ import {
 
 
 
+
+const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 
 const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZrenderEventTypes = [
     'click',
@@ -143,23 +141,6 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.$stopWatchingIncomingEChartsOptions()
         this.$startWatchingIncomingEChartsOptions()
         this.refreshECharts() // Always take this opportunity to refresh echarts once.
-    }
-
-    $startWatchingIncomingEChartsOptions(): void {
-        const { chart } = this
-        if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
-            this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
-                this.refreshECharts(newOptions !== oldOptions)
-            }, { deep: !this.shouldNotWatchEchartsOptionsDeeply })
-        }
-    }
-
-    $stopWatchingIncomingEChartsOptions(): void {
-        const { $toUnwatchEChartsOptions } = this
-        if ($toUnwatchEChartsOptions) {
-            $toUnwatchEChartsOptions()
-            this.$toUnwatchEChartsOptions = null
-        }
     }
 
     @Watch('shouldNotAutoResizeEcharts', {})
@@ -345,6 +326,23 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
+    $startWatchingIncomingEChartsOptions(): void {
+        const { chart } = this
+        if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
+            this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
+                this.refreshECharts(newOptions !== oldOptions)
+            }, { deep: !this.shouldNotWatchEchartsOptionsDeeply })
+        }
+    }
+
+    $stopWatchingIncomingEChartsOptions(): void {
+        const { $toUnwatchEChartsOptions } = this
+        if ($toUnwatchEChartsOptions) {
+            $toUnwatchEChartsOptions()
+            this.$toUnwatchEChartsOptions = null
+        }
+    }
+
     $startListeningToAllEChartsEvents(): void {
         const { chart } = this
         if (!chart) { return }
@@ -382,27 +380,32 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    $updateResizingDebouncingInterval(newInterval?: number): void {
-        let decidedInterval: number = 200
+    $updateResizingDebouncingInterval(newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
+        let decidedInterval: number = ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
 
         if (newInterval && newInterval >= 10) {
             decidedInterval = + newInterval // In case the newInterval is a string, like '120'.
         }
 
-        if (decidedInterval === this.$oldResizingDebouncingInterval) { return }
-
-        this.$oldResizingDebouncingInterval = decidedInterval
+        if (decidedInterval === this.$oldResizingDebouncingInterval && !eChartInstanceIsJustBuilt) {
+            return
+        }
 
         this.$disableAutoResizing()
+        this.$rootElementResizeEventHandler = null
 
         if (!this.shouldNotAutoResizeEcharts) {
-            this.$rootElementResizeEventHandler = debounce(
+            const newHandler = debounce(
                 this.$resize.bind(this),
                 decidedInterval,
                 { leading: true }
             )
 
-            this.$enableAutoResizing()
+            if (typeof newHandler == 'function') {
+                this.$rootElementResizeEventHandler = newHandler
+                this.$enableAutoResizing()
+                this.$oldResizingDebouncingInterval = decidedInterval
+            }
         }
     }
 
@@ -444,7 +447,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
         this.refreshECharts(true)
         this.$startListeningToAllEChartsEvents()
-        this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval)
+        this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true)
     }
 
     $dispose(): void {

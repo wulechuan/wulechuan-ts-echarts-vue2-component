@@ -4,6 +4,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 import debounce from 'lodash.debounce';
 import { addListener as startListeningToElementResizingEvent, removeListener as stopListeningToElementResizingEvent, } from 'resize-detector';
 import echarts from 'echarts';
+var ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200;
 var SUPPORTED_ZRENDER_EVENT_TYPES = [
     'click',
     'mousedown',
@@ -77,22 +78,6 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         this.$stopWatchingIncomingEChartsOptions();
         this.$startWatchingIncomingEChartsOptions();
         this.refreshECharts(); // Always take this opportunity to refresh echarts once.
-    };
-    WlcEchartsVueTwoComponent.prototype.$startWatchingIncomingEChartsOptions = function () {
-        var _this = this;
-        var chart = this.chart;
-        if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
-            this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', function (newOptions, oldOptions) {
-                _this.refreshECharts(newOptions !== oldOptions);
-            }, { deep: !this.shouldNotWatchEchartsOptionsDeeply });
-        }
-    };
-    WlcEchartsVueTwoComponent.prototype.$stopWatchingIncomingEChartsOptions = function () {
-        var $toUnwatchEChartsOptions = this.$toUnwatchEChartsOptions;
-        if ($toUnwatchEChartsOptions) {
-            $toUnwatchEChartsOptions();
-            this.$toUnwatchEChartsOptions = null;
-        }
     };
     WlcEchartsVueTwoComponent.prototype.$onEChartsAutoReszingMarkChanged = function (newMark, oldMark) {
         if (newMark) {
@@ -261,6 +246,22 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         }
     };
     // --- eCharts instance methods: end ------------
+    WlcEchartsVueTwoComponent.prototype.$startWatchingIncomingEChartsOptions = function () {
+        var _this = this;
+        var chart = this.chart;
+        if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
+            this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', function (newOptions, oldOptions) {
+                _this.refreshECharts(newOptions !== oldOptions);
+            }, { deep: !this.shouldNotWatchEchartsOptionsDeeply });
+        }
+    };
+    WlcEchartsVueTwoComponent.prototype.$stopWatchingIncomingEChartsOptions = function () {
+        var $toUnwatchEChartsOptions = this.$toUnwatchEChartsOptions;
+        if ($toUnwatchEChartsOptions) {
+            $toUnwatchEChartsOptions();
+            this.$toUnwatchEChartsOptions = null;
+        }
+    };
     WlcEchartsVueTwoComponent.prototype.$startListeningToAllEChartsEvents = function () {
         var _this = this;
         var chart = this.chart;
@@ -296,19 +297,23 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
             zrenderInstance.off();
         }
     };
-    WlcEchartsVueTwoComponent.prototype.$updateResizingDebouncingInterval = function (newInterval) {
-        var decidedInterval = 200;
+    WlcEchartsVueTwoComponent.prototype.$updateResizingDebouncingInterval = function (newInterval, eChartInstanceIsJustBuilt) {
+        var decidedInterval = ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL;
         if (newInterval && newInterval >= 10) {
             decidedInterval = +newInterval; // In case the newInterval is a string, like '120'.
         }
-        if (decidedInterval === this.$oldResizingDebouncingInterval) {
+        if (decidedInterval === this.$oldResizingDebouncingInterval && !eChartInstanceIsJustBuilt) {
             return;
         }
-        this.$oldResizingDebouncingInterval = decidedInterval;
         this.$disableAutoResizing();
+        this.$rootElementResizeEventHandler = null;
         if (!this.shouldNotAutoResizeEcharts) {
-            this.$rootElementResizeEventHandler = debounce(this.$resize.bind(this), decidedInterval, { leading: true });
-            this.$enableAutoResizing();
+            var newHandler = debounce(this.$resize.bind(this), decidedInterval, { leading: true });
+            if (typeof newHandler == 'function') {
+                this.$rootElementResizeEventHandler = newHandler;
+                this.$enableAutoResizing();
+                this.$oldResizingDebouncingInterval = decidedInterval;
+            }
         }
     };
     WlcEchartsVueTwoComponent.prototype.$enableAutoResizing = function () {
@@ -342,7 +347,7 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         }
         this.refreshECharts(true);
         this.$startListeningToAllEChartsEvents();
-        this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval);
+        this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true);
     };
     WlcEchartsVueTwoComponent.prototype.$dispose = function () {
         var chart = this.chart;
