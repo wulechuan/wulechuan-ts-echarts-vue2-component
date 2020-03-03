@@ -24,8 +24,5 @@ html, body {
 body {
     margin 0
     background-color #999
-    display flex
-    justify-content center
-    align-items center
 }
 </style>

@@ -1,4 +1,4 @@
-import * as tslib_1 from "tslib";
+import { __decorate, __extends } from "tslib";
 import Vue from 'vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import debounce from 'lodash.debounce';
@@ -51,69 +51,59 @@ var SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES = [
     'contextmenu',
 ];
 var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
-    tslib_1.__extends(WlcEchartsVueTwoComponent, _super);
+    __extends(WlcEchartsVueTwoComponent, _super);
     function WlcEchartsVueTwoComponent() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.name = 'wlc-echarts-vue-two-component';
         _this.chart = null;
         _this.echartsGraphic = echarts.graphic;
-        _this.$rootElementResizeEventHandler = debounce(_this.$resize.bind(_this), _this.resizingDebouncingInterval, { leading: true });
+        _this.$oldResizingDebouncingInterval = NaN;
+        _this.$rootElementResizeEventHandler = null;
         _this.$toUnwatchEChartsOptions = null;
         return _this;
     }
     WlcEchartsVueTwoComponent.prototype.render = function (createElement) {
         return createElement('div');
     };
-    Object.defineProperty(WlcEchartsVueTwoComponent.prototype, "resizingDebouncingInterval", {
-        get: function () {
-            var echartsResizingDebouncingInterval = this.echartsResizingDebouncingInterval;
-            if (echartsResizingDebouncingInterval === undefined) {
-                return 200;
-            }
-            if (echartsResizingDebouncingInterval > 10) {
-                return echartsResizingDebouncingInterval;
-            }
-            return 200;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    WlcEchartsVueTwoComponent.prototype.onManuallyUpdatingMarkChanged = function (newMark, oldMark) {
-        this.stopWatchingIncomingEChartsOptions();
-        this.startWatchingIncomingEChartsOptions();
-        this.updateECharts(); // Always take this opportunity to update echarts once.
+    WlcEchartsVueTwoComponent.prototype.$onResizingDebouncingIntervalChanged = function (newInterval, oldInterval) {
+        this.$updateResizingDebouncingInterval(newInterval);
     };
-    WlcEchartsVueTwoComponent.prototype.onEChartsOptionsWatchingDepthMarkChanged = function (newMark, oldMark) {
-        this.stopWatchingIncomingEChartsOptions();
-        this.startWatchingIncomingEChartsOptions();
-        this.updateECharts(); // Always take this opportunity to update echarts once.
+    WlcEchartsVueTwoComponent.prototype.$onManuallyRefreshingMarkChanged = function (newMark, oldMark) {
+        this.$stopWatchingIncomingEChartsOptions();
+        this.$startWatchingIncomingEChartsOptions();
+        this.refreshECharts(); // Always take this opportunity to refresh echarts once.
     };
-    WlcEchartsVueTwoComponent.prototype.startWatchingIncomingEChartsOptions = function () {
+    WlcEchartsVueTwoComponent.prototype.$onEChartsOptionsWatchingDepthMarkChanged = function (newMark, oldMark) {
+        this.$stopWatchingIncomingEChartsOptions();
+        this.$startWatchingIncomingEChartsOptions();
+        this.refreshECharts(); // Always take this opportunity to refresh echarts once.
+    };
+    WlcEchartsVueTwoComponent.prototype.$startWatchingIncomingEChartsOptions = function () {
         var _this = this;
         var chart = this.chart;
         if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
             this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', function (newOptions, oldOptions) {
-                _this.updateECharts(newOptions !== oldOptions);
+                _this.refreshECharts(newOptions !== oldOptions);
             }, { deep: !this.shouldNotWatchEchartsOptionsDeeply });
         }
     };
-    WlcEchartsVueTwoComponent.prototype.stopWatchingIncomingEChartsOptions = function () {
+    WlcEchartsVueTwoComponent.prototype.$stopWatchingIncomingEChartsOptions = function () {
         var $toUnwatchEChartsOptions = this.$toUnwatchEChartsOptions;
         if ($toUnwatchEChartsOptions) {
             $toUnwatchEChartsOptions();
             this.$toUnwatchEChartsOptions = null;
         }
     };
-    WlcEchartsVueTwoComponent.prototype.onEChartsAutoReszingMarkChanged = function (newMark, oldMark) {
+    WlcEchartsVueTwoComponent.prototype.$onEChartsAutoReszingMarkChanged = function (newMark, oldMark) {
         if (newMark) {
-            this.disableAutoResizing();
+            this.$disableAutoResizing();
         }
         else {
-            this.enableAutoResizing();
+            this.$enableAutoResizing();
         }
     };
-    WlcEchartsVueTwoComponent.prototype.onEChartsThemeChanged = function (newTheme, oldTheme) {
-        this.recreateEChart();
+    WlcEchartsVueTwoComponent.prototype.$onEChartsThemeChanged = function (newTheme, oldTheme) {
+        this.$recreateEChart();
     };
     WlcEchartsVueTwoComponent.prototype.onEChartsGroupingNameChanged = function (newGroupingName, oldGroupingName) {
         var chart = this.chart;
@@ -165,6 +155,18 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
+    WlcEchartsVueTwoComponent.prototype.updateECharts = function (shouldNotMerge, lazyUpdate) {
+        console.warn('The "updateECharts" method is a deprecated alias of "refreshECharts". So use "refreshECharts" instead.');
+        this.refreshECharts(shouldNotMerge, lazyUpdate);
+    };
+    WlcEchartsVueTwoComponent.prototype.refreshECharts = function (shouldNotMerge, lazyUpdate) {
+        // To update echarts with current "echartsOptions" withing Vue component props.
+        // If you set this component to update manually, you invoke this method yourself.
+        var _a = this, chart = _a.chart, echartsOptions = _a.echartsOptions;
+        if (chart && echartsOptions) {
+            chart.setOption(echartsOptions, shouldNotMerge, lazyUpdate);
+        }
+    };
     // --- echarts static methods: start ------------
     // connect(group: string | ECharts[]): void {
     //     echarts.connect(group)
@@ -259,7 +261,7 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         }
     };
     // --- eCharts instance methods: end ------------
-    WlcEchartsVueTwoComponent.prototype.startListeningToAllEChartsEvents = function () {
+    WlcEchartsVueTwoComponent.prototype.$startListeningToAllEChartsEvents = function () {
         var _this = this;
         var chart = this.chart;
         if (!chart) {
@@ -279,7 +281,7 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
             });
         }
     };
-    WlcEchartsVueTwoComponent.prototype.stopListeningToAllEChartsEvents = function () {
+    WlcEchartsVueTwoComponent.prototype.$stopListeningToAllEChartsEvents = function () {
         var chart = this.chart;
         if (!chart) {
             return;
@@ -294,11 +296,34 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
             zrenderInstance.off();
         }
     };
-    WlcEchartsVueTwoComponent.prototype.enableAutoResizing = function () {
-        startListeningToElementResizingEvent(this.$el, this.$rootElementResizeEventHandler);
+    WlcEchartsVueTwoComponent.prototype.$updateResizingDebouncingInterval = function (newInterval) {
+        var decidedInterval = 200;
+        if (newInterval && newInterval >= 10) {
+            decidedInterval = +newInterval; // In case the newInterval is a string, like '120'.
+        }
+        if (decidedInterval === this.$oldResizingDebouncingInterval) {
+            return;
+        }
+        this.$oldResizingDebouncingInterval = decidedInterval;
+        this.$disableAutoResizing();
+        if (!this.shouldNotAutoResizeEcharts) {
+            this.$rootElementResizeEventHandler = debounce(this.$resize.bind(this), decidedInterval, { leading: true });
+            this.$enableAutoResizing();
+        }
     };
-    WlcEchartsVueTwoComponent.prototype.disableAutoResizing = function () {
-        stopListeningToElementResizingEvent(this.$el, this.$rootElementResizeEventHandler);
+    WlcEchartsVueTwoComponent.prototype.$enableAutoResizing = function () {
+        var el = this.$el;
+        var handler = this.$rootElementResizeEventHandler;
+        if (el instanceof HTMLElement && typeof handler === 'function') {
+            startListeningToElementResizingEvent(el, handler);
+        }
+    };
+    WlcEchartsVueTwoComponent.prototype.$disableAutoResizing = function () {
+        var el = this.$el;
+        var handler = this.$rootElementResizeEventHandler;
+        if (el instanceof HTMLElement && typeof handler === 'function') {
+            stopListeningToElementResizingEvent(el, handler);
+        }
     };
     WlcEchartsVueTwoComponent.prototype.$resize = function () {
         var chart = this.chart;
@@ -306,7 +331,7 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
             chart.resize();
         }
     };
-    WlcEchartsVueTwoComponent.prototype.createEchartInstance = function () {
+    WlcEchartsVueTwoComponent.prototype.$createEchartInstance = function () {
         if (this.chart) {
             return;
         }
@@ -315,37 +340,27 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         if (this.echartsGroupingName) {
             newChart.group = this.echartsGroupingName;
         }
-        this.updateECharts(true);
-        this.startListeningToAllEChartsEvents();
-        if (!this.shouldNotAutoResizeEcharts) {
-            this.enableAutoResizing();
-        }
+        this.refreshECharts(true);
+        this.$startListeningToAllEChartsEvents();
+        this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval);
     };
-    WlcEchartsVueTwoComponent.prototype.updateECharts = function (shouldNotMerge, lazyUpdate) {
-        // To update echarts with current "echartsOptions" withing Vue component props.
-        // If you set this component to update manually, you invoke this method yourself.
-        var _a = this, chart = _a.chart, echartsOptions = _a.echartsOptions;
-        if (chart && echartsOptions) {
-            chart.setOption(echartsOptions, shouldNotMerge, lazyUpdate);
-        }
-    };
-    WlcEchartsVueTwoComponent.prototype.dispose = function () {
+    WlcEchartsVueTwoComponent.prototype.$dispose = function () {
         var chart = this.chart;
         if (chart) {
-            this.disableAutoResizing();
-            // this.stopListeningToAllEChartsEvents() // I think the echartsInstance.dispose() will do the job automatically.
+            this.$disableAutoResizing();
+            // this.$stopListeningToAllEChartsEvents() // I think the echartsInstance.dispose() will do the job automatically.
             chart.dispose();
             this.chart = null;
         }
     };
-    WlcEchartsVueTwoComponent.prototype.recreateEChart = function () {
-        this.dispose();
-        this.createEchartInstance();
+    WlcEchartsVueTwoComponent.prototype.$recreateEChart = function () {
+        this.$dispose();
+        this.$createEchartInstance();
     };
     // --- Vue component life cycle hooks -----------
     WlcEchartsVueTwoComponent.prototype.mounted = function () {
-        this.createEchartInstance();
-        this.startWatchingIncomingEChartsOptions();
+        this.$createEchartInstance();
+        this.$startWatchingIncomingEChartsOptions();
     };
     WlcEchartsVueTwoComponent.prototype.activated = function () {
         // I think we should take this opportunity to auto-resize the echart once.
@@ -354,49 +369,52 @@ var WlcEchartsVueTwoComponent = /** @class */ (function (_super) {
         }
     };
     WlcEchartsVueTwoComponent.prototype.beforeDestroy = function () {
-        // this.stopWatchingIncomingEChartsOptions() // I think Vue will do this itself automatically.
-        this.dispose();
+        // this.$stopWatchingIncomingEChartsOptions() // I think Vue will do this itself automatically.
+        this.$dispose();
     };
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "shouldManuallyRefreshEcharts", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "shouldNotWatchEchartsOptionsDeeply", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "shouldNotAutoResizeEcharts", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "echartsTheme", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "echartsInitializationOptions", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "echartsOptions", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "echartsGroupingName", void 0);
-    tslib_1.__decorate([
+    __decorate([
         Prop()
     ], WlcEchartsVueTwoComponent.prototype, "echartsResizingDebouncingInterval", void 0);
-    tslib_1.__decorate([
+    __decorate([
+        Watch('echartsResizingDebouncingInterval', {})
+    ], WlcEchartsVueTwoComponent.prototype, "$onResizingDebouncingIntervalChanged", null);
+    __decorate([
         Watch('shouldManuallyRefreshEcharts', {})
-    ], WlcEchartsVueTwoComponent.prototype, "onManuallyUpdatingMarkChanged", null);
-    tslib_1.__decorate([
+    ], WlcEchartsVueTwoComponent.prototype, "$onManuallyRefreshingMarkChanged", null);
+    __decorate([
         Watch('shouldNotWatchEchartsOptionsDeeply', {})
-    ], WlcEchartsVueTwoComponent.prototype, "onEChartsOptionsWatchingDepthMarkChanged", null);
-    tslib_1.__decorate([
+    ], WlcEchartsVueTwoComponent.prototype, "$onEChartsOptionsWatchingDepthMarkChanged", null);
+    __decorate([
         Watch('shouldNotAutoResizeEcharts', {})
-    ], WlcEchartsVueTwoComponent.prototype, "onEChartsAutoReszingMarkChanged", null);
-    tslib_1.__decorate([
+    ], WlcEchartsVueTwoComponent.prototype, "$onEChartsAutoReszingMarkChanged", null);
+    __decorate([
         Watch('echartsTheme', {})
-    ], WlcEchartsVueTwoComponent.prototype, "onEChartsThemeChanged", null);
-    tslib_1.__decorate([
+    ], WlcEchartsVueTwoComponent.prototype, "$onEChartsThemeChanged", null);
+    __decorate([
         Watch('echartsGroupingName', {})
     ], WlcEchartsVueTwoComponent.prototype, "onEChartsGroupingNameChanged", null);
-    WlcEchartsVueTwoComponent = tslib_1.__decorate([
+    WlcEchartsVueTwoComponent = __decorate([
         Component({})
     ], WlcEchartsVueTwoComponent);
     return WlcEchartsVueTwoComponent;

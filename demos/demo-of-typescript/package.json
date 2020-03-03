@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@wulechuan/echarts-vue2-component": "file:../..",
-    "vue": "^2.6.10",
+    "vue": "^2.6.11",
     "vue-property-decorator": "^8.3.0"
   },
   "devDependencies": {
@@ -21,7 +21,7 @@
     "eslint-plugin-vue": "^5.0.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
-    "typescript": "~3.5.3",
+    "typescript": "^3.8.3",
     "vue-template-compiler": "^2.6.10"
   }
 }

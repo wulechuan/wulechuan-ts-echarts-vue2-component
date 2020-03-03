@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@wulechuan/echarts-vue2-component": "file:../..",
-    "vue": "^2.6.10"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-eslint": "^4.1.0",

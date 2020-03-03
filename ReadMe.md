@@ -38,12 +38,23 @@
 
 见下例。
 
-另见本代码库自带的可运转的示例项目《[demos/demo-of-typescript](./demos/demo-of-typescript)》。
+另见本代码库自带的可运转的示例项目《[demos/demo-of-typescript](./demos/demo-of-typescript/)》。
 
 ```html
 <template>
-    <vue-echarts :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts class="my-echarts" :echarts-options="myEchartsOptions"></vue-echarts>
 </template>
+```
+
+> 注意！本组件有意不携带**任何** CSS 代码。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
+
+```css
+<style>
+    .my-echarts {
+        width:  790px;
+        height: 515px;
+    }
+</style>
 ```
 
 > 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名，即指向 npm 包的 `main` 文件。实际上，指向的是 `./index.ts`。
@@ -78,7 +89,7 @@ export default class MyComponent extends Vue {
 
 见下例。
 
-另见本代码库自带的可运转的示例项目《[demos/demo-of-javascript](./demos/demo-of-javascript)》。
+另见本代码库自带的可运转的示例项目《[demos/demo-of-javascript](./demos/demo-of-javascript/)》。
 
 ```html
 <template>
@@ -86,7 +97,19 @@ export default class MyComponent extends Vue {
 </template>
 ```
 
-> 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `.../dist`。实际上，指向的是 `.../dist/index.js`。
+> 注意！本组件有意不携带**任何** CSS 代码。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
+
+
+```css
+<style>
+    .my-echarts {
+        width:  790px;
+        height: 515px;
+    }
+</style>
+```
+
+> 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `./dist`。实际上，指向的是 `./dist/index.js`。
 
 ```js
 import Vue from 'vue'
@@ -133,7 +156,7 @@ shouldManuallyRefreshEcharts?: boolean;
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-若取 `true`，则即使该 Vuejs 2.x 组件之输入之 `echartsOptions` 有所变化，组件内部的 eCharts 实例亦不会重绘，而是等待组件外部代码“人为”调用本组件实例的 `updateECharts` 方法。
+若取 `true`，则即使该 Vuejs 2.x 组件之输入之 `echartsOptions` 有所变化，组件内部的 eCharts 实例亦不会重绘，而是等待组件外部代码“人为”调用本组件实例的 `refreshECharts` 方法。
 
 
 
@@ -163,6 +186,7 @@ shouldNotAutoResizeEcharts?: boolean;
 
 
 
+
 #### Prop `echartsInitializationOptions`
 
 ```ts
@@ -171,7 +195,9 @@ echartsInitializationOptions?: EchartsInitializationOptions;
 
 葫芦串（所谓 kebab）记法：`echarts-initialization-options`。
 
-默认值为 `undefined`。参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echarts.init)》。
+默认值为 `undefined`。
+
+参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echarts.init)》。
 
 
 
@@ -184,7 +210,9 @@ echartsOptions?: EChartOption;
 
 葫芦串（所谓 kebab）记法：`echarts-options`。
 
-默认值为 `undefined`。参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/option.html)》。
+默认值为 `undefined`。
+
+参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/option.html)》。
 
 
 
@@ -197,7 +225,10 @@ echartsGroupingName?: string;
 
 葫芦串（所谓 kebab）记法：`echarts-grouping-name`。
 
-默认值为 `undefined`。参阅《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echartsInstance.group)》。
+默认值为 `undefined`。
+
+参阅《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echartsInstance.group)》。
+
 
 
 
@@ -242,7 +273,7 @@ eCharts 的主题名称字符串，或完整的 eCharts 主题定义对象。
 #### data: `name`
 
 ```ts
-readonly name: string = 'wlc-echarts-vue-two-component';
+public readonly name: string = 'wlc-echarts-vue-two-component';
 ```
 
 本组件之名称。该值视为只读属性，取值为 `'wlc-echarts-vue-two-component'`。
@@ -253,7 +284,7 @@ readonly name: string = 'wlc-echarts-vue-two-component';
 #### data: `chart`
 
 ```ts
-chart: ECharts | null = null;
+public chart: ECharts | null = null;
 ```
 
 eChart 实例对象，或 `null` 值。
@@ -268,6 +299,8 @@ echarts 构造函数上携带的静态对象 `graphic`。
 
 参阅《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echarts.graphic)》。
 
+与之相关的源代码片段如下：
+
 ```ts
 import echarts from 'echarts'
 
@@ -275,14 +308,16 @@ import echarts from 'echarts'
 export default class WlcEchartsVueTwoComponent extends Vue {
     // ......
 
-    echartsGraphic = echarts.graphic
+    public echartsGraphic = echarts.graphic
 
     // ......
 }
 ```
 
 
-### 取值器（getters）
+### 取值器（getters），即计算属性（`computed`）
+
+与取值器相关的源代码片段如下：
 
 ```ts
 export default class WlcEchartsVueTwoComponent extends Vue {
@@ -318,9 +353,24 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-### 本组件的方法函数
+### 本组件公开的方法函数
 
-#### 方法函数 `updateECharts`
+
+#### 方法函数 `refreshECharts`
+
+```ts
+refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
+```
+
+强制 eCharts 实例重绘一次。
+
+
+
+
+
+#### 方法函数 `updateECharts` （已弃用）
+
+> 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用 `refreshECharts`。
 
 ```ts
 updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
@@ -328,23 +378,109 @@ updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
 
 强制 eCharts 实例重绘一次。
 
-#### 方法函数 `enableAutoResizing`
+
+
+
+
+
+### 存在于本组件但不建议调用的方法函数
+
+以下方法函数本质上仍然是“公开”的。但它们均在本组件中被其余代码按需调用，**组件之用户一般无需亲自调用它们**。为区别，以下方法函数之名称均冠以“美元符号”，即“`$`”。
+
+
+
+#### 方法函数 `$startListeningToAllEChartsEvents`
 
 ```ts
-enableAutoResizing(): void
+$startListeningToAllEChartsEvents(): void
 ```
 
-#### 方法函数 `disableAutoResizing`
+
+
+
+#### 方法函数 `$stopListeningToAllEChartsEvents`
 
 ```ts
-disableAutoResizing(): void
+$stopListeningToAllEChartsEvents(): void
 ```
 
-#### 方法函数 `dispose`
+
+
+
+#### 方法函数 `$updateResizingDebouncingInterval`
 
 ```ts
-dispose(): void
+$updateResizingDebouncingInterval(newInterval?: number): void
 ```
+
+
+
+
+
+#### 方法函数 `$enableAutoResizing`
+
+> 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `enableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
+
+```ts
+$enableAutoResizing(): void
+```
+
+
+
+
+
+#### 方法函数 `$disableAutoResizing`
+
+> 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `disableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
+
+```ts
+$disableAutoResizing(): void
+```
+
+
+
+
+
+#### 方法函数 `$resize`
+
+```ts
+$resize(): void
+```
+
+
+
+
+
+
+#### 方法函数 `$createEchartInstance`
+
+```ts
+$createEchartInstance(): void
+```
+
+
+
+
+
+#### 方法函数 `$dispose`
+
+> 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
+
+```ts
+$dispose(): void
+```
+
+
+
+
+
+#### 方法函数 `$recreateEChart`
+
+```ts
+$recreateEChart(): void
+```
+
+
 
 
 
@@ -361,23 +497,37 @@ function dispatchAction(payload: object): void
 ```
 
 ```ts
-function resize(resizingOptions?: EChartsResizeOption): void
+function resize(
+    resizingOptions?: EChartsResizeOption
+): void
 ```
 
 ```ts
-function convertToPixel(finder: EChartsConvertFinder, value: string | any[]): string | any[]
+function convertToPixel(
+    finder: EChartsConvertFinder,
+    value: string | any[]
+): string | any[]
 ```
 
 ```ts
-function convertFromPixel(finder: EChartsConvertFinder, value: any[] | string) : any[] | string
+function convertFromPixel(
+    finder: EChartsConvertFinder,
+    value: any[] | string
+) : any[] | string
 ```
 
 ```ts
-function containPixel(finder: EChartsConvertFinder, value: any[]): boolean
+function containPixel(
+    finder: EChartsConvertFinder,
+    value: any[]
+): boolean
 ```
 
 ```ts
-function showLoading(type?: string, options?: EChartsLoadingOption): void
+function showLoading(
+    type?: string,
+    options?: EChartsLoadingOption
+): void
 ```
 
 ```ts
