@@ -93,7 +93,7 @@ export default class MyComponent extends Vue {
 
 ```html
 <template>
-    <vue-echarts :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts class="my-echarts" :echarts-options="myEchartsOptions"></vue-echarts>
 </template>
 ```
 
