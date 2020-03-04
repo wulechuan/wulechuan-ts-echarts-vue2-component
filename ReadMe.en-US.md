@@ -145,7 +145,35 @@ export default {
 
 ## API
 
-### Vuejs Component Props
+### A Full Example as a Quick Reference
+
+```html
+<template>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-options="YourEchartsOptionsHere"
+        :should-manually-refresh-echarts="false"
+        :should-not-watch-echarts-options-deeply="false"
+        :should-not-auto-resize-echarts="false"
+        :echarts-theme="YourEchartsThemeNameStringOrThemeDefinitionObject"
+        :echarts-initialization-options="null"
+        :echarts-grouping-name="theGroupingNameOfThisInstanceOfEcharts"
+        :echarts-resizing-debouncing-interval="200"
+    ></vue-echarts>
+</template>
+```
+
+```css
+<style>
+    .my-echarts {
+        width:  790px;
+        height: 515px;
+    }
+</style>
+```
+
+
+### Vuejs Component `Props`
 
 #### Prop `shouldManuallyRefreshEcharts`
 

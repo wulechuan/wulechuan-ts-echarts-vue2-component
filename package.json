@@ -1,7 +1,7 @@
 {
   "name": "@wulechuan/echarts-vue2-component",
   "author": "wulechuan <wulechuan@live.com>",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
   "license": "WTFPL",
   "keywords": [

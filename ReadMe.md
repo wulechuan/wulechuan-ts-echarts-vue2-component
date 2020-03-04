@@ -144,6 +144,37 @@ export default {
 
 ## 应用编程接口（API）
 
+### 完整应用示例，以便速查
+
+```html
+<template>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-options="你的eCharts配置项"
+        :should-manually-refresh-echarts="false"
+        :should-not-watch-echarts-options-deeply="false"
+        :should-not-auto-resize-echarts="false"
+        :echarts-theme="你的eCharts主题名称或主题配置对象"
+        :echarts-initialization-options="null"
+        :echarts-grouping-name="该eCharts示例参与图表成组时的【组名称】"
+        :echarts-resizing-debouncing-interval="200"
+    >
+    </vue-echarts>
+</template>
+```
+
+```css
+<style>
+    .my-echarts {
+        width:  790px;
+        height: 515px;
+    }
+</style>
+```
+
+
+
+
 ### 输入项（即 Vuejs 组件的 Props）
 
 #### Prop `shouldManuallyRefreshEcharts`
