@@ -1,7 +1,7 @@
 {
   "name": "@wulechuan/echarts-vue2-component",
   "author": "wulechuan <wulechuan@live.com>",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
   "license": "WTFPL",
   "keywords": [
@@ -16,8 +16,8 @@
   "main": "index.ts",
   "scripts": {
     "start": "tsc  --outDir dist",
-    "beforeGitCommit": "npm  start",
-    "prepublishOnly": "npm   start"
+    "beforeGitCommit": "npm  i    &&    npm  start",
+    "prepublishOnly": "npm  start"
   },
   "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
   "repository": {
