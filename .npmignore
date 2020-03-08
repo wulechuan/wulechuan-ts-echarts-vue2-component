@@ -4,6 +4,6 @@
 /documents/styles
 /documents/**/*.html
 node_modules
-git-push-all.sh
 /ReadMe.*.html
 /ReadMe.html
+git*.sh

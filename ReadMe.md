@@ -1,6 +1,6 @@
 # 吴乐川的针对 Vuejs 2.x 框架并支持 TypeScript 语法的 ECharts 组件
 
-<link rel="stylesheet" href="./documents/styles/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 ## Multilingual Editions of this Article

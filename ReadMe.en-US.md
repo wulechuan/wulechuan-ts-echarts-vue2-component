@@ -1,6 +1,6 @@
 # Wulechuan's ECharts component of Vuejs 2.x plus TypeScript
 
-<link rel="stylesheet" href="./documents/styles/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 ## Multilingual Editions of this Article
