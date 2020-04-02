@@ -13,7 +13,7 @@
 
 <script>
 import Vue from 'vue'
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/javascript'
 export default {
     components: {
         'vue-echarts': EChartsVue2Component,

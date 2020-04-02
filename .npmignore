@@ -1,9 +1,13 @@
 .DS_Store
 .vscode
+.eslint*
 /demos
 /documents/styles
 /documents/**/*.html
 node_modules
+/gulp*
+/source
 /ReadMe.*.html
 /ReadMe.html
 git*.sh
+/tsconfig.json

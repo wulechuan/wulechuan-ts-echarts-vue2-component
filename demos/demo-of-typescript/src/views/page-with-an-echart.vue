@@ -15,7 +15,9 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/typescript/compact'
+
+require('echarts/lib/chart/line')
 
 @Component({
     components: {
@@ -23,29 +25,30 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
     },
 })
 export default class PageWithAnEchart extends Vue {
-    message: string = '目前，eCharts 的尺寸变更的刷新频度为默认值（0.2 秒每次）。稍后将故意改变该值。'
-
+    message:          string = '目前，eCharts 的尺寸变更的刷新频度为默认值（0.2 秒每次）。稍后将故意改变该值。'
     resizingInterval: number = NaN
 
     echartsOptions = {
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],
         },
         yAxis: {
             type: 'value',
         },
         series: [{
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [ 820, 932, 901, 934, 1290, 1330, 1320 ],
             type: 'line',
         }],
     }
 
+    change(): void {
+        this.message          = '已经故意将 eCharts 的尺寸变更的刷新频度调整为 2 秒每次。'
+        this.resizingInterval = 2000
+    }
+
     mounted(): void {
-        setTimeout(() => {
-            this.message = '已经故意将 eCharts 的尺寸变更的刷新频度调整为 2 秒每次。'
-            this.resizingInterval = 2000
-        }, 5000)
+        setTimeout(this.change, 5000)
     }
 }
 </script>

@@ -1,17 +1,25 @@
 module.exports = {
-    root: true,
     env: {
+        es6: true,
         node: true,
+        browser: true,
     },
     extends: [
-        'plugin:vue/essential',
-        '@vue/typescript',
+        'eslint:recommended',
+        // 'plugin:vue/essential',
+        // '@vue/typescript',
     ],
+    parser: '@typescript-eslint/parser',
     parserOptions: {
-        parser: '@typescript-eslint/parser',
+        ecmaVersion: 2018,
+        ecmaFeatures: {
+            experimentalObjectRestSpread: true,
+        },
+        sourceType: 'module',
     },
     rules: {
         'no-unused-vars': 0, // for typescript interfaces
+        'no-func-assign': 0, // for @Decorator shim codes.
         'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0,
         'no-console':  process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -21,15 +29,6 @@ module.exports = {
         indent: ['error', 4, {
             SwitchCase: 1,
             MemberExpression: 1,
-        }],
-        'vue/html-indent': [2, 4, {
-        }],
-        'vue/html-self-closing': [2, {
-            html: {
-                void: 'never',
-                normal: 'never',
-                component: 'never',
-            },
         }],
         'no-trailing-spaces': ['error', {
             skipBlankLines: false,

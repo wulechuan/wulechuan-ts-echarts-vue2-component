@@ -2,13 +2,13 @@
     "eslint.enable": true,
     "files.exclude": {
         "**/.DS_Store": true,
+        "**/node_modules": true,
         "package-lock.json": true,
         "babel.config.js": true,
         ".markdownlint*": true,
-        ".eslintrc.js": true,
+        // ".eslintrc.js": true,
         // ".npmignore": true,
         // ".gitignore": true,
-        "**/node_modules": true,
         // "tsconfig.js*": true,
     },
     "search.exclude": {

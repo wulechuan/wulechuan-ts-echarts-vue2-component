@@ -1,48 +1,63 @@
 {
-  "name": "@wulechuan/echarts-vue2-component",
-  "author": "wulechuan <wulechuan@live.com>",
-  "version": "0.2.5",
-  "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
-  "license": "WTFPL",
-  "keywords": [
-    "vue",
-    "vue2",
-    "vuejs",
-    "echarts",
-    "echart",
-    "echartsjs",
-    "typescript"
-  ],
-  "main": "index.ts",
-  "scripts": {
-    "start": "tsc  --outDir dist",
-    "beforeGitCommit": "npm  i    &&    npm  start",
-    "prepublishOnly": "npm  start"
-  },
-  "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
-  },
-  "bugs": {
-    "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
-  },
-  "peerDependencies": {
-    "vue": "^2.6.11"
-  },
-  "dependencies": {
-    "@types/echarts": "^4.4.2",
-    "@types/lodash.debounce": "^4.0.6",
-    "echarts": "^4.6.0",
-    "lodash.debounce": "^4.0.8",
-    "resize-detector": "^0.2.1",
-    "vue-property-decorator": "^8.4.0"
-  },
-  "devDependencies": {
-    "@types/vue": "^2.0.0",
-    "@wulechuan/css-stylus-markdown-themes": "^6.4.0",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3",
-    "vue": "^2.6.11"
-  }
+    "name": "@wulechuan/echarts-vue2-component",
+    "author": "wulechuan <wulechuan@live.com>",
+    "version": "0.3.0-beta1",
+    "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
+    "license": "WTFPL",
+    "keywords": [
+        "vue",
+        "vue2",
+        "vuejs",
+        "echarts",
+        "echart",
+        "echartsjs",
+        "typescript",
+        "电子图表"
+    ],
+    "main": "dist/typescript/index.ts",
+    "types": "dist/typescript/echarts.d.ts",
+    "scripts": {
+        "_lint:dist": "eslint    --fix  ./dist/**/*.ts  ./dist/**/*.js",
+        "_lint:source": "eslint  --fix  ./source/**/*.ts  ./gulpfile.esm.js/**/*",
+        "_dist": "gulp  --silent  buildOnce",
+        "lint": "npm  run  _lint:source    &    npm  run  _lint:dist",
+        "dist": "npm  run  _dist    &&    npm  run  _lint:dist",
+        "start": "gulp  --silent",
+        "before-git-commit": "npm  i    &&    npm  run  _lint:source    &&    npm  run  dist",
+        "prepublishOnly": "npm  dist"
+    },
+    "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
+    },
+    "bugs": {
+        "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
+    },
+    "peerDependencies": {
+        "echarts": "^4.6.0",
+        "vue": "^2.6.11",
+        "vue-property-decorator": "^8.4.0"
+    },
+    "dependencies": {
+        "lodash.debounce": "^4.0.8",
+        "resize-detector": "^0.2.1"
+    },
+    "devDependencies": {
+        "@types/lodash.debounce": "^4.0.6",
+        "@types/echarts": "^4.4.2",
+        "@types/vue": "^2.0.0",
+        "@vue/eslint-config-typescript": "^5.0.2",
+        "@typescript-eslint/eslint-plugin": "^2.26.0",
+        "@typescript-eslint/parser": "^2.26.0",
+        "@wulechuan/css-stylus-markdown-themes": "^6.4.0",
+        "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
+        "eslint": "^6.8.0",
+        "esm": "^3.2.25",
+        "indent.js": "^0.3.5",
+        "plugin-error": "^1.0.1",
+        "through2": "^3.0.1",
+        "tslib": "^1.11.1",
+        "typescript": "^3.8.3"
+    }
 }

@@ -11,10 +11,11 @@
         "allowSyntheticDefaultImports": true,
         "declaration": true,
         "declarationMap": true,
-        "sourceMap": true
+        "sourceMap": true,
     },
-    "exclude": [
-        "demos",
-        "dist"
-    ]
+    "files": [
+        "index.ts",
+        "compact.ts",
+        "echarts.d.ts"
+    ],
 }

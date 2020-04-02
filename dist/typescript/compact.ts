@@ -9,7 +9,9 @@ import {
     removeListener as  stopListeningToElementResizingEvent,
 } from 'resize-detector'
 
-import echarts, {
+import echarts from 'echarts/lib/echarts'
+
+import {
     ECharts,
     EChartOption,
     EChartsResizeOption,
@@ -25,7 +27,7 @@ import echarts, {
 import {
     SupportedZrenderEventTypes,
     SupportedEchartsInstanceEventTypes,
-} from './types'
+} from 'echarts-vue2-component'
 
 
 
@@ -478,9 +480,11 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     activated(): void {
         // I think we should take this opportunity to auto-resize the echart once.
-        if (true || !this.shouldNotAutoResizeEcharts) {
-            this.$resize()
-        }
+        this.$resize()
+
+        // if (!this.shouldNotAutoResizeEcharts) {
+        //     this.$resize()
+        // }
     }
 
     beforeDestroy(): void {

@@ -57,7 +57,7 @@
 </style>
 ```
 
-> 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名，即指向 npm 包的 `main` 文件。实际上，指向的是 `./index.ts`。
+> 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名，即指向 npm 包的 `main` 文件。实际上，指向的是 `./dist/full/index.ts`。
 
 ```ts
 import Vue from 'vue'
