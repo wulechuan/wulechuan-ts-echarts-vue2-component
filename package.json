@@ -24,7 +24,7 @@
         "dist": "npm  run  _dist    &&    npm  run  _lint:dist",
         "start": "gulp  --silent",
         "before-git-commit": "npm  i    &&    npm  run  _lint:source    &&    npm  run  dist",
-        "prepublishOnly": "npm  dist"
+        "prepublishOnly": "npm  run  _lint:source    &&    npm  run  dist"
     },
     "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
     "repository": {
