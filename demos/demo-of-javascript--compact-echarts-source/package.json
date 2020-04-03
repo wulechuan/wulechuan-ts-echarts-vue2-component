@@ -9,6 +9,7 @@
     },
     "dependencies": {
         "@wulechuan/echarts-vue2-component": "file:../..",
+        "echarts": "^4.7.0",
         "vue": "^2.6.11"
     },
     "devDependencies": {

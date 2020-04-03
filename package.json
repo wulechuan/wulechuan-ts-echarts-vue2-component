@@ -1,7 +1,7 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
     "author": "wulechuan <wulechuan@live.com>",
-    "version": "0.3.0-beta3",
+    "version": "0.3.0-beta4",
     "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
     "license": "WTFPL",
     "keywords": [
@@ -40,13 +40,13 @@
         "vue": "^2.6.11"
     },
     "dependencies": {
+        "@types/lodash.debounce": "^4.0.6",
         "lodash.debounce": "^4.0.8",
         "resize-detector": "^0.2.1",
         "vue-property-decorator": "^8.4.1"
     },
     "devDependencies": {
         "@types/echarts": "^4.4.4",
-        "@types/lodash.debounce": "^4.0.6",
         "@types/vue": "^2.0.0",
         "@typescript-eslint/eslint-plugin": "^2.23.0",
         "@typescript-eslint/parser": "^2.23.0",

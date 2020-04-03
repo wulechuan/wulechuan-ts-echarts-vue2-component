@@ -10,10 +10,10 @@
     "dependencies": {
         "@wulechuan/echarts-vue2-component": "file:../..",
         "echarts": "^4.7.0",
-        "vue": "^2.6.11",
-        "vue-property-decorator": "^8.4.1"
+        "vue": "^2.6.11"
     },
     "devDependencies": {
+        "@types/echarts": "^4.4.4",
         "@vue/cli-plugin-eslint": "^4.1.0",
         "@vue/cli-plugin-typescript": "^4.1.0",
         "@vue/cli-service": "^4.1.0",
