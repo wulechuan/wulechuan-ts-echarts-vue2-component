@@ -13,7 +13,6 @@ import {
 const echartsDefaultCreator = undefined
 
 import {
-    EChartsCreator,
     ECharts,
     EChartOption,
     EChartsResizeOption,
@@ -23,13 +22,14 @@ import {
     TypedArray,
 
     // Augmentations by this package.
+    EChartsCreator,
     EchartsInitializationOptions,
     EChartsTheme,
 } from 'echarts'
 
 import {
-    SupportedZrenderEventTypes,
-    SupportedEchartsInstanceEventTypes,
+    SupportedZRenderEventTypes,
+    SupportedEChartsInstanceEventTypes,
 } from '@wulechuan/echarts-vue2-component'
 
 
@@ -38,7 +38,7 @@ import {
 
 const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 
-const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZrenderEventTypes = [
+const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZRenderEventTypes = [
     'click',
     'mousedown',
     'mouseup',
@@ -47,7 +47,7 @@ const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZrenderEventTypes = [
     'contextmenu',
 ]
 
-const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEchartsInstanceEventTypes = [
+const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEChartsInstanceEventTypes = [
     'legendselectchanged',
     'legendselected',
     'legendunselected',

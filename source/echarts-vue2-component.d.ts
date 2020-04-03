@@ -1,5 +1,7 @@
+/// <reference path="./echarts.d.ts" />
+
 declare module '@wulechuan/echarts-vue2-component' {
-    export type SupportedZrenderEventTypes = Array<SupportedZrenderEventType>;
+    export type SupportedZRenderEventTypes = Array<SupportedZrenderEventType>;
 
     export type SupportedZrenderEventType = (
         'click' |
@@ -10,7 +12,7 @@ declare module '@wulechuan/echarts-vue2-component' {
         'contextmenu'
     );
 
-    export type SupportedEchartsInstanceEventTypes = Array<SupportedEchartsInstanceEventType>;
+    export type SupportedEChartsInstanceEventTypes = Array<SupportedEchartsInstanceEventType>;
 
     export type SupportedEchartsInstanceEventType = (
         'legendselectchanged' |
