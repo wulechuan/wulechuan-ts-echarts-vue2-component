@@ -6,7 +6,7 @@
 /documents/**/*.html
 node_modules
 /gulp*
-/source
+/source/*.vue
 /ReadMe.*.html
 /ReadMe.html
 git*.sh

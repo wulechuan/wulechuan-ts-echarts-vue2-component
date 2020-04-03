@@ -1,3 +1,4 @@
+<script lang="ts">
 import Vue, { CreateElement } from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 
@@ -9,14 +10,16 @@ import {
     removeListener as  stopListeningToElementResizingEvent,
 } from 'resize-detector'
 
-import echarts from 'echarts'
+const echartsDefaultCreator = undefined
 
 import {
+    EchartsCreator,
     ECharts,
     EChartOption,
     EChartsResizeOption,
     EChartsConvertFinder,
     EChartsLoadingOption,
+    Graphic,
     TypedArray,
 
     // Augmentations by this package.
@@ -27,7 +30,7 @@ import {
 import {
     SupportedZrenderEventTypes,
     SupportedEchartsInstanceEventTypes,
-} from 'echarts-vue2-component'
+} from '@wulechuan/echarts-vue2-component'
 
 
 
@@ -88,9 +91,9 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEchartsInstanceEventTypes
 
 @Component({})
 export default class WlcEchartsVueTwoComponent extends Vue {
-    public readonly name: string          = 'wlc-echarts-vue-two-component'
-    public          chart: ECharts | null = null
-    public          echartsGraphic        = echarts.graphic
+    public readonly name:                string                = 'wlc-echarts-vue-two-component'
+    public          chart:               ECharts        | null = null
+    public          echartsCreatorToUse: EchartsCreator | null = null
 
 
 
@@ -104,6 +107,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
+    @Prop() echartsCreator?:                     EchartsCreator
     @Prop() shouldManuallyRefreshEcharts?:       boolean
     @Prop() shouldNotWatchEchartsOptionsDeeply?: boolean
     @Prop() shouldNotAutoResizeEcharts?:         boolean
@@ -118,9 +122,9 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    $oldResizingDebouncingInterval: number = NaN
+    $oldResizingDebouncingInterval: number                = NaN
     $rootElementResizeEventHandler: ResizeCallback | null = null
-    $toUnwatchEChartsOptions: Function | null = null
+    $toUnwatchEChartsOptions:       Function       | null = null
 
 
 
@@ -328,6 +332,20 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
+    $decideEchartsCreatorToUse(): void {
+        const providedEchartsCreator = this.echartsCreator
+
+        let echartsCreatorToUse
+        if (providedEchartsCreator) {
+            echartsCreatorToUse = providedEchartsCreator
+        } else if (echartsDefaultCreator) {
+            echartsCreatorToUse = echartsDefaultCreator
+        } else {
+            throw new ReferenceError('[wlc-echarts-vue-two-component]: No echart constructor was provided. If you insist to use the "the-wrapper-only.vue", please provide an echart constructor via the "prop" named "echarts-creator". Or you can use the "index.vue" instead.')
+        }
+        this.echartsCreatorToUse = echartsCreatorToUse || null
+    }
+
     $startWatchingIncomingEChartsOptions(): void {
         const { chart } = this
         if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
@@ -435,7 +453,9 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     $createEchartInstance(): void {
         if (this.chart) { return }
 
-        const newChart = echarts.init(
+        const { echartsCreatorToUse } = this
+
+        const newChart = echartsCreatorToUse!.init(
             this.$el as HTMLDivElement | HTMLCanvasElement,
             this.echartsTheme,
             this.echartsInitializationOptions
@@ -473,6 +493,10 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     // --- Vue component life cycle hooks -----------
 
+    created(): void {
+        this.$decideEchartsCreatorToUse()
+    }
+
     mounted(): void {
         this.$createEchartInstance()
         this.$startWatchingIncomingEChartsOptions()
@@ -492,3 +516,4 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.$dispose()
     }
 }
+</script>

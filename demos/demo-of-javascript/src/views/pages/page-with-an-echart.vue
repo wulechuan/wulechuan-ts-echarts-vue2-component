@@ -1,5 +1,6 @@
 <template>
     <div class="page-with-an-echart">
+        <h2>下方图表之源代码中引入的是 index.vue，其中的脚本块采用 JavaScript 书写。</h2>
         <p>{{ message }}</p>
         <div class="echarts-container">
             <vue-echarts
@@ -13,7 +14,11 @@
 
 <script>
 import Vue from 'vue'
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/javascript'
+
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/javascript/index.vue'
+
+import echartsOptions from '../data/echarts-options--line'
+
 export default {
     components: {
         'vue-echarts': EChartsVue2Component,
@@ -22,19 +27,7 @@ export default {
         return {
             message: '目前，eCharts 的尺寸变更的刷新频度为默认值（0.2 秒每次）。稍后将故意改变该值。',
             resizingInterval: NaN,
-            echartsOptions: {
-                xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                },
-                yAxis: {
-                    type: 'value',
-                },
-                series: [{
-                    data: [820, 932, 901, 934, 1290, 1330, 1320],
-                    type: 'line',
-                }],
-            },
+            echartsOptions,
         }
     },
     mounted: function () {
@@ -50,6 +43,8 @@ export default {
 .page-with-an-echart {
     width  100%
     height 100%
+    box-sizing border-box
+    padding 30px
     display flex
     flex-direction column
     justify-content center

@@ -5,10 +5,11 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "vue-cli-service  serve  --port 3568"
+        "start": "vue-cli-service  serve  --port 3570"
     },
     "dependencies": {
         "@wulechuan/echarts-vue2-component": "file:../..",
+        "echarts": "^4.7.0",
         "vue": "^2.6.11",
         "vue-property-decorator": "^8.4.1"
     },

@@ -1,21 +1,15 @@
 module.exports = {
+    root: true,
     env: {
         es6: true,
         node: true,
-        browser: true,
     },
     extends: [
-        'eslint:recommended',
-        // 'plugin:vue/essential',
-        // '@vue/typescript',
+        'plugin:vue/essential',
+        '@vue/typescript',
     ],
-    parser: '@typescript-eslint/parser',
     parserOptions: {
-        ecmaVersion: 2018,
-        ecmaFeatures: {
-            experimentalObjectRestSpread: true,
-        },
-        sourceType: 'module',
+        parser: '@typescript-eslint/parser',
     },
     rules: {
         'no-unused-vars': 0, // for typescript interfaces
@@ -30,6 +24,15 @@ module.exports = {
             SwitchCase: 1,
             MemberExpression: 1,
         }],
+        'vue/html-indent': [2, 4, {
+        }],
+        'vue/html-self-closing': [2, {
+            html: {
+                void: 'never',
+                normal: 'never',
+                component: 'never',
+            },
+        }],
         'no-trailing-spaces': ['error', {
             skipBlankLines: false,
             ignoreComments: false,
@@ -38,10 +41,10 @@ module.exports = {
         'no-param-reassign': 0,
         quotes: ['error', 'single'],
         semi: ['error', 'never'],
-        'max-statements': [0, 32],
+        'max-statements': [0, 64],
         'multiline-ternary': ['error', 'always-multiline'],
         'new-parens': [1],
-        yoda: ['error', 'never'],
+        yoda: [0],
         'comma-dangle': ['error', {
             arrays: 'always-multiline',
             objects: 'always-multiline',

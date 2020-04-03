@@ -1,41 +1,12 @@
-import Vue, { CreateElement } from 'vue'
+<script source-language-was="ts">
+import { __decorate } from 'tslib'
+import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
-
 import debounce from 'lodash.debounce'
-
-import {
-    ResizeCallback,
-    addListener    as startListeningToElementResizingEvent,
-    removeListener as  stopListeningToElementResizingEvent,
-} from 'resize-detector'
-
-import echarts from 'echarts'
-
-import {
-    ECharts,
-    EChartOption,
-    EChartsResizeOption,
-    EChartsConvertFinder,
-    EChartsLoadingOption,
-    TypedArray,
-
-    // Augmentations by this package.
-    EchartsInitializationOptions,
-    EChartsTheme,
-} from 'echarts'
-
-import {
-    SupportedZrenderEventTypes,
-    SupportedEchartsInstanceEventTypes,
-} from 'echarts-vue2-component'
-
-
-
-
-
+import { addListener as startListeningToElementResizingEvent, removeListener as stopListeningToElementResizingEvent } from 'resize-detector'
+const echartsDefaultCreator = undefined
 const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
-
-const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZrenderEventTypes = [
+const SUPPORTED_ZRENDER_EVENT_TYPES = [
     'click',
     'mousedown',
     'mouseup',
@@ -43,8 +14,7 @@ const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZrenderEventTypes = [
     'dblclick',
     'contextmenu',
 ]
-
-const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEchartsInstanceEventTypes = [
+const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES = [
     'legendselectchanged',
     'legendselected',
     'legendunselected',
@@ -82,127 +52,82 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEchartsInstanceEventTypes
     'globalout',
     'contextmenu',
 ]
-
-
-
-
-@Component({})
-export default class WlcEchartsVueTwoComponent extends Vue {
-    public readonly name: string          = 'wlc-echarts-vue-two-component'
-    public          chart: ECharts | null = null
-    public          echartsGraphic        = echarts.graphic
-
-
-
-
-
-    render(createElement: CreateElement) {
+let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
+    constructor() {
+        super(...arguments)
+        this.name = 'wlc-echarts-vue-two-component'
+        this.chart = null
+        this.echartsCreatorToUse = null
+        this.$oldResizingDebouncingInterval = NaN
+        this.$rootElementResizeEventHandler = null
+        this.$toUnwatchEChartsOptions = null
+    }
+    render(createElement) {
         return createElement('div')
     }
-
-
-
-
-
-    @Prop() shouldManuallyRefreshEcharts?:       boolean
-    @Prop() shouldNotWatchEchartsOptionsDeeply?: boolean
-    @Prop() shouldNotAutoResizeEcharts?:         boolean
-
-    @Prop() echartsTheme?:                       EChartsTheme
-    @Prop() echartsInitializationOptions?:       EchartsInitializationOptions
-    @Prop() echartsOptions?:                     EChartOption
-    @Prop() echartsGroupingName?:                string
-    @Prop() echartsResizingDebouncingInterval?:  number
-
-
-
-
-
-    $oldResizingDebouncingInterval: number = NaN
-    $rootElementResizeEventHandler: ResizeCallback | null = null
-    $toUnwatchEChartsOptions: Function | null = null
-
-
-
-
-
-    @Watch('echartsResizingDebouncingInterval', {})
-    $onResizingDebouncingIntervalChanged(newInterval: number, oldInterval: number): void {
+    $onResizingDebouncingIntervalChanged(newInterval, oldInterval) {
         this.$updateResizingDebouncingInterval(newInterval)
     }
-
-    @Watch('shouldManuallyRefreshEcharts', {})
-    $onManuallyRefreshingMarkChanged(newMark: boolean, oldMark: boolean): void {
+    $onManuallyRefreshingMarkChanged(newMark, oldMark) {
         this.$stopWatchingIncomingEChartsOptions()
         this.$startWatchingIncomingEChartsOptions()
         this.refreshECharts() // Always take this opportunity to refresh echarts once.
     }
-
-    @Watch('shouldNotWatchEchartsOptionsDeeply', {})
-    $onEChartsOptionsWatchingDepthMarkChanged(newMark: boolean, oldMark: boolean): void {
+    $onEChartsOptionsWatchingDepthMarkChanged(newMark, oldMark) {
         this.$stopWatchingIncomingEChartsOptions()
         this.$startWatchingIncomingEChartsOptions()
         this.refreshECharts() // Always take this opportunity to refresh echarts once.
     }
-
-    @Watch('shouldNotAutoResizeEcharts', {})
-    $onEChartsAutoReszingMarkChanged(newMark: boolean, oldMark: boolean): void {
+    $onEChartsAutoReszingMarkChanged(newMark, oldMark) {
         if (newMark) {
             this.$disableAutoResizing()
-        } else {
+        }
+        else {
             this.$enableAutoResizing()
         }
     }
-
-    @Watch('echartsTheme', {})
-    $onEChartsThemeChanged(newTheme: EChartsTheme, oldTheme: EChartsTheme): void {
+    $onEChartsThemeChanged(newTheme, oldTheme) {
         this.$recreateEChart()
     }
-
-    @Watch('echartsGroupingName', {})
-    onEChartsGroupingNameChanged(newGroupingName: string, oldGroupingName: string): void {
+    onEChartsGroupingNameChanged(newGroupingName, oldGroupingName) {
         const { chart } = this
-        if (chart) { chart.group = newGroupingName }
+        if (chart) {
+            chart.group = newGroupingName
+        }
     }
-
-
-
-
-
-    get echartWidth(): number {
+    get echartWidth() {
         const { chart } = this
-        if (!chart) { return NaN }
+        if (!chart) {
+            return NaN
+        }
         return chart.getWidth()
     }
-
-    get echartHeight(): number {
+    get echartHeight() {
         const { chart } = this
-        if (!chart) { return NaN }
+        if (!chart) {
+            return NaN
+        }
         return chart.getHeight()
     }
-
-    get echartIsDisposed(): boolean {
+    get echartIsDisposed() {
         const { chart } = this
-        if (!chart) { return false }
+        if (!chart) {
+            return false
+        }
         return chart.isDisposed()
     }
-
-    get echartComputedOptions(): null | EChartOption<EChartOption.Series> {
+    get echartComputedOptions() {
         const { chart } = this
-        if (!chart) { return null }
+        if (!chart) {
+            return null
+        }
         return chart.getOption()
     }
-
-
-
-
-
-    updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
+    updateECharts(shouldNotMerge, lazyUpdate) {
         console.warn('The "updateECharts" method is a deprecated alias of "refreshECharts". So use "refreshECharts" instead.')
         this.refreshECharts(shouldNotMerge, lazyUpdate)
     }
-
-    refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
+    refreshECharts(shouldNotMerge, lazyUpdate) {
         // To update echarts with current "echartsOptions" withing Vue component props.
         // If you set this component to update manually, you invoke this method yourself.
         const { chart, echartsOptions } = this
@@ -210,21 +135,13 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             chart.setOption(echartsOptions, shouldNotMerge, lazyUpdate)
         }
     }
-
-
-
-
-
     // --- echarts static methods: start ------------
-
     // connect(group: string | ECharts[]): void {
     //     echarts.connect(group)
     // }
-
     // disConnect(group: string): void {
     //     echarts.disConnect(group)
     // }
-
     // registerMap(
     //     mapName: string,
     //     geoJSON: object,
@@ -232,103 +149,101 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     // ): void {
     //     echarts.registerMap(mapName, geoJSON, specialAreas)
     // }
-
     // registerTheme(themeName: string, theme: object): void {
     //     echarts.registerTheme(name, theme)
     // }
-
     // getMap(mapName: string): MapObj {
     //     return echarts.getMap(mapName)
     // }
-
     // --- echarts static methods: end --------------
-
-
-
-
-
     // --- eCharts instance methods: start ----------
-
-    dispatchAction(payload: object): void {
+    dispatchAction(payload) {
         const { chart } = this
-        if (chart) { chart.dispatchAction(payload) }
+        if (chart) {
+            chart.dispatchAction(payload)
+        }
     }
-
-    resize(resizingOptions?: EChartsResizeOption): void {
+    resize(resizingOptions) {
         const { chart } = this
-        if (chart) { chart.resize(resizingOptions) }
+        if (chart) {
+            chart.resize(resizingOptions)
+        }
     }
-
-    convertToPixel(finder: EChartsConvertFinder, value: string | any[]): string | any[] {
+    convertToPixel(finder, value) {
         const { chart } = this
-        if (!chart) { return [] }
+        if (!chart) {
+            return []
+        }
         return chart.convertToPixel(finder, value)
     }
-
-    convertFromPixel(finder: EChartsConvertFinder, value: any[] | string) : any[] | string {
+    convertFromPixel(finder, value) {
         const { chart } = this
-        if (!chart) { return [] }
+        if (!chart) {
+            return []
+        }
         return chart.convertFromPixel(finder, value)
     }
-
-    containPixel(finder: EChartsConvertFinder, value: any[]): boolean {
+    containPixel(finder, value) {
         const { chart } = this
-        if (!chart) { return false }
+        if (!chart) {
+            return false
+        }
         return chart.containPixel(finder, value)
     }
-
-    showLoading(type?: string, options?: EChartsLoadingOption): void {
+    showLoading(type, options) {
         const { chart } = this
-        if (chart) { chart.showLoading(type, options) }
+        if (chart) {
+            chart.showLoading(type, options)
+        }
     }
-
-    hideLoading(): void {
+    hideLoading() {
         const { chart } = this
-        if (chart) { chart.hideLoading() }
+        if (chart) {
+            chart.hideLoading()
+        }
     }
-
-    getDataURL(options: {
-        type?: string,
-        pixelRatio?: number,
-        backgroundColor?: string,
-        excludeComponents?: string[]
-    }): string {
+    getDataURL(options) {
         const { chart } = this
-        if (!chart) { return '' }
+        if (!chart) {
+            return ''
+        }
         return chart.getDataURL(options)
     }
-
-    getConnectedDataURL(options: {
-        type: string,
-        pixelRatio: number,
-        backgroundColor: string,
-        excludeComponents?: string[]
-    }): string {
+    getConnectedDataURL(options) {
         const { chart } = this
-        if (!chart) { return '' }
+        if (!chart) {
+            return ''
+        }
         return chart.getConnectedDataURL(options)
     }
-
-    appendData(options: {
-        seriesIndex?: string,
-        data?: any[] | TypedArray,
-    }): void {
+    appendData(options) {
         const { chart } = this
-        if (chart) { chart.appendData(options) }
+        if (chart) {
+            chart.appendData(options)
+        }
     }
-
-    clear(): void {
+    clear() {
         const { chart } = this
-        if (chart) { chart.clear() }
+        if (chart) {
+            chart.clear()
+        }
     }
-
     // --- eCharts instance methods: end ------------
-
-
-
-
-
-    $startWatchingIncomingEChartsOptions(): void {
+    $decideEchartsCreatorToUse() {
+        const providedEchartsCreator = this.echartsCreator
+        let echartsCreatorToUse
+        if (providedEchartsCreator) {
+            echartsCreatorToUse = providedEchartsCreator
+        }
+        else if (echartsDefaultCreator) {
+            echartsCreatorToUse = echartsDefaultCreator
+        }
+        else {
+            throw new ReferenceError('[wlc-echarts-vue-two-component]: No echart constructor was provided. If you insist to use the "the-wrapper-only.vue", please provide an echart constructor via the "prop" named "echarts-creator". Or you can use the "index.vue" instead.')
+        }
+        this.echartsCreatorToUse = echartsCreatorToUse || null
+    }
+    $startWatchingIncomingEChartsOptions() {
         const { chart } = this
         if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
             this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
@@ -336,44 +251,40 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             }, { deep: !this.shouldNotWatchEchartsOptionsDeeply })
         }
     }
-
-    $stopWatchingIncomingEChartsOptions(): void {
+    $stopWatchingIncomingEChartsOptions() {
         const { $toUnwatchEChartsOptions } = this
         if ($toUnwatchEChartsOptions) {
             $toUnwatchEChartsOptions()
             this.$toUnwatchEChartsOptions = null
         }
     }
-
-    $startListeningToAllEChartsEvents(): void {
+    $startListeningToAllEChartsEvents() {
         const { chart } = this
-        if (!chart) { return }
-
+        if (!chart) {
+            return
+        }
         SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES.forEach(eventType => {
-            chart.on(eventType, (eventObject: object) => {
+            chart.on(eventType, (eventObject) => {
                 this.$emit(eventType, eventObject)
             })
         })
-
         if (SUPPORTED_ZRENDER_EVENT_TYPES.length > 0) {
             const zrenderInstance = chart.getZr()
-
             SUPPORTED_ZRENDER_EVENT_TYPES.forEach(eventType => {
-                zrenderInstance.on(eventType, (eventOpject: object) => {
+                zrenderInstance.on(eventType, (eventOpject) => {
                     this.$emit(`zrender:${eventType}`, eventOpject)
                 })
             })
         }
     }
-
-    $stopListeningToAllEChartsEvents(): void {
+    $stopListeningToAllEChartsEvents() {
         const { chart } = this
-        if (!chart) { return }
-
+        if (!chart) {
+            return
+        }
         SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES.forEach(eventType => {
             chart.off(eventType)
         })
-
         if (SUPPORTED_ZRENDER_EVENT_TYPES.length > 0) {
             const zrenderInstance = chart.getZr()
             // https://ecomfe.github.io/zrender-doc/public/api.html#zrendereventfulonevent-handler-context
@@ -381,28 +292,18 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             zrenderInstance.off()
         }
     }
-
-    $updateResizingDebouncingInterval(newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
-        let decidedInterval: number = ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
-
+    $updateResizingDebouncingInterval(newInterval, eChartInstanceIsJustBuilt) {
+        let decidedInterval = ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
         if (newInterval && newInterval >= 10) {
-            decidedInterval = + newInterval // In case the newInterval is a string, like '120'.
+            decidedInterval = +newInterval // In case the newInterval is a string, like '120'.
         }
-
         if (decidedInterval === this.$oldResizingDebouncingInterval && !eChartInstanceIsJustBuilt) {
             return
         }
-
         this.$disableAutoResizing()
         this.$rootElementResizeEventHandler = null
-
         if (!this.shouldNotAutoResizeEcharts) {
-            const newHandler = debounce(
-                this.$resize.bind(this),
-                decidedInterval,
-                { leading: true }
-            )
-
+            const newHandler = debounce(this.$resize.bind(this), decidedInterval, { leading: true })
             if (typeof newHandler == 'function') {
                 this.$rootElementResizeEventHandler = newHandler
                 this.$enableAutoResizing()
@@ -410,49 +311,41 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             }
         }
     }
-
-    $enableAutoResizing(): void {
+    $enableAutoResizing() {
         const el = this.$el
         const handler = this.$rootElementResizeEventHandler
         if (el instanceof HTMLElement && typeof handler === 'function') {
             startListeningToElementResizingEvent(el, handler)
         }
     }
-
-    $disableAutoResizing(): void {
+    $disableAutoResizing() {
         const el = this.$el
         const handler = this.$rootElementResizeEventHandler
         if (el instanceof HTMLElement && typeof handler === 'function') {
             stopListeningToElementResizingEvent(el, handler)
         }
     }
-
-    $resize(): void {
+    $resize() {
         const { chart } = this
-        if (chart) { chart.resize() }
+        if (chart) {
+            chart.resize()
+        }
     }
-
-    $createEchartInstance(): void {
-        if (this.chart) { return }
-
-        const newChart = echarts.init(
-            this.$el as HTMLDivElement | HTMLCanvasElement,
-            this.echartsTheme,
-            this.echartsInitializationOptions
-        )
-
+    $createEchartInstance() {
+        if (this.chart) {
+            return
+        }
+        const { echartsCreatorToUse } = this
+        const newChart = echartsCreatorToUse.init(this.$el, this.echartsTheme, this.echartsInitializationOptions)
         this.chart = newChart
-
         if (this.echartsGroupingName) {
             newChart.group = this.echartsGroupingName
         }
-
         this.refreshECharts(true)
         this.$startListeningToAllEChartsEvents()
         this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true)
     }
-
-    $dispose(): void {
+    $dispose() {
         const { chart } = this
         if (chart) {
             this.$disableAutoResizing()
@@ -461,34 +354,78 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             this.chart = null
         }
     }
-
-    $recreateEChart(): void {
+    $recreateEChart() {
         this.$dispose()
         this.$createEchartInstance()
     }
-
-
-
-
-
     // --- Vue component life cycle hooks -----------
-
-    mounted(): void {
+    created() {
+        this.$decideEchartsCreatorToUse()
+    }
+    mounted() {
         this.$createEchartInstance()
         this.$startWatchingIncomingEChartsOptions()
     }
-
-    activated(): void {
+    activated() {
         // I think we should take this opportunity to auto-resize the echart once.
         this.$resize()
-
         // if (!this.shouldNotAutoResizeEcharts) {
         //     this.$resize()
         // }
     }
-
-    beforeDestroy(): void {
+    beforeDestroy() {
         // this.$stopWatchingIncomingEChartsOptions() // I think Vue will do this itself automatically.
         this.$dispose()
     }
 }
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsCreator', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'shouldManuallyRefreshEcharts', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'shouldNotWatchEchartsOptionsDeeply', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'shouldNotAutoResizeEcharts', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsTheme', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsInitializationOptions', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsOptions', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsGroupingName', void 0)
+__decorate([
+    Prop(),
+], WlcEchartsVueTwoComponent.prototype, 'echartsResizingDebouncingInterval', void 0)
+__decorate([
+    Watch('echartsResizingDebouncingInterval', {}),
+], WlcEchartsVueTwoComponent.prototype, '$onResizingDebouncingIntervalChanged', null)
+__decorate([
+    Watch('shouldManuallyRefreshEcharts', {}),
+], WlcEchartsVueTwoComponent.prototype, '$onManuallyRefreshingMarkChanged', null)
+__decorate([
+    Watch('shouldNotWatchEchartsOptionsDeeply', {}),
+], WlcEchartsVueTwoComponent.prototype, '$onEChartsOptionsWatchingDepthMarkChanged', null)
+__decorate([
+    Watch('shouldNotAutoResizeEcharts', {}),
+], WlcEchartsVueTwoComponent.prototype, '$onEChartsAutoReszingMarkChanged', null)
+__decorate([
+    Watch('echartsTheme', {}),
+], WlcEchartsVueTwoComponent.prototype, '$onEChartsThemeChanged', null)
+__decorate([
+    Watch('echartsGroupingName', {}),
+], WlcEchartsVueTwoComponent.prototype, 'onEChartsGroupingNameChanged', null)
+WlcEchartsVueTwoComponent = __decorate([
+    Component({}),
+], WlcEchartsVueTwoComponent)
+export default WlcEchartsVueTwoComponent
+//# sourceMappingURL=module.js.map
+</script>

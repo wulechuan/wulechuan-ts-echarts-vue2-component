@@ -1,53 +1,62 @@
 import path from 'path'
 import through from 'through2'
-import typescript from 'typescript'
-import changeIndentation from 'indent.js'
 import createNewGulpError from 'plugin-error'
 
 import {
     modifyIndexTSContentString,
-} from '../helpers/modify-index-ts'
+} from '../helpers/modify-index-dot-vue'
+
+import {
+    transformContentStringOfSingleVueFile,
+} from '@wulechuan/vue2-sfc-from-typescript-to-javascript'
 
 import {
     createATaskCycle,
 } from '@wulechuan/gulp-classical-task-cycle'
 
-export function createOneTaskCycleForProcessingTheIndexTS(options) {
+
+
+
+
+export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
     const {
         descriptionOfCoreTask,
         nameOfTheOnlySourceFile,
+        outputFileNameOfWrapperOnlyVersion,
         sourceFileFolderPath,
         distFolderPath,
-        shouldModifyTypeScriptSourceFile,
+        scriptShouldNotImportEcharts,
         shouldCompileTypeScriptIntoJavaScript,
-        tsconfig,
+        extraOptions = {},
     } = options
 
     let outputFileName
+    const {
+        vueFileConversionOptions = {},
+    } = extraOptions
 
-    if (shouldModifyTypeScriptSourceFile) {
-        outputFileName = 'compact.ts'
+    if (scriptShouldNotImportEcharts) {
+        outputFileName = outputFileNameOfWrapperOnlyVersion
     } else {
-        outputFileName = 'index.ts'
+        outputFileName = nameOfTheOnlySourceFile
     }
 
-    let relativeGlobsOfAllPossibleOutputs
     let outputFolderSubPath
 
     if (shouldCompileTypeScriptIntoJavaScript) {
         outputFolderSubPath = 'javascript'
-        outputFileName = outputFileName.replace(/\.ts$/, '.js')
-        relativeGlobsOfAllPossibleOutputs = [
-            outputFileName,
-            `${outputFileName}.map`,
-        ]
     } else {
         outputFolderSubPath = 'typescript'
-        relativeGlobsOfAllPossibleOutputs = [ outputFileName ]
     }
 
     const outputFolderPath = path.posix.join(distFolderPath, outputFolderSubPath)
-    // console.log('outputFolderPath', `"${outputFolderPath}"`)
+    const relativeGlobsOfAllPossibleOutputs = [ outputFileName ]
+
+
+
+
+
+    // https://github.com/wulechuan/wulechuan-js-gulp-4-classical-task-cycle/blob/master/documents/refs/en-US/api-create-a-task-cycle.md
 
     return createATaskCycle({
         descriptionOfCoreTask,
@@ -65,7 +74,7 @@ export function createOneTaskCycleForProcessingTheIndexTS(options) {
             },
         },
 
-        firstPipeForProcessingSources: compileTypeScript,
+        firstPipeForProcessingSources: processTheIndexDotVue,
 
         compressions: {
             shouldNotOutputUncompressedVersion: false,
@@ -79,8 +88,8 @@ export function createOneTaskCycleForProcessingTheIndexTS(options) {
 
 
 
-    function compileTypeScript() {
-        return through.obj(function (file, fileEncoding, callback) {
+    function processTheIndexDotVue() {
+        return through.obj(async function (file, fileEncoding, callback) {
             if (file.isStream()) {
                 return callback(createNewGulpError('Streaming is not supported.'))
             }
@@ -89,15 +98,15 @@ export function createOneTaskCycleForProcessingTheIndexTS(options) {
                 return callback(null, file)
             }
 
-            const typeScriptFileContent = file.contents.toString(fileEncoding || 'utf-8')
+            const sourceFileContents = file.contents.toString(fileEncoding || 'utf-8')
 
 
 
-            const typeScriptFileContentAsCompilationSource = shouldModifyTypeScriptSourceFile
-                ? modifyIndexTSContentString(typeScriptFileContent)
-                : typeScriptFileContent
+            const sourceFileContentsAsCompilationSource = scriptShouldNotImportEcharts
+                ? modifyIndexTSContentString(sourceFileContents)
+                : sourceFileContents
 
-            let outputFileContent = typeScriptFileContentAsCompilationSource
+            let processedVueContents = sourceFileContentsAsCompilationSource
 
 
 
@@ -110,18 +119,16 @@ export function createOneTaskCycleForProcessingTheIndexTS(options) {
 
 
             if (shouldCompileTypeScriptIntoJavaScript) {
-                const compilationResult = typescript.transpileModule(
-                    typeScriptFileContentAsCompilationSource,
-                    tsconfig
-                )
-
-                outputFileContent = changeIndentation.js(
-                    compilationResult.outputText,
-                    { tabString: '    ' }
+                processedVueContents = await transformContentStringOfSingleVueFile(
+                    sourceFileContentsAsCompilationSource,
+                    {
+                        ...vueFileConversionOptions,
+                        sourceContentDescriptionName: nameOfTheOnlySourceFile,
+                    }
                 )
             }
 
-            file.contents = Buffer.from(outputFileContent)
+            file.contents = Buffer.from(processedVueContents)
 
             return callback(null, file)
         })

@@ -4,7 +4,9 @@
 
 <script>
 import Vue from 'vue'
-import PageWithAnEchart from './views/page-with-an-echart.vue'
+
+import PageWithAnEchart from '@/views/pages/page-with-an-echart.vue'
+
 export default {
     components: {
         'page-with-an-echart': PageWithAnEchart,
@@ -13,12 +15,12 @@ export default {
 </script>
 
 <style lang="stylus">
-html, body {
-    height 100%
-}
-
 body {
     margin 0
     background-color #999
+}
+
+html, body {
+    height 100%
 }
 </style>

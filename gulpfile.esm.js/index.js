@@ -1,12 +1,12 @@
-import path from 'path'
+// import path from 'path'
+
+// import {
+//     createOneTaskCycleForCopyingAnyFiles,
+// } from './task-cycle-generators/any-file-copy'
 
 import {
-    createOneTaskCycleForProcessingTheIndexTS,
-} from './task-cycle-generators/index-ts-modifiy-and-then-compile'
-
-import {
-    createOneTaskCycleForCopyingAnyFiles,
-} from './task-cycle-generators/any-file-copy'
+    createOneTaskCycleForProcessingTheIndexDotVue,
+} from './task-cycle-generators/process-index-dot-vue'
 
 import {
     create3HighOrderTasksUponMultipleTaskCycles,
@@ -16,79 +16,66 @@ import {
 
 import tsconfig from '../tsconfig'
 
-const joinPathPOSIX = path.posix.join
+// const joinPathPOSIX = path.posix.join
 
-const distFolderPath          = './dist'
-const sourceFileFolderPath    = './source'
-const nameOfTheOnlySourceFile = 'index.ts'
+const distFolderPath                     = './dist'
+const sourceFileFolderPath               = './source'
+const nameOfTheOnlySourceFile            = 'index.vue'
+const outputFileNameOfWrapperOnlyVersion = 'the-wrapper-only.vue'
 
 
+const outputFileIndentation = '    '
 
-// https://github.com/wulechuan/wulechuan-js-gulp-4-classical-task-cycle/blob/master/documents/refs/en-US/api-create-a-task-cycle.md
-
-const tcCopyTypeDefinitionsToDistOfTypeScript = createOneTaskCycleForCopyingAnyFiles({
-    sourceGlobs: {
-        rootFolderPath: joinPathPOSIX(sourceFileFolderPath),
-        relativeGlobsSpecificallyForThisTaskCycle: [ '*.d.ts' ],
+const vueFileRelatedTaskCycleExtraOptions = {
+    vueFileConversionOptions: {
+        indentation: outputFileIndentation,
+        tsconfig,
     },
-    outputFiles: {
-        rootFolderPath: joinPathPOSIX(distFolderPath, 'typescript'),
-        forBatchOutputFiles: {
-            relativeGlobsOfAllPossibleOutputs: [ '*.d.ts' ],
-        },
-    },
-})
+}
 
-const tcCopyTypeTSConfigJSONToDistOfTypeScript = createOneTaskCycleForCopyingAnyFiles({
-    sourceGlobs: {
-        rootFolderPath: joinPathPOSIX(sourceFileFolderPath, 'dist-typescript'),
-        relativeGlobsSpecificallyForThisTaskCycle: [ 'tsconfig.json' ],
-    },
-    outputFiles: {
-        rootFolderPath: joinPathPOSIX(distFolderPath, 'typescript'),
-        forBatchOutputFiles: {
-            relativeGlobsOfAllPossibleOutputs: [ 'tsconfig.json' ],
-        },
-    },
-})
-
-const tcCopyIndexTS = createOneTaskCycleForProcessingTheIndexTS({
+const tcCopyIndexDotVue = createOneTaskCycleForProcessingTheIndexDotVue({
     descriptionOfCoreTask: `复制 ${nameOfTheOnlySourceFile}。`,
     nameOfTheOnlySourceFile,
     sourceFileFolderPath,
     distFolderPath,
-    shouldModifyTypeScriptSourceFile: false,
+    outputFileNameOfWrapperOnlyVersion,
+    scriptShouldNotImportEcharts: false,
     shouldCompileTypeScriptIntoJavaScript: false,
 })
 
-const tcCopyModifiedIndexTS = createOneTaskCycleForProcessingTheIndexTS({
+const tcCopyModifiedIndexDotVue = createOneTaskCycleForProcessingTheIndexDotVue({
     descriptionOfCoreTask: `先修订 ${nameOfTheOnlySourceFile} 的内容，然后复制到输出文件夹。`,
     nameOfTheOnlySourceFile,
     sourceFileFolderPath,
     distFolderPath,
-    shouldModifyTypeScriptSourceFile: true,
+    outputFileNameOfWrapperOnlyVersion,
+    scriptShouldNotImportEcharts: true,
     shouldCompileTypeScriptIntoJavaScript: false,
 })
 
-const tcCompileIndexTS = createOneTaskCycleForProcessingTheIndexTS({
+const tcCompileIndexDotVue = createOneTaskCycleForProcessingTheIndexDotVue({
     descriptionOfCoreTask: `将 ${nameOfTheOnlySourceFile} 编译为 JavaScript。`,
     nameOfTheOnlySourceFile,
     sourceFileFolderPath,
     distFolderPath,
-    shouldModifyTypeScriptSourceFile: false,
+    outputFileNameOfWrapperOnlyVersion,
+    scriptShouldNotImportEcharts: false,
     shouldCompileTypeScriptIntoJavaScript: true,
-    tsconfig,
+    extraOptions: vueFileRelatedTaskCycleExtraOptions,
 })
 
-const tcCompileModifiedIndexTS = createOneTaskCycleForProcessingTheIndexTS({
+const tcCompileModifiedIndexDotVue = createOneTaskCycleForProcessingTheIndexDotVue({
     descriptionOfCoreTask: `先修订 ${nameOfTheOnlySourceFile} 的内容，然后将其编译为 JavaScript。`,
     nameOfTheOnlySourceFile,
     sourceFileFolderPath,
     distFolderPath,
-    shouldModifyTypeScriptSourceFile: true,
+    outputFileNameOfWrapperOnlyVersion,
+    scriptShouldNotImportEcharts: true,
     shouldCompileTypeScriptIntoJavaScript: true,
-    tsconfig,
+    extraOptions: vueFileRelatedTaskCycleExtraOptions,
 })
+
+
 
 
 
@@ -98,12 +85,10 @@ const {
     watchEverything,
 } = create3HighOrderTasksUponMultipleTaskCycles({
     taskCyclesInPallarel: [
-        tcCopyTypeDefinitionsToDistOfTypeScript,
-        tcCopyTypeTSConfigJSONToDistOfTypeScript,
-        tcCopyIndexTS,
-        tcCopyModifiedIndexTS,
-        tcCompileIndexTS,
-        tcCompileModifiedIndexTS,
+        tcCopyIndexDotVue,
+        tcCopyModifiedIndexDotVue,
+        tcCompileIndexDotVue,
+        tcCompileModifiedIndexDotVue,
     ],
 })
 
