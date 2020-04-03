@@ -13,7 +13,7 @@ import {
 const echartsDefaultCreator = undefined
 
 import {
-    EchartsCreator,
+    EChartsCreator,
     ECharts,
     EChartOption,
     EChartsResizeOption,
@@ -93,7 +93,7 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEchartsInstanceEventTypes
 export default class WlcEchartsVueTwoComponent extends Vue {
     public readonly name:                string                = 'wlc-echarts-vue-two-component'
     public          chart:               ECharts        | null = null
-    public          echartsCreatorToUse: EchartsCreator | null = null
+    public          echartsCreatorToUse: EChartsCreator | null = null
 
 
 
@@ -107,7 +107,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    @Prop() echartsCreator?:                     EchartsCreator
+    @Prop() echartsCreator?:                     EChartsCreator
     @Prop() shouldManuallyRefreshEcharts?:       boolean
     @Prop() shouldNotWatchEchartsOptionsDeeply?: boolean
     @Prop() shouldNotAutoResizeEcharts?:         boolean

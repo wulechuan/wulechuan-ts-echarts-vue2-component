@@ -23,7 +23,7 @@ declare namespace echarts {
 
     type EChartsRootNamespaceType = typeof echarts
 
-    export type EchartsCreator = {
+    export type EChartsCreator = {
         // [P in keyof typeof echarts]: typeof echarts[P];
         init:             EChartsRootNamespaceType['init'];
         graphic:          EChartsRootNamespaceType['graphic'];
