@@ -1,4 +1,4 @@
-export declare namespace echarts {
+declare namespace echarts {
     export interface ECharts {
         /**
          * getZr 暂未出现在官方的 @types 定义中。
