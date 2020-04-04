@@ -16,7 +16,7 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/typescript/the-wrapper-only.vue'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/the-wrapper-only.vue'
 
 import {
     EChartsCreator,

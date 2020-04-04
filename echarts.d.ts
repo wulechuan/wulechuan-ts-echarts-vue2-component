@@ -28,9 +28,9 @@ declare namespace echarts {
     export type EChartsCreator = {
         // [P in keyof typeof echarts]: typeof echarts[P];
         init: (
-            dom:         HTMLDivElement | HTMLCanvasElement,
-            theme:       EChartsTheme,
-            initOptions: EchartsInitializationOptions
+            dom:          HTMLDivElement | HTMLCanvasElement,
+            theme?:       EChartsTheme,
+            initOptions?: EchartsInitializationOptions
         ) => ECharts;
 
         graphic:          EChartsRootNamespaceType['graphic'];

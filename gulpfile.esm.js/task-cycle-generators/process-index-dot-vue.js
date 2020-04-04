@@ -24,7 +24,7 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
         nameOfTheOnlySourceFile,
         outputFileNameOfWrapperOnlyVersion,
         sourceFileFolderPath,
-        distFolderPath,
+        outputFolderPath,
         scriptShouldNotImportEcharts,
         shouldCompileTypeScriptIntoJavaScript,
         extraOptions = {},
@@ -49,7 +49,6 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
         outputFolderSubPath = 'typescript'
     }
 
-    const outputFolderPath = path.posix.join(distFolderPath, outputFolderSubPath)
     const relativeGlobsOfAllPossibleOutputs = [ outputFileName ]
 
 
@@ -110,11 +109,13 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
 
 
 
-            const sourceFileContainingSubFolderPath = path.relative(
-                '.',
-                path.posix.dirname(file.path)
-            )
-            file.path = path.posix.join(outputFolderSubPath, sourceFileContainingSubFolderPath, outputFileName)
+            // const sourceFileContainingSubFolderPath = path.relative(
+            //     '.',
+            //     path.posix.dirname(file.path)
+            // )
+            // file.path = path.posix.join(outputFolderSubPath, sourceFileContainingSubFolderPath, outputFileName)
+
+            file.path = outputFileName
 
 
 
