@@ -1,3 +1,5 @@
+/// <reference types="echarts" />
+
 declare namespace echarts {
     export interface ECharts {
         /**
@@ -21,11 +23,16 @@ declare namespace echarts {
 
     export type EChartsTheme = string | object;
 
-    type EChartsRootNamespaceType = typeof echarts
+    type EChartsRootNamespaceType = typeof echarts;
 
     export type EChartsCreator = {
         // [P in keyof typeof echarts]: typeof echarts[P];
-        init:             EChartsRootNamespaceType['init'];
+        init: (
+            dom:          HTMLDivElement | HTMLCanvasElement,
+            theme?:       EChartsTheme,
+            initOptions?: EchartsInitializationOptions
+        ) => ECharts;
+
         graphic:          EChartsRootNamespaceType['graphic'];
         connect:          EChartsRootNamespaceType['connect'];
         disConnect:       EChartsRootNamespaceType['disConnect'];
@@ -34,6 +41,7 @@ declare namespace echarts {
         registerMap:      EChartsRootNamespaceType['registerMap'];
         registerTheme:    EChartsRootNamespaceType['registerTheme'];
         getMap:           EChartsRootNamespaceType['getMap'];
-        EChartOption:     echarts.EChartOption;
+
+        // EChartOption:     echarts.EChartOption;
     }
 }

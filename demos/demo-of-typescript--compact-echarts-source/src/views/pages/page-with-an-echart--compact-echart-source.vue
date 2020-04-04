@@ -16,11 +16,16 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/typescript/the-wrapper-only.vue'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/the-wrapper-only.vue'
+
+import {
+    EChartsCreator,
+    EChartOption,
+} from 'echarts'
 
 import echartsOptions from '../data/echarts-options--line'
 
-import echarts from 'echarts/lib/echarts'
+import echarts from 'echarts'
 import 'echarts/lib/chart/line'
 
 @Component({
@@ -30,8 +35,8 @@ import 'echarts/lib/chart/line'
 })
 export default class PageWithAnEchart extends Vue {
     message = '并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。'
-    echartsCreator = echarts
-    echartsOptions = echartsOptions
+    echartsCreator: EChartsCreator = echarts
+    echartsOptions: EChartOption   = echartsOptions
 }
 </script>
 

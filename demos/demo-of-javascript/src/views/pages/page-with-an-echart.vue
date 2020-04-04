@@ -15,7 +15,7 @@
 <script>
 import Vue from 'vue'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/javascript/index.vue'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/javascript/index.vue'
 
 import echartsOptions from '../data/echarts-options--line'
 

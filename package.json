@@ -1,7 +1,7 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
     "author": "wulechuan <wulechuan@live.com>",
-    "version": "0.3.0-beta5",
+    "version": "0.3.0-beta6",
     "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
     "license": "WTFPL",
     "keywords": [
@@ -14,13 +14,13 @@
         "typescript",
         "电子图表"
     ],
-    "main": "dist/typescript/index.vue",
-    "types": "source/index.d.ts",
+    "main": "index.vue",
+    "types": "index.d.ts",
     "scripts": {
         "remove-all-html-docs": "rimraf  ./ReadMe*.html  ./documents/**/*.html",
         "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./documents/**/*.md  -E3  -C ./documents/wlc-md-to-html.config.js  --to '*'",
-        "_lint:dist": "eslint    --fix    ./dist/**/*.vue",
-        "_lint:source": "eslint  --fix  ./source/**/*.vue  ./source/**/*.ts  ./gulpfile.esm.js/**/*  ./tsconfig.js",
+        "_lint:dist": "eslint    --fix  ./the-wrapper-only.vue  ./javascript/*.vue",
+        "_lint:source": "eslint  --fix  ./index.vue  ./*.d.ts  ./gulpfile.esm.js/**/*  ./tsconfig.js",
         "lint": "npm  run  _lint:source                                         &    npm  run  _lint:dist",
         "dist": "npm  run  _lint:source    &&    gulp   --silent  buildOnce    &&    npm  run  _lint:dist",
         "start": "gulp  --silent",
