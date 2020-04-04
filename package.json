@@ -15,7 +15,7 @@
         "电子图表"
     ],
     "main": "dist/typescript/index.vue",
-    "types": "source/echarts-vue2-component.d.ts",
+    "types": "source/index.d.ts",
     "scripts": {
         "remove-all-html-docs": "rimraf  ./ReadMe*.html  ./documents/**/*.html",
         "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./documents/**/*.md  -E3  -C ./documents/wlc-md-to-html.config.js  --to '*'",

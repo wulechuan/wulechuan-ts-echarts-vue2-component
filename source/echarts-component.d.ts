@@ -1,5 +1,3 @@
-/// <reference path="./echarts.d.ts" />
-
 declare module '@wulechuan/echarts-vue2-component' {
     export type SupportedZRenderEventTypes = Array<SupportedZrenderEventType>;
 

@@ -25,7 +25,7 @@ import {
 
 import echartsOptions from '../data/echarts-options--line'
 
-import echarts from 'echarts/lib/echarts'
+import echarts from 'echarts'
 import 'echarts/lib/chart/line'
 
 @Component({
