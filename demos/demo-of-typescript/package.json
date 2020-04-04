@@ -1,11 +1,11 @@
 {
     "name": "typescript-demo-of-wlc-echarts-vue2-component",
-    "description": "演示 @wulechuan/echarts-vue2-component 用法的 TypeScript 项目。",
+    "description": "演示 @wulechuan/echarts-vue2-component 用法的 TypeScript 项目。按需加载 echarts 各模块。",
     "license": "WTFPL",
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "vue-cli-service  serve  --port 3570"
+        "start": "vue-cli-service  serve  --port 3569"
     },
     "dependencies": {
         "@wulechuan/echarts-vue2-component": "file:../..",

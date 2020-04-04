@@ -3,10 +3,6 @@ import through from 'through2'
 import createNewGulpError from 'plugin-error'
 
 import {
-    modifyIndexTSContentString,
-} from '../helpers/modify-index-dot-vue'
-
-import {
     transformContentStringOfSingleVueFile,
 } from '@wulechuan/vue2-sfc-from-typescript-to-javascript'
 
@@ -22,32 +18,16 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
     const {
         descriptionOfCoreTask,
         nameOfTheOnlySourceFile,
-        outputFileNameOfWrapperOnlyVersion,
+        outputFileName,
         sourceFileFolderPath,
         outputFolderPath,
-        scriptShouldNotImportEcharts,
         shouldCompileTypeScriptIntoJavaScript,
         extraOptions = {},
     } = options
 
-    let outputFileName
     const {
         vueFileConversionOptions = {},
     } = extraOptions
-
-    if (scriptShouldNotImportEcharts) {
-        outputFileName = outputFileNameOfWrapperOnlyVersion
-    } else {
-        outputFileName = nameOfTheOnlySourceFile
-    }
-
-    let outputFolderSubPath
-
-    if (shouldCompileTypeScriptIntoJavaScript) {
-        outputFolderSubPath = 'javascript'
-    } else {
-        outputFolderSubPath = 'typescript'
-    }
 
     const relativeGlobsOfAllPossibleOutputs = [ outputFileName ]
 
@@ -97,31 +77,16 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
                 return callback(null, file)
             }
 
+
+
             const sourceFileContents = file.contents.toString(fileEncoding || 'utf-8')
 
 
 
-            const sourceFileContentsAsCompilationSource = scriptShouldNotImportEcharts
-                ? modifyIndexTSContentString(sourceFileContents)
-                : sourceFileContents
-
-            let processedVueContents = sourceFileContentsAsCompilationSource
-
-
-
-            // const sourceFileContainingSubFolderPath = path.relative(
-            //     '.',
-            //     path.posix.dirname(file.path)
-            // )
-            // file.path = path.posix.join(outputFolderSubPath, sourceFileContainingSubFolderPath, outputFileName)
-
-            file.path = outputFileName
-
-
-
+            let processedVueContents = sourceFileContents
             if (shouldCompileTypeScriptIntoJavaScript) {
                 processedVueContents = await transformContentStringOfSingleVueFile(
-                    sourceFileContentsAsCompilationSource,
+                    sourceFileContents,
                     {
                         ...vueFileConversionOptions,
                         sourceContentDescriptionName: nameOfTheOnlySourceFile,
@@ -129,7 +94,12 @@ export function createOneTaskCycleForProcessingTheIndexDotVue(options) {
                 )
             }
 
+
+
+            file.path = path.posix.join(outputFolderPath, outputFileName)
             file.contents = Buffer.from(processedVueContents)
+
+
 
             return callback(null, file)
         })

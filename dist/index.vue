@@ -4,7 +4,6 @@ import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
 import debounce from 'lodash.debounce'
 import { addListener as startListeningToElementResizingEvent, removeListener as stopListeningToElementResizingEvent } from 'resize-detector'
-const echartsDefaultCreator = undefined
 const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 const SUPPORTED_ZRENDER_EVENT_TYPES = [
     'click',
@@ -235,11 +234,11 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         if (providedEchartsCreator) {
             echartsCreatorToUse = providedEchartsCreator
         }
-        else if (echartsDefaultCreator) {
-            echartsCreatorToUse = echartsDefaultCreator
-        }
         else {
-            throw new ReferenceError('[wlc-echarts-vue-two-component]: No echart constructor was provided. If you insist to use the "the-wrapper-only.vue", please provide an echart constructor via the "prop" named "echarts-creator". Or you can use the "index.vue" instead.')
+            throw new ReferenceError('[wlc-echarts-vue-two-component]:' +
+                '\n\tNo echart creator was provided.' +
+                '\n\tFrom v0.3.0 on, you MUST provide an echart creator ' +
+                'to this vue component, via its "prop" named "echarts-creator".')
         }
         this.echartsCreatorToUse = echartsCreatorToUse || null
     }

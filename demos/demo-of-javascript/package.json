@@ -1,6 +1,6 @@
 {
     "name": "ecmascript-demo-of-wlc-echarts-vue2-component",
-    "description": "演示 @wulechuan/echarts-vue2-component 用法的 ECMAScript 项目。",
+    "description": "演示 @wulechuan/echarts-vue2-component 用法的 ECMAScript 项目。按需加载 echarts 各模块。",
     "license": "WTFPL",
     "version": "0.1.0",
     "private": true,

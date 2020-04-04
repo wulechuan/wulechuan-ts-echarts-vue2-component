@@ -1,12 +1,12 @@
 <template>
     <div class="page-with-an-echart">
-        <h2>下方图表之源代码中引入的是 index.vue，其中的脚本块采用 TypeScript 书写。</h2>
-        <p>{{ message }}</p>
+        <h2>下方图表之源代码中的脚本块采用 TypeScript 书写。</h2>
+        <p>并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p>
         <div class="echarts-container">
             <vue-echarts
                 class="my-echarts"
+                :echarts-creator="echartsCreator"
                 :echarts-options="echartsOptions"
-                :echarts-resizing-debouncing-interval="resizingInterval"
             ></vue-echarts>
         </div>
     </div>
@@ -16,9 +16,12 @@
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/index.vue'
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
 
 import echartsOptions from '../data/echarts-options--line'
+
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
 
 @Component({
     components: {
@@ -26,19 +29,8 @@ import echartsOptions from '../data/echarts-options--line'
     },
 })
 export default class PageWithAnEchart extends Vue {
-    message:          string = '目前，eCharts 的尺寸变更的刷新频度为默认值（0.2 秒每次）。稍后将故意改变该值。'
-    resizingInterval: number = NaN
-
+    echartsCreator = echarts
     echartsOptions = echartsOptions
-
-    change(): void {
-        this.message          = '已经故意将 eCharts 的尺寸变更的刷新频度调整为 2 秒每次。'
-        this.resizingInterval = 2000
-    }
-
-    mounted(): void {
-        setTimeout(this.change, 5000)
-    }
 }
 </script>
 
