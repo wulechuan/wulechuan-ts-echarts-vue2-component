@@ -1,11 +1,11 @@
 # Wulechuan's ECharts component of Vuejs 2.x plus TypeScript
 
-<link rel="stylesheet" href="./node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
+<link rel="stylesheet" href="../node_modules/@wulechuan/css-stylus-markdown-themes/dist/css/wulechuan-styles-for-html-via-markdown--vscode.default.min.css">
 
 
 ## Multilingual Editions of this Article
 
-- 《[本文之简体中文版](./ReadMe.md)》
+- 《[本文之简体中文版](../ReadMe.md)》
 
 
 
@@ -46,7 +46,7 @@ Also see [demos/demo-of-typescript](./demos/demo-of-typescript/).
 </template>
 ```
 
-> Note that this component carries **no** CSS, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
+> Note that **this component carries no CSS**, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
 
 ```css
 <style>

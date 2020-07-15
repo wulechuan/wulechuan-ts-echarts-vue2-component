@@ -5,7 +5,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./ReadMe.en-US.md)
+- [English version of this ReadMe](./documents/ReadMe.en-US.md)
 
 
 
@@ -97,7 +97,7 @@ export default class MyComponent extends Vue {
 </template>
 ```
 
-> 注意！本组件有意不携带**任何** CSS 代码。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
+> 注意！ **本组件有意不携带任何 CSS 代码**。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
 
 
 ```css
@@ -156,7 +156,7 @@ export default {
         :should-not-auto-resize-echarts="false"
         :echarts-theme="你的eCharts主题名称或主题配置对象"
         :echarts-initialization-options="null"
-        :echarts-grouping-name="该eCharts示例参与图表成组时的【组名称】"
+        :echarts-grouping-name="该eCharts实例参与图表成组时的【组名称】"
         :echarts-resizing-debouncing-interval="200"
     >
     </vue-echarts>
