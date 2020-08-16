@@ -29,7 +29,7 @@
 
 ## 简介
 
-本工具系本人受到已有项目《[vue-echarts](https://github.com/ecomfe/vue-echarts/)》启发而自做的。vue-echarts 并不支持 TypeScript 语法。而本人所写的该工具则增补了这项功能。
+本工具系本人受到他人早先撰写的已有项目《[vue-echarts](https://github.com/ecomfe/vue-echarts/)》启发而自做的。vue-echarts 并不支持 TypeScript 语法。而本人所写的该工具则增补了这项功能。
 
 
 ## 用法
@@ -42,7 +42,11 @@
 
 ```html
 <template>
-    <vue-echarts class="my-echarts" :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-creator="echartsCreator"
+        :echarts-options="echartsOptions"
+    ></vue-echarts>
 </template>
 ```
 
@@ -53,22 +57,36 @@
     .my-echarts {
         width:  790px;
         height: 515px;
+        background-color: white;
     }
 </style>
 ```
 
-> 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名，即指向 npm 包的 `main` 文件。实际上，指向的是 `./dist/full/index.ts`。
+> 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名 `@wulechuan/echarts-vue2-component`，即指向 npm 包的 `main` 文件。实际上，指向的是 `./source/index.vue`。
 
 ```ts
 import Vue from 'vue'
-import VueEcharts from '@wulechuan/echarts-vue2-component'
+import { Component, Prop } from 'vue-property-decorator'
 
-export default class MyComponent extends Vue {
-    components = {
-        'vue-echarts': VueEcharts
-    }
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
 
-    myEchartsOptions = {
+/**
+ * 本组件自 v0.3.0-beta7 始，故意不再包含 echarts。
+ * 故使用本组件须另行引入 echarts 本身，并交由本组件的“echartsCreator”接口项，以代入本组件。
+ */
+
+// 另，为节省引入的代码量，推荐下方的写法（共两行）：
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
+
+@Component({
+    components: {
+        'vue-echarts': EChartsVue2Component,
+    },
+})
+export default class PageWithAnEchart extends Vue {
+    echartsCreator = echarts
+    echartsOptions = {
         xAxis: {
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -93,7 +111,11 @@ export default class MyComponent extends Vue {
 
 ```html
 <template>
-    <vue-echarts class="my-echarts" :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-creator="echartsCreator"
+        :echarts-options="echartsOptions"
+    ></vue-echarts>
 </template>
 ```
 
@@ -105,22 +127,35 @@ export default class MyComponent extends Vue {
     .my-echarts {
         width:  790px;
         height: 515px;
+        background-color: white;
     }
 </style>
 ```
 
-> 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `./dist`。实际上，指向的是 `./dist/index.js`。
+> 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `./@wulechuan/echarts-vue2-component/dist/index.vue`。
 
 ```js
 import Vue from 'vue'
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist'
+
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
+
+/**
+ * 本组件自 v0.3.0-beta7 始，故意不再包含 echarts。
+ * 故使用本组件须另行引入 echarts 本身，并交由本组件的“echartsCreator”接口项，以代入本组件。
+ */
+
+// 另，为节省引入的代码量，推荐下方的写法（共两行）：
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
+
 export default {
     components: {
         'vue-echarts': EChartsVue2Component,
     },
     data: function () {
         return {
-            myEchartsOptions: {
+            echartsCreator: echarts,
+            echartsOptions: {
                 xAxis: {
                     type: 'category',
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -150,12 +185,13 @@ export default {
 <template>
     <vue-echarts
         class="my-echarts"
-        :echarts-options="你的eCharts配置项"
+        :echarts-creatror="echarts官方曝露的工厂函数"
         :should-manually-refresh-echarts="false"
         :should-not-watch-echarts-options-deeply="false"
         :should-not-auto-resize-echarts="false"
         :echarts-theme="你的eCharts主题名称或主题配置对象"
         :echarts-initialization-options="null"
+        :echarts-options="你的eCharts配置项"
         :echarts-grouping-name="该eCharts实例参与图表成组时的【组名称】"
         :echarts-resizing-debouncing-interval="200"
     >
@@ -176,6 +212,18 @@ export default {
 
 
 ### 输入项（即 Vuejs 组件的 Props）
+
+#### Prop `echartsCreator`
+
+```ts
+echartsCreator: Function;
+```
+
+葫芦串（所谓 kebab）记法：`echarts-creator`。
+
+本组件自 v0.3.0-beta7 始，**故意不再包含 `echarts`**。故使用本组件须另行引入 `echarts` 本身，并交由本组件的“echartsCreator”接口项，以代入本组件。
+**该项为必须项，故无默认值为。**
+
 
 #### Prop `shouldManuallyRefreshEcharts`
 

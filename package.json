@@ -1,7 +1,7 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
     "author": "wulechuan <wulechuan@live.com>",
-    "version": "0.3.0-beta9",
+    "version": "0.3.0",
     "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
     "license": "WTFPL",
     "keywords": [
@@ -46,14 +46,14 @@
         "vue-property-decorator": "^8.4.1"
     },
     "devDependencies": {
-        "@types/echarts": "^4.4.4",
+        "@types/echarts": "^4.6.4",
         "@types/vue": "^2.0.0",
         "@typescript-eslint/eslint-plugin": "^2.23.0",
         "@typescript-eslint/parser": "^2.23.0",
         "@vue/eslint-config-typescript": "^5.0.2",
         "@wulechuan/css-stylus-markdown-themes": "^6.4.7",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
-        "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^0.1.4",
+        "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^0.1.9",
         "cssnano": "^4.1.10",
         "eslint": "^6.8.0",
         "eslint-plugin-vue": "^6.2.2",
@@ -67,6 +67,6 @@
         "rimraf": "^3.0.2",
         "through2": "^3.0.1",
         "tslib": "^1.11.1",
-        "typescript": "^3.8.3"
+        "typescript": "^3.9.7"
     }
 }

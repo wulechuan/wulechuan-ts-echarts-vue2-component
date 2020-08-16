@@ -240,7 +240,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
                 '\n\tFrom v0.3.0 on, you MUST provide an echart creator ' +
                 'to this vue component, via its "prop" named "echarts-creator".')
         }
-        this.echartsCreatorToUse = echartsCreatorToUse || null
+        this.echartsCreatorToUse = echartsCreatorToUse
     }
     $startWatchingIncomingEChartsOptions() {
         const { chart } = this

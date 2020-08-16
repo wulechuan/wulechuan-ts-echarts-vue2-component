@@ -344,7 +344,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
                 'to this vue component, via its "prop" named "echarts-creator".'
             )
         }
-        this.echartsCreatorToUse = echartsCreatorToUse || null
+        this.echartsCreatorToUse = echartsCreatorToUse
     }
 
     $startWatchingIncomingEChartsOptions(): void {

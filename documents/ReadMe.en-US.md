@@ -29,7 +29,7 @@
 
 ## Introduction
 
-This package is heavly inspired by the long existing one, named "[vue-echarts](https://github.com/ecomfe/vue-echarts/)". While vue-echarts does not support TypeScript. Thus this package is made.
+This component is heavly inspired by the long existing component written by someone else, named "[vue-echarts](https://github.com/ecomfe/vue-echarts/)". While that `vue-echarts` does not support TypeScript. Thus this component is made.
 
 
 ## Usage
@@ -38,11 +38,15 @@ This package is heavly inspired by the long existing one, named "[vue-echarts](h
 
 See the example below.
 
-Also see [demos/demo-of-typescript](./demos/demo-of-typescript/).
+See [demos/demo-of-typescript](./demos/demo-of-typescript/) also.
 
 ```html
 <template>
-    <vue-echarts class="my-echarts" :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-creator="echartsCreator"
+        :echarts-options="echartsOptions"
+    ></vue-echarts>
 </template>
 ```
 
@@ -62,14 +66,31 @@ Also see [demos/demo-of-typescript](./demos/demo-of-typescript/).
 
 ```ts
 import Vue from 'vue'
-import VueEcharts from '@wulechuan/echarts-vue2-component'
+import { Component, Prop } from 'vue-property-decorator'
 
-export default class MyComponent extends Vue {
-    components = {
-        'vue-echarts': VueEcharts
-    }
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
 
-    myEchartsOptions = {
+/**
+ * As of v0.3.0-beta7, this component no longer includes the echarts itself.
+ * So, any program that utilizes this component, must not only import this component,
+ * but also import the echarts. And the echarts default export,
+ * which is the factory function of eCharts instances,
+ * must set to the `echartsCreator` prop of this component of mine.
+ */
+
+// By the way, to minimize the codes get imported,
+// I suggest one to import echarts code as shown by the 2 lines below.
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
+
+@Component({
+    components: {
+        'vue-echarts': EChartsVue2Component,
+    },
+})
+export default class PageWithAnEchart extends Vue {
+    echartsCreator = echarts
+    echartsOptions = {
         xAxis: {
             type: 'category',
             data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -90,12 +111,16 @@ export default class MyComponent extends Vue {
 
 See the example below.
 
-Also see [demos/demo-of-javascript](./demos/demo-of-javascript/).
+See [demos/demo-of-javascript](./demos/demo-of-javascript/) also.
 
 
 ```html
 <template>
-    <vue-echarts class="my-ecahrts" :echarts-options="myEchartsOptions"></vue-echarts>
+    <vue-echarts
+        class="my-echarts"
+        :echarts-creator="echartsCreator"
+        :echarts-options="echartsOptions"
+    ></vue-echarts>
 </template>
 ```
 
@@ -114,14 +139,30 @@ Also see [demos/demo-of-javascript](./demos/demo-of-javascript/).
 
 ```js
 import Vue from 'vue'
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist'
+
+import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
+
+/**
+ * As of v0.3.0-beta7, this component no longer includes the echarts itself.
+ * So, any program that utilizes this component, must not only import this component,
+ * but also import the echarts. And the echarts default export,
+ * which is the factory function of eCharts instances,
+ * must set to the `echartsCreator` prop of this component of mine.
+ */
+
+// By the way, to minimize the codes get imported,
+// I suggest one to import echarts code as shown by the 2 lines below.
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/chart/line'
+
 export default {
     components: {
         'vue-echarts': EChartsVue2Component,
     },
     data: function () {
         return {
-            myEchartsOptions: {
+            echartsCreator: echarts,
+            echartsOptions: {
                 xAxis: {
                     type: 'category',
                     data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -151,6 +192,7 @@ export default {
 <template>
     <vue-echarts
         class="my-echarts"
+        :echarts-creator="TheOfficialFactoryFunctionOfEcharts"
         :echarts-options="YourEchartsOptionsHere"
         :should-manually-refresh-echarts="false"
         :should-not-watch-echarts-options-deeply="false"
@@ -174,6 +216,24 @@ export default {
 
 
 ### Vuejs Component `Props`
+
+#### Prop `echartsCreator`
+
+```ts
+echartsCreator: Function;
+```
+
+The kebab format is `echarts-creator`.
+
+As of v0.3.0-beta7, this component no longer includes the `echarts` itself.
+So, any program that utilizes this component, must not only import this component,
+but also import the `echarts`. And the `echarts` default export,
+which is the factory function of echarts instances,
+must set to the `echartsCreator` prop of this component of mine.
+
+This prop is a required one. Thus has no default value.
+
+
 
 #### Prop `shouldManuallyRefreshEcharts`
 
