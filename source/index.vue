@@ -490,7 +490,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     $recreateEChartInstance(): void {
         this.$disposeEchartInstance()
-        this.$createEchartInstance()     
+        this.$createEchartInstance()
     }
 
     $dispose(): void { // Deprecated! Use "$disposeEchartInstance" instead.

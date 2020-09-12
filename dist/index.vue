@@ -86,7 +86,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         }
     }
     $onEChartsThemeChanged(newTheme, oldTheme) {
-        this.$recreateEChart()
+        this.$recreateEChartInstance()
     }
     onEChartsGroupingNameChanged(newGroupingName, oldGroupingName) {
         const { chart } = this
@@ -127,8 +127,13 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         this.refreshECharts(shouldNotMerge, lazyUpdate)
     }
     refreshECharts(shouldNotMerge, lazyUpdate) {
-        // To update echarts with current "echartsOptions" withing Vue component props.
-        // If you set this component to update manually, you invoke this method yourself.
+        /**
+         * This method is to update echarts according to current "echartsOptions" within
+         * the props of this Vue component.
+         * By default, this Vue component updates echarts automatically whenever the
+         * "echartsOptions" changes. Thus you don't need to invoke this method at all.
+         * But if you set this component to update manually, you invoke this method yourself.
+        */
         const { chart, echartsOptions } = this
         if (chart && echartsOptions) {
             chart.setOption(echartsOptions, shouldNotMerge, lazyUpdate)
@@ -344,7 +349,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         this.$startListeningToAllEChartsEvents()
         this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true)
     }
-    $dispose() {
+    $disposeEchartInstance() {
         const { chart } = this
         if (chart) {
             this.$disableAutoResizing()
@@ -353,9 +358,15 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
             this.chart = null
         }
     }
-    $recreateEChart() {
-        this.$dispose()
+    $recreateEChartInstance() {
+        this.$disposeEchartInstance()
         this.$createEchartInstance()
+    }
+    $dispose() {
+        this.$disposeEchartInstance()
+    }
+    $recreateEChart() {
+        this.$recreateEChartInstance()
     }
     // --- Vue component life cycle hooks -----------
     created() {
@@ -374,7 +385,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
     }
     beforeDestroy() {
         // this.$stopWatchingIncomingEChartsOptions() // I think Vue will do this itself automatically.
-        this.$dispose()
+        this.$disposeEchartInstance()
     }
 }
 __decorate([
