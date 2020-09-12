@@ -219,7 +219,7 @@ echartsCreator: Function;
 
 葫芦串（所谓 kebab）记法：`echarts-creator`。
 
-本组件自 v0.3.0-beta7 始，**故意不再包含 `echarts`**。故使用本组件须另行引入 `echarts` 本身，并交由本组件的“echartsCreator”接口项，以代入本组件。
+本组件自 v0.3.0-beta7 始，**故意不再包含 `echarts`**。故使用本组件须另行引入 `echarts` 本身，并经由本组件的“echartsCreator”接口项，以代入本组件。
 **该项为必须项，故无默认值为。**
 
 
@@ -259,7 +259,7 @@ shouldNotAutoResizeEcharts?: boolean;
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-当 eCharts 之容器 DOM 的尺寸变化时，如果允许（默认即允许）eCharts 自动重绘，使得 eCharts 的画面总是自动充满其容器，既不被裁剪，也不留有多余的空白。允许自动重绘与否，取决于该 Prop 参数（指 `shouldNotAutoResizeEchart` ），其取`falsy` 值，则代表允许 eCharts 在容器尺寸变更时自动重绘；反之。
+当 eCharts 之容器 DOM 的尺寸变化时，如果允许（默认即允许）eCharts 自动重绘，则会使 eCharts 的画面总是自动充满 echarts 的外层容器，既不被裁剪，也不留有多余的空白。而允许自动重绘与否，则取决于该 Prop 参数（指 `shouldNotAutoResizeEchart` ），其取`falsy` 值，则代表允许 eCharts 在容器尺寸变更时自动重绘；反之。
 
 
 
@@ -317,11 +317,12 @@ echartsResizingDebouncingInterval?: number;
 
 葫芦串（所谓 kebab）记法：`echarts-resizing-debouncing-interval`。
 
-单位为毫秒。不允许小于 `10`。默认值为 `200`。
-
-当 eCharts 在其容器横纵尺寸变化时，可能自动重绘。重绘与否取决于名为 `shouldNotAutoResizeEchart` 的 Prop 参数（见上文）。
-
-如果用户正在交互式的动态改变 eCharts 容器的尺寸，那么毫无疑问，eCharts 须在交互过程中反复重绘多次，以使得 eCharts 是在视觉上尺寸总是瞬时跟随容器变化。然而，反复重绘 eCharts 的代价可能很大，于是本组件借助 `lodash.debounce` 来“减缓” eCharts 重绘的步调。该参数（指`echartsResizingDebouncingInterval`）即是 `debounce` 触发重绘动作之时间间隔，单位是毫秒。
+当 eCharts 之外层容器之尺寸变化时，echarts 可能自动重绘。重绘与否取决于名为 `shouldNotAutoResizeEchart` 的
+Prop 参数（见上文）。如果用户正在交互式的动态改变 eCharts 容器之尺寸，那么毫无疑问，eCharts
+须在交互过程中反复重绘多次，以使得 eCharts 是在视觉上尺寸总是瞬时跟随容器变化。然而，反复重绘
+eCharts 的代价可能很大，于是本组件借助 `lodash.debounce` 来“减缓” eCharts 重绘之步调。该参数（指
+`echartsResizingDebouncingInterval`）即是 `debounce` 触发重绘动作之时间间隔，单位是毫秒。取值不允许小于
+`10`。默认值为 `200`。
 
 
 
@@ -335,7 +336,7 @@ echartsTheme?: EChartsTheme;
 
 默认值为 `undefined`。
 
-eCharts 的主题名称字符串，或完整的 eCharts 主题定义对象。
+或为 eCharts 的主题名称字符串；或为完整的 eCharts 主题定义对象。
 
 参阅 eCharts 文档的相关部分：
 
@@ -353,7 +354,7 @@ eCharts 的主题名称字符串，或完整的 eCharts 主题定义对象。
 public readonly name: string = 'wlc-echarts-vue-two-component';
 ```
 
-本组件之名称。该值视为只读属性，取值为 `'wlc-echarts-vue-two-component'`。
+为本组件之名称。该值视为只读属性，取值为 `'wlc-echarts-vue-two-component'`。
 
 
 
@@ -364,7 +365,7 @@ public readonly name: string = 'wlc-echarts-vue-two-component';
 public chart: ECharts | null = null;
 ```
 
-eChart 实例对象，或 `null` 值。
+或为本组件业已构建、正在使用的 eCharts 实例对象；或为 `null` 值。
 
 
 
@@ -432,11 +433,13 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 ### 本组件公开的方法函数
 
+本 Vue 组件成其为 Vue 组件，即使得采用本组件之程序很少有必要调用本组件之方法。换言之，下列方法函数虽是公开的，诸君日常却不太可能用到。
+
 
 #### 方法函数 `refreshECharts`
 
 ```ts
-refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
+refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 强制 eCharts 实例重绘一次。
@@ -447,10 +450,10 @@ refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
 
 #### 方法函数 `updateECharts` （已弃用）
 
-> 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用 `refreshECharts`。
+> 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用新名称 `refreshECharts`。
 
 ```ts
-updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
+updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 强制 eCharts 实例重绘一次。
@@ -548,7 +551,15 @@ $disposeEchartInstance(): void
 
 
 
-#### 方法函数 `$dispose`
+#### 方法函数 `$recreateEChartInstance`
+
+```ts
+$recreateEChartInstance(): void
+```
+
+
+
+#### 方法函数 `$dispose` （已弃用）
 
 > 该方法函数为 `$disposeEchartInstance` 之别名，并已弃用。请改用新名称 `$disposeEchartInstance`。
 > 另，本组件之 v0.1.0 版中曾将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称（指 `dispose`）已经不可使用。
@@ -561,16 +572,8 @@ $dispose(): void
 
 
 
-#### 方法函数 `$recreateEChartInstance`
 
-```ts
-$recreateEChartInstance(): void
-```
-
-
-
-
-#### 方法函数 `$recreateEChart`
+#### 方法函数 `$recreateEChart` （已弃用）
 
 > 该方法函数为 `$recreateEChartInstance` 之别名，并已弃用。请改用新名称 `$recreateEChartInstance`。
 

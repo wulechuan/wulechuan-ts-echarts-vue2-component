@@ -138,8 +138,6 @@ See [demos/demo-of-javascript](./demos/demo-of-javascript/) also.
 > Note that when working with JavaScript(ECMAScript), for the `import` statement, the `from` part points to `./dist`, which is in fact `./dist/index.js`.
 
 ```js
-import Vue from 'vue'
-
 import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
 
 /**
@@ -225,11 +223,11 @@ echartsCreator: Function;
 
 The kebab format is `echarts-creator`.
 
-As of v0.3.0-beta7, this component no longer includes the `echarts` itself.
+**As of v0.3.0-beta7, this component no longer includes the `echarts` itself.
 So, any program that utilizes this component, must not only import this component,
 but also import the `echarts`. And the `echarts` default export,
 which is the factory function of echarts instances,
-must set to the `echartsCreator` prop of this component of mine.
+must set to the `echartsCreator` prop of this component of mine.**
 
 This prop is a required one. Thus has no default value.
 
@@ -440,7 +438,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 #### Method: `refreshECharts`
 
 ```ts
-refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
+refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 Force the eCharts instance to re-draw its content once.
@@ -449,10 +447,10 @@ Force the eCharts instance to re-draw its content once.
 
 #### Method: `updateECharts` (DEPRECATED)
 
-> This is an alias of the `refreshECharts` method. And it's deprecated. So please turn to use `refreshECharts` instead.
+> This is an alias of the `refreshECharts` method. And this alias has deprecated. So please turn to use `refreshECharts` instead.
 
 ```ts
-updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void;
+updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 Force the eCharts instance to re-draw its content once.
@@ -533,9 +531,27 @@ $createEchartInstance(): void
 
 
 
+#### Method: `$disposeEchartInstance`
 
-#### Method: `$dispose`
+```ts
+$disposeEchartInstance(): void
+```
 
+
+
+
+#### Method: `$recreateEChartInstance`
+
+```ts
+$recreateEChartInstance(): void
+```
+
+
+
+
+#### Method: `$dispose` (DEPRECATED)
+
+> This is an alias of the `$disposeEchartInstance` method. And this alias has deprecated. So please turn to use `disposeEchartInstance` instead.
 > Note that in v0.1.0, this method was named `dispose`. As of v0.2.0, this method has renamed to `$dispose`, and the old name is no longer available.
 
 ```ts
@@ -545,7 +561,9 @@ $dispose(): void
 
 
 
-#### Method: `$recreateEChart`
+#### Method: `$recreateEChart` (DEPRECATED)
+
+> This is an alias of the `$recreateEChartInstance` method. And this alias has deprecated. So please turn to use `recreateEChartInstance` instead.
 
 ```ts
 $recreateEChart(): void
