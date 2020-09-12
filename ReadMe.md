@@ -135,8 +135,6 @@ export default class PageWithAnEchart extends Vue {
 > 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `./@wulechuan/echarts-vue2-component/dist/index.vue`。
 
 ```js
-import Vue from 'vue'
-
 import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
 
 /**
@@ -510,7 +508,7 @@ $enableAutoResizing(): void
 
 #### 方法函数 `$disableAutoResizing`
 
-> 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `disableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
+> 注意： v0.1.0 版中曾将其命名为未冠以美元符号的 `disableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
 
 ```ts
 $disableAutoResizing(): void
@@ -541,9 +539,19 @@ $createEchartInstance(): void
 
 
 
+#### 方法函数 `$disposeEchartInstance`
+
+```ts
+$disposeEchartInstance(): void
+```
+
+
+
+
 #### 方法函数 `$dispose`
 
-> 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
+> 该方法函数为 `$disposeEchartInstance` 之别名，并已弃用。请改用新名称 `$disposeEchartInstance`。
+> 另，本组件之 v0.1.0 版中曾将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称（指 `dispose`）已经不可使用。
 
 ```ts
 $dispose(): void
@@ -553,7 +561,18 @@ $dispose(): void
 
 
 
+#### 方法函数 `$recreateEChartInstance`
+
+```ts
+$recreateEChartInstance(): void
+```
+
+
+
+
 #### 方法函数 `$recreateEChart`
+
+> 该方法函数为 `$recreateEChartInstance` 之别名，并已弃用。请改用新名称 `$recreateEChartInstance`。
 
 ```ts
 $recreateEChart(): void
@@ -565,7 +584,7 @@ $recreateEChart(): void
 
 ### 从 eChart 实例对象上映射至本组件实例的同名方法函数
 
-仿照《[vue-echarts](https://github.com/ecomfe/vue-echarts/)》之做法，本组件亦将 eChart 实例对象上的诸多方法映射为本 Vuejs 组件上的同名方法。但我猜测我鲜有机会调用这些方法。
+仿照《[vue-echarts](https://github.com/ecomfe/vue-echarts/)》之做法，本组件亦将 eChart 实例对象上的诸多方法映射为本 Vuejs 组件上的同名方法。**但我猜测我们鲜有机会调用这些方法。换言之，它们形同摆设。**
 
 每一段映射代码均非常简短，有兴趣不妨查阅源代码。
 
@@ -639,7 +658,7 @@ function appendData(options: {
 ```
 
 ```ts
-clear(): void
+function clear(): void
 ```
 
 
