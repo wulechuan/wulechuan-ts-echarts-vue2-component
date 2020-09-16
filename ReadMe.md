@@ -192,6 +192,9 @@ export default {
         :echarts-options="你的eCharts配置项"
         :echarts-grouping-name="该eCharts实例参与图表成组时的【组名称】"
         :echarts-resizing-debouncing-interval="200"
+        @echart-instance-created="handleEchartInstanceCreation"
+        @echart-instance-disposed="handleEchartInstanceDisposion"
+        @resized="handleEchartInstanceResizing"
     >
     </vue-echarts>
 </template>
@@ -438,11 +441,12 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 #### 方法函数 `refreshECharts`
 
+强制 eCharts 实例重绘一次。
+
 ```ts
 refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
-强制 eCharts 实例重绘一次。
 
 
 
@@ -450,13 +454,14 @@ refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 
 #### 方法函数 `updateECharts` （已弃用）
 
+强制 eCharts 实例重绘一次。
+
 > 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用新名称 `refreshECharts`。
 
 ```ts
 updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
-强制 eCharts 实例重绘一次。
 
 
 
@@ -665,6 +670,40 @@ function clear(): void
 ```
 
 
+
+
+### 事件
+
+#### 本组件原生的事件
+
+##### `resized`
+
+处理函数入口参数：无。
+
+顾名思义。
+
+
+
+##### `echart-instance-created`
+
+处理函数入口参数：eCharts 实例对象。
+
+每当创建好一个 eCharts 实例对象后，本组件对外界发起一次该事件。
+
+> 注意：如果某些因素的变动引发本组件销毁旧有 eCharts 实例对象并重新构建一个 eCharts 实例对象，该事件会再次发起。
+
+
+
+##### `echart-instance-disposed`
+
+处理函数入口参数：无。
+
+每当销毁一个 eCharts 实例对象后，本组件对外界发起一次该事件。
+
+
+#### 从 eCharts 实例传递的事件
+
+从略。
 
 
 

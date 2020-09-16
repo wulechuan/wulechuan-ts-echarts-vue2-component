@@ -87,6 +87,15 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEChartsInstanceEventTypes
 
 
 
+type EventNames = (
+    | 'resized'
+    | 'echart-instance-created'
+    | 'echart-instance-disposed'
+)
+
+
+
+
 @Component({})
 export default class WlcEchartsVueTwoComponent extends Vue {
     public readonly name:                string                = 'wlc-echarts-vue-two-component'
@@ -453,7 +462,10 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     $resize(): void {
         const { chart } = this
-        if (chart) { chart.resize() }
+        if (chart) {
+            chart.resize()
+            this.$emitEvent('resized')
+        }
     }
 
     $createEchartInstance(): void {
@@ -476,6 +488,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.refreshECharts(true)
         this.$startListeningToAllEChartsEvents()
         this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true)
+        this.$emitEvent('echart-instance-created', this.chart)
     }
 
     $disposeEchartInstance(): void {
@@ -485,6 +498,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             // this.$stopListeningToAllEChartsEvents() // I think the echartsInstance.dispose() will do the job automatically.
             chart.dispose()
             this.chart = null
+            this.$emitEvent('echart-instance-disposed')
         }
     }
 
@@ -499,6 +513,15 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     $recreateEChart(): void { // Deprecated! Use "$recreateEChartInstance" instead.
         this.$recreateEChartInstance()
+    }
+
+    $emitEvent(eventName: EventNames, payload?: any): void {
+        if (payload === undefined || payload === null) {
+            this.$emit(eventName)
+            return
+        }
+
+        this.$emit(eventName, payload)
     }
 
 

@@ -199,6 +199,9 @@ export default {
         :echarts-initialization-options="null"
         :echarts-grouping-name="theGroupingNameOfThisInstanceOfEcharts"
         :echarts-resizing-debouncing-interval="200"
+        @echart-instance-created="handleEchartInstanceCreation"
+        @echart-instance-disposed="handleEchartInstanceDisposion"
+        @resized="handleEchartInstanceResizing"
     ></vue-echarts>
 </template>
 ```
@@ -437,24 +440,24 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 #### Method: `refreshECharts`
 
+Force the eCharts instance to re-draw its content once.
+
 ```ts
 refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
-Force the eCharts instance to re-draw its content once.
 
 
 
 #### Method: `updateECharts` (DEPRECATED)
+
+Force the eCharts instance to re-draw its content once.
 
 > This is an alias of the `refreshECharts` method. And this alias has deprecated. So please turn to use `refreshECharts` instead.
 
 ```ts
 updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
-
-Force the eCharts instance to re-draw its content once.
-
 
 
 
@@ -648,6 +651,41 @@ function appendData(options: {
 clear(): void
 ```
 
+
+
+### Events
+
+#### Native Events of This Vue Component
+
+##### `resized`
+
+Arguments of an event handler: none.
+
+
+
+
+
+##### `echart-instance-created`
+
+Arguments of an event handler: the eChart instance object.
+
+Whenever an eChart instance is created, an event of this type emits.
+
+> Note that some factors might cause this vue component to first dispose the existing
+> eChart instance and then recreate a new one. In this case, the event emits again.
+
+
+
+##### `echart-instance-disposed`
+
+Arguments of an event handler: none.
+
+Whenever an eChart instance is disposed, an event of this type emits.
+
+
+#### ECharts Events Passed upwards by This Vue Component
+
+No details at present.
 
 
 

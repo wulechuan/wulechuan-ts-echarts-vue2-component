@@ -333,6 +333,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         const { chart } = this
         if (chart) {
             chart.resize()
+            this.$emitEvent('resized')
         }
     }
     $createEchartInstance() {
@@ -348,6 +349,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
         this.refreshECharts(true)
         this.$startListeningToAllEChartsEvents()
         this.$updateResizingDebouncingInterval(this.echartsResizingDebouncingInterval, true)
+        this.$emitEvent('echart-instance-created', this.chart)
     }
     $disposeEchartInstance() {
         const { chart } = this
@@ -356,6 +358,7 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
             // this.$stopListeningToAllEChartsEvents() // I think the echartsInstance.dispose() will do the job automatically.
             chart.dispose()
             this.chart = null
+            this.$emitEvent('echart-instance-disposed')
         }
     }
     $recreateEChartInstance() {
@@ -367,6 +370,13 @@ let WlcEchartsVueTwoComponent = class WlcEchartsVueTwoComponent extends Vue {
     }
     $recreateEChart() {
         this.$recreateEChartInstance()
+    }
+    $emitEvent(eventName, payload) {
+        if (payload === undefined || payload === null) {
+            this.$emit(eventName)
+            return
+        }
+        this.$emit(eventName, payload)
     }
     // --- Vue component life cycle hooks -----------
     created() {
