@@ -62,7 +62,8 @@ See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编
 ```
 
 
-> Note that when working with TypeScript, for the `import` statement of this package, the `from` part points to the npm package name of its, aka the `main` file metioned in the `package.json`. To be specific, the main file is in fact `./index.ts`.
+> Note that when working with TypeScript, for the `import` statement in your app, the `from` part points to the npm package name of `@wulechuan/echarts-vue2-component`, aka the `main` file metioned in the `package.json` of its. To be specific, the main file is `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue`.
+
 
 ```ts
 import Vue from 'vue'
@@ -124,7 +125,7 @@ See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编�
 </template>
 ```
 
-> Note that this component carries **no** CSS, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
+> Note that **this component carries no CSS**, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
 
 ```css
 <style>
@@ -135,7 +136,7 @@ See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编�
 </style>
 ```
 
-> Note that when working with JavaScript(ECMAScript), for the `import` statement, the `from` part points to `./dist`, which is in fact `./dist/index.js`.
+> Note that when working with JavaScript(ECMAScript), for the `import` statement in your app, the `from` part points to `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue`.
 
 ```js
 import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'

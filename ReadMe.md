@@ -48,7 +48,7 @@
 
 ## 用法
 
-### 针对 TypeScript 编程环境的用法
+### 采用 TypeScript 语言编程之用法
 
 见下例。
 
@@ -123,7 +123,7 @@ export default class Echarts部件应用示范 extends Vue {
 ```
 
 
-### 针对 JavaScript (ECMAScript) 编程环境的用法
+### 采用 JavaScript (ECMAScript) 语言编程之用法
 
 见下例。
 
