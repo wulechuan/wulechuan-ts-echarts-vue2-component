@@ -15,7 +15,7 @@ import {
 import {
     ECharts,
     EChartOption,
-    ThemeOp
+    ThemeOption,
 
     // Augmentations by this package.
     EChartsCreator,

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-Hans-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+
+    <style>
+        html {
+            font-size: 15px;
+        }
+
+        body {
+            margin: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <noscript>
+        <strong>本网页应用为《<%= htmlWebpackPlugin.options.title %>》。其需要浏览器开启 Javascript 之功能方可正常运转。</strong>
+    </noscript>
+    <div id="vue-应用根占位-div"></div>
+    <!-- built files will be auto injected -->
+</body>
+</html>

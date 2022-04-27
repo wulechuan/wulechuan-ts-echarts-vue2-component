@@ -4,8 +4,8 @@
     "license": "WTFPL",
     "version": "1.0.0",
     "description": "此为吴乐川的《已适配 Vuejs 2 框架的 eCharts “包裹”工具》，并支持 TypeScript 语法。",
-    "main": "./源代码/发布的源代码/javascript/index.vue",
-    "types": "./源代码/发布的源代码/typescripts/index.d.ts",
+    "main": "./源代码/发布的源代码/typescript/index.vue",
+    "types": "./源代码/发布的源代码/typescript/index.d.ts",
     "directories": {
         "source": "源代码/原始的源代码",
         "dist": "源代码/发布的源代码",
