@@ -30,8 +30,21 @@
 
 ## 简介
 
-本工具系本人受到他人早先撰写的已有项目《[vue-echarts](https://github.com/ecomfe/vue-echarts/)》启发而自做的。vue-echarts 并不支持 TypeScript 语法。而本人所写的该工具则增补了这项功能。
+本工具系本人受到他人早先撰写的已有项目《[vue-echarts](https://www.npmjs.com/package/vue-echarts)》启发而自做的。vue-echarts 并不支持 TypeScript 语法。而本人所写的该工具则增补了这项功能。
 
+-----
+
+
+## 源代码仓库
+
+| <span style="display:inline-block;width:180px;">提供仓库服务之组织</span> | <span style="display:inline-block;width:150px;">仓库组织之国别</span> | 仓库地址 |
+| ------------- | :----------: | ------- |
+| 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://gitee.com/nanchang-wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
+| 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://code.aliyun.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
+| GitHub         | 美           | [https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
+
+
+-----
 
 ## 用法
 
@@ -39,19 +52,23 @@
 
 见下例。
 
-另见本代码库自带的可运转的示例项目《[demos/demo-of-typescript](./demos/demo-of-typescript/)》。
+另见本代码库自带的可运转的示例项目《[./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/)》。
 
 ```html
 <template>
-    <vue-echarts
+    <WlcEcharts
         class="my-echarts"
         :echarts-creator="echartsCreator"
         :echarts-options="echartsOptions"
-    ></vue-echarts>
+    ></WlcEcharts>
 </template>
 ```
 
-> 注意！本组件有意不携带**任何** CSS 代码。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
+> #### 注意！
+>
+> 本组件有意**不携带任何 CSS 代码**。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。**因此，不要忘记借助 CSS 来定义本组件的宽、高。**
+>
+> 另，一般的，我们会借助 **CSS 类名**来实现该目的，一如本例。参阅下文的 `<style>` 代码。
 
 ```css
 <style>
@@ -63,13 +80,15 @@
 </style>
 ```
 
-> 注意！采用本 Vuejs 组件之 TypeScript 版本时，`import` 语句的 `from` 指向 npm 包名 `@wulechuan/echarts-vue2-component`，即指向 npm 包的 `main` 文件。实际上，指向的是 `./source/index.vue`。
+> #### 注意！
+>
+> 采用本 Vuejs 组件之 TypeScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 指向 npm 包名 `@wulechuan/echarts-vue2-component`，即指向 npm 包的 `main` 文件。实际上，指向的是 `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue`。
 
 ```ts
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
+import WlcEcharts from '@wulechuan/echarts-vue2-component'
 
 /**
  * 本组件自 v0.3.0-beta7 始，故意不再包含 echarts。
@@ -77,15 +96,15 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
  */
 
 // 另，为节省引入的代码量，推荐下方的写法（共两行）：
-import echarts from 'echarts/lib/echarts'
+import * as echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 
 @Component({
     components: {
-        'vue-echarts': EChartsVue2Component,
+        WlcEcharts,
     },
 })
-export default class PageWithAnEchart extends Vue {
+export default class Echarts部件应用示范 extends Vue {
     echartsCreator = echarts
     echartsOptions = {
         xAxis: {
@@ -108,20 +127,23 @@ export default class PageWithAnEchart extends Vue {
 
 见下例。
 
-另见本代码库自带的可运转的示例项目《[demos/demo-of-javascript](./demos/demo-of-javascript/)》。
+另见本代码库自带的可运转的示例项目《[./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/](./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/)》。
 
 ```html
 <template>
-    <vue-echarts
+    <WlcEcharts
         class="my-echarts"
         :echarts-creator="echartsCreator"
         :echarts-options="echartsOptions"
-    ></vue-echarts>
+    ></WlcEcharts>
 </template>
 ```
 
-> 注意！ **本组件有意不携带任何 CSS 代码**。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。因此，不要忘记借助 CSS 来定义本组件的宽、高。且一般的，我们会借助 CSS 类名来实现该目的，一如本例。
-
+> #### 注意！
+>
+> 本组件有意**不携带任何 CSS 代码**。甚至不携带 CSS 类名（className）。而众所周知，eCharts 组件要求其容器有明确的宽、高配置。**因此，不要忘记借助 CSS 来定义本组件的宽、高。**
+>
+> 另，一般的，我们会借助 **CSS 类名**来实现该目的，一如本例。参阅下文的 `<style>` 代码。
 
 ```css
 <style>
@@ -133,10 +155,10 @@ export default class PageWithAnEchart extends Vue {
 </style>
 ```
 
-> 注意！采用本 Vuejs 组件之 JavaScript 版本时，`import` 语句的 `from` 指向 `./@wulechuan/echarts-vue2-component/dist/index.vue`。
+> 注意！采用本 Vuejs 组件之 JavaScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 指向 `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue`。
 
 ```js
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
+import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
 /**
  * 本组件自 v0.3.0-beta7 始，故意不再包含 echarts。
@@ -144,12 +166,13 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.v
  */
 
 // 另，为节省引入的代码量，推荐下方的写法（共两行）：
-import echarts from 'echarts/lib/echarts'
+import * as echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 
 export default {
+    name: 'Echarts部件应用示范',
     components: {
-        'vue-echarts': EChartsVue2Component,
+        WlcEcharts,
     },
     data: function () {
         return {
@@ -173,7 +196,7 @@ export default {
 ```
 
 
----
+-----
 
 
 ## 应用编程接口（API）
@@ -182,7 +205,7 @@ export default {
 
 ```html
 <template>
-    <vue-echarts
+    <WlcEcharts
         class="my-echarts"
         :echarts-creatror="echarts官方曝露的工厂函数"
         :should-manually-refresh-echarts="false"
@@ -197,7 +220,7 @@ export default {
         @echart-instance-disposed="handleEchartInstanceDisposion"
         @resized="handleEchartInstanceResizing"
     >
-    </vue-echarts>
+    </WlcEcharts>
 </template>
 ```
 
@@ -708,20 +731,20 @@ function clear(): void
 
 
 
----
+-----
 
 ## 未来计划
 
 暂无。
 
 
----
+-----
 
 ## 许可证类型
 
 WTFPL
 
-> 注意：
+> ### 注意：
 >
 > 我未研究过许可证的约束。因此姑且声明为 WTFPL 类型。但实际上该许可证类型可能与我采用的开源模块有冲突。
 

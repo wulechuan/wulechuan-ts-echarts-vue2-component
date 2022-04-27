@@ -29,7 +29,7 @@
 
 ## Introduction
 
-This component is heavly inspired by the long existing component written by someone else, named "[vue-echarts](https://github.com/ecomfe/vue-echarts/)". While that `vue-echarts` does not support TypeScript. Thus this component is made.
+This component is heavly inspired by the long existing component written by someone else, named "[vue-echarts](https://www.npmjs.com/package/vue-echarts)". While that `vue-echarts` does not support TypeScript. Thus this component is made.
 
 
 ## Usage
@@ -38,15 +38,15 @@ This component is heavly inspired by the long existing component written by some
 
 See the example below.
 
-See [demos/demo-of-typescript](./demos/demo-of-typescript/) also.
+See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/) also.
 
 ```html
 <template>
-    <vue-echarts
+    <WlcEcharts
         class="my-echarts"
         :echarts-creator="echartsCreator"
         :echarts-options="echartsOptions"
-    ></vue-echarts>
+    ></WlcEcharts>
 </template>
 ```
 
@@ -68,7 +68,7 @@ See [demos/demo-of-typescript](./demos/demo-of-typescript/) also.
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
+import WlcEcharts from '@wulechuan/echarts-vue2-component'
 
 /**
  * As of v0.3.0-beta7, this component no longer includes the echarts itself.
@@ -80,15 +80,15 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
 
 // By the way, to minimize the codes get imported,
 // I suggest one to import echarts code as shown by the 2 lines below.
-import echarts from 'echarts/lib/echarts'
+import * as echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 
 @Component({
     components: {
-        'vue-echarts': EChartsVue2Component,
+        WlcEcharts,
     },
 })
-export default class PageWithAnEchart extends Vue {
+export default class MyEchartsDemo extends Vue {
     echartsCreator = echarts
     echartsOptions = {
         xAxis: {
@@ -111,7 +111,7 @@ export default class PageWithAnEchart extends Vue {
 
 See the example below.
 
-See [demos/demo-of-javascript](./demos/demo-of-javascript/) also.
+See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/](./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/) also.
 
 
 ```html
@@ -138,7 +138,7 @@ See [demos/demo-of-javascript](./demos/demo-of-javascript/) also.
 > Note that when working with JavaScript(ECMAScript), for the `import` statement, the `from` part points to `./dist`, which is in fact `./dist/index.js`.
 
 ```js
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.vue'
+import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
 /**
  * As of v0.3.0-beta7, this component no longer includes the echarts itself.
@@ -150,12 +150,13 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component/dist/index.v
 
 // By the way, to minimize the codes get imported,
 // I suggest one to import echarts code as shown by the 2 lines below.
-import echarts from 'echarts/lib/echarts'
+import * as echarts from 'echarts/lib/echarts'
 import 'echarts/lib/chart/line'
 
 export default {
+    name: 'my-echarts-demo',
     components: {
-        'vue-echarts': EChartsVue2Component,
+        WlcEcharts,
     },
     data: function () {
         return {
@@ -188,7 +189,7 @@ export default {
 
 ```html
 <template>
-    <vue-echarts
+    <WlcEcharts
         class="my-echarts"
         :echarts-creator="TheOfficialFactoryFunctionOfEcharts"
         :echarts-options="YourEchartsOptionsHere"
@@ -202,7 +203,7 @@ export default {
         @echart-instance-created="handleEchartInstanceCreation"
         @echart-instance-disposed="handleEchartInstanceDisposion"
         @resized="handleEchartInstanceResizing"
-    ></vue-echarts>
+    ></WlcEcharts>
 </template>
 ```
 
