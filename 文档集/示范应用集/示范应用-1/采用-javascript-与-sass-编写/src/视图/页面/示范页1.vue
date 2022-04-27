@@ -2,17 +2,17 @@
     <div class="页面 页面--示范页1-折线图">
         <!-- <p>仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p> -->
         <div class="echarts-皿">
-            <WlcECharts部件
+            <WlcEcharts
                 class="echarts-根--某折线图"
                 :echarts-creator="echarts之工厂函数"
                 :echarts-options="echarts之配置项集"
-            ></WlcECharts部件>
+            ></WlcEcharts>
         </div>
     </div>
 </template>
 
 <script>
-import WlcECharts部件 from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
+import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
 import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
 
@@ -22,7 +22,7 @@ import 'echarts/lib/chart/line'
 export default {
     name: 'Page示范页1_Echarts折线图',
     components: {
-        WlcECharts部件,
+        WlcEcharts,
     },
     data: function () {
         return {
