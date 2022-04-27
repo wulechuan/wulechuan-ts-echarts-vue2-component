@@ -1,18 +1,23 @@
-/// <reference types="echarts" />
+// <reference types="echarts" />
+
+import type {
+    ECharts,
+} from 'echarts'
 
 declare namespace echarts {
-    export interface ECharts {
-        /**
-         * getZr 暂未出现在官方的 @types 定义中。
-         * 因此，须借助下方代码临时补充相关的类型定义。
-         * 否则采用 TypeScript 之项目的构建脚本可能报错并失败。
-         */
-        getZr: () => {
-            on:  Function;
-            off: Function;
-            [key: string]: any;
-        };
-    }
+
+    // export interface ECharts {
+    //     /**
+    //      * getZr 暂未出现在官方的 @types 定义中。
+    //      * 因此，须借助下方代码临时补充相关的类型定义。
+    //      * 否则采用 TypeScript 之项目的构建脚本可能报错并失败。
+    //      */
+    //     getZr: () => {
+    //         on:  Function;
+    //         off: Function;
+    //         [key: string]: any;
+    //     };
+    // }
 
     export type EchartsInitializationOptions = {
         devicePixelRatio?: number;
@@ -21,7 +26,7 @@ declare namespace echarts {
         height?:    number  | string;
     };
 
-    export type EChartsTheme = string | object;
+    export type EChartsThemeConfig = string | Echarts['ThemeOption'];
 
     type EChartsRootNamespaceType = typeof echarts;
 
@@ -29,7 +34,7 @@ declare namespace echarts {
         // [P in keyof typeof echarts]: typeof echarts[P];
         init: (
             dom:          HTMLDivElement | HTMLCanvasElement,
-            theme?:       EChartsTheme,
+            theme?:       EChartsThemeConfig,
             initOptions?: EchartsInitializationOptions
         ) => ECharts;
 

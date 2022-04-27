@@ -45,8 +45,9 @@ npm  i  -D \
     "fs-extra@latest" \
     "gulp-postcss@latest" \
     "gulp-stylus@latest" \
+    "gulp-teaser@latest" \
     "plugin-error@latest" \
     "rimraf@latest" \
+    "stylus@latest" \
     "through2@latest" \
-    "tslib@latest" \
     "typescript@latest"

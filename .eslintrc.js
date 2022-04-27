@@ -1,7 +1,6 @@
 module.exports = {
     root: true,
     env: {
-        es6: true,
         node: true,
     },
     extends: [
@@ -13,7 +12,6 @@ module.exports = {
     },
     rules: {
         'no-unused-vars': 0, // for typescript interfaces
-        'no-func-assign': 0, // for @Decorator shim codes.
         'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0,
         'no-console':  process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -28,7 +26,7 @@ module.exports = {
         }],
         'vue/html-self-closing': [2, {
             html: {
-                void: 'never',
+                void: 'any',
                 normal: 'never',
                 component: 'never',
             },
