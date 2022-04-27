@@ -1,7 +1,6 @@
 <template>
     <div class="页 示范页1">
-        <h2>下方图表之源代码中的脚本块采用 JavaScript 书写。</h2>
-        <p>并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p>
+        <!-- <p>仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p> -->
         <div class="echarts-container">
             <vue-echarts
                 class="my-echarts"

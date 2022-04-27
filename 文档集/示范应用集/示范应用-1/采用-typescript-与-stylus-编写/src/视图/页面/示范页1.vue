@@ -1,6 +1,6 @@
 <template>
     <div class="页 示范页1">
-        <p>并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p>
+        <!-- <p>仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p> -->
         <div class="echarts-container">
             <vue-echarts
                 class="my-echarts"
