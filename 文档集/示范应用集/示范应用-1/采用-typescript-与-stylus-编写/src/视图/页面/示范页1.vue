@@ -1,6 +1,5 @@
 <template>
-    <div class="page-with-an-echart">
-        <h2>下方图表之源代码中的脚本块采用 TypeScript 书写。</h2>
+    <div class="页 示范页1">
         <p>并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p>
         <div class="echarts-container">
             <vue-echarts
@@ -20,8 +19,7 @@ import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
 
 import echartsOptions from '../../数据/echarts-配置项集--折线图'
 
-import echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/line'
+import * as echarts from 'echarts'
 
 @Component({
     components: {
@@ -35,7 +33,7 @@ export default class Page示范页1 extends Vue {
 </script>
 
 <style lang="stylus">
-.page-with-an-echart {
+.示范页1 {
     width  100%
     height 100%
     box-sizing border-box

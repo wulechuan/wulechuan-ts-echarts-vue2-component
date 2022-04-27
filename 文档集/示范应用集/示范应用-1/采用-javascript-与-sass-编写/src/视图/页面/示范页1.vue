@@ -1,5 +1,5 @@
 <template>
-    <div class="page-with-an-echart">
+    <div class="页 示范页1">
         <h2>下方图表之源代码中的脚本块采用 JavaScript 书写。</h2>
         <p>并且仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p>
         <div class="echarts-container">
@@ -13,13 +13,11 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 import EChartsVue2Component from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
 import echartsOptions from '../../数据/echarts-配置项集--折线图'
 
-import echarts from 'echarts/lib/echarts'
+import * as echarts from 'echarts'
 import 'echarts/lib/chart/line'
 
 export default {
@@ -37,7 +35,7 @@ export default {
 </script>
 
 <style lang="scss">
-.page-with-an-echart {
+.示范页1 {
     width:  100%;
     height: 100%;
     box-sizing: border-box;

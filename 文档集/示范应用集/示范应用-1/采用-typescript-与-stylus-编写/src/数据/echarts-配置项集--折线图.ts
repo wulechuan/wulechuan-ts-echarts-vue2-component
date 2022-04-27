@@ -1,4 +1,4 @@
-import { EChartOption } from 'echarts'
+import { EChartsOption } from 'echarts'
 
 export default {
     xAxis: {
@@ -12,4 +12,4 @@ export default {
         data: [ 820, 932, 901, 934, 1290, 1330, 1320 ],
         type: 'line',
     }],
-} as EChartOption
+} as EChartsOption

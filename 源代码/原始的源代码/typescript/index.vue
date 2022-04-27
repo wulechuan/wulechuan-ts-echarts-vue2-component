@@ -14,7 +14,7 @@ import {
 
 import {
     ECharts,
-    EChartOption,
+    EChartsOption,
     ThemeOption,
 
     // Augmentations by this package.
@@ -118,7 +118,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     @Prop() public readonly echartsTheme?:                       EChartsThemeConfig
     @Prop() public readonly echartsInitializationOptions?:       EchartsInitializationOptions
-    @Prop() public readonly echartsOptions?:                     EChartOption
+    @Prop() public readonly echartsOptions?:                     EChartsOption
     @Prop() public readonly echartsGroupingName?:                string
     @Prop() public readonly echartsResizingDebouncingInterval?:  number
 
@@ -160,7 +160,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.isDisposed()
     }
 
-    private get echartComputedOptions(): null | EChartOption<EChartOption.Series> {
+    private get echartComputedOptions(): null | EChartsOption<EChartsOption.Series> {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()

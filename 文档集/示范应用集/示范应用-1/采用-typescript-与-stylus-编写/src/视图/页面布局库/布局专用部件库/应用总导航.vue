@@ -48,7 +48,7 @@ export type 范_导航内部实用条目 = 范_导航配置条目 & {
 export default class App总导航 extends Vue {
     private 导航条目之列表: Array<范_导航配置条目> = [
         {
-            内部名称: '示范1：常见的双列互通之形式',
+            内部名称: '示范1：折线图',
             路由之绝对路径: '/examples/1',
         },
     ]
