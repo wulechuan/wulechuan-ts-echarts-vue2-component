@@ -1,4 +1,5 @@
-export default {
+/** @type {import('echarts').EChartsOption} */
+export const echarts之配置项集 = {
     xAxis: {
         type: 'category',
         data: [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],

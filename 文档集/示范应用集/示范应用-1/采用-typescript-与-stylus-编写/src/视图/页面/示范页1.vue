@@ -1,12 +1,12 @@
 <template>
-    <div class="页 示范页1">
+    <div class="页面 页面--示范页1-折线图">
         <!-- <p>仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p> -->
-        <div class="echarts-container">
-            <vue-echarts
-                class="my-echarts"
-                :echarts-creator="echartsCreator"
-                :echarts-options="echartsOptions"
-            ></vue-echarts>
+        <div class="echarts-皿">
+            <WlcECharts部件
+                class="echarts-根--某折线图"
+                :echarts-creator="echarts之工厂函数"
+                :echarts-options="echarts之配置项集"
+            ></WlcECharts部件>
         </div>
     </div>
 </template>
@@ -15,25 +15,25 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
-import EChartsVue2Component from '@wulechuan/echarts-vue2-component'
+import WlcECharts部件 from '@wulechuan/echarts-vue2-component'
 
-import echartsOptions from '../../数据/echarts-配置项集--折线图'
+import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
 
 import * as echarts from 'echarts'
 
 @Component({
     components: {
-        'vue-echarts': EChartsVue2Component,
+        WlcECharts部件,
     },
 })
-export default class Page示范页1 extends Vue {
-    echartsCreator = echarts
-    echartsOptions = echartsOptions
+export default class Page示范页1_Echarts折线图 extends Vue {
+    echarts之工厂函数 = echarts
+    echarts之配置项集 = echarts之配置项集
 }
 </script>
 
 <style lang="stylus">
-.示范页1 {
+.页面--示范页1-折线图 {
     width  100%
     height 100%
     box-sizing border-box
@@ -48,7 +48,7 @@ export default class Page示范页1 extends Vue {
         text-align center
     }
 
-    .echarts-container {
+    .echarts-皿 {
         flex 1 1
         width  90%
         height 100%
@@ -58,7 +58,7 @@ export default class Page示范页1 extends Vue {
         overflow hidden
     }
 
-    .my-echarts {
+    .echarts-根--某折线图 {
         width  100%
         height 100%
         max-width  790px
