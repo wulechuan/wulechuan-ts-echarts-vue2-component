@@ -1,9 +1,67 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "author": "wulechuan <wulechuan@live.com>",
-    "version": "0.4.1",
-    "description": "在 Vuejs 框架下方便的使用 eChartsjs。并支持 TypeScript 语法。",
+    "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
+    "version": "0.5.0",
+    "description": "此为吴乐川的《已适配 Vuejs 2 框架的 eCharts “包裹”工具》，并支持 TypeScript 语法。",
+    "main": "./源代码/发布的源代码/javascript/index.vue",
+    "types": "./源代码/发布的源代码/typescripts/index.d.ts",
+    "directories": {
+        "source": "源代码/原始的源代码",
+        "dist": "源代码/发布的源代码",
+        "test": "测试集",
+        "doc": "文档集"
+    },
+    "scripts": {
+        "remove-all-html-docs": "rimraf  ./ReadMe*.html  ./文档集/说明书/**/*.html",
+        "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./文档集/说明书/**/*.md  -E3  -C ./文档集/说明书/wlc-md-to-html.config.js  --to '*'",
+        "检验以下代码：须发布的文件": "eslint  --fix  ./源代码/发布的源代码/**/*.vue  ./源代码/发布的源代码/**/*.js",
+        "检验以下代码：原始的源文件": "eslint  --fix  ./源代码/原始的源代码/**/*.vue  ./源代码/原始的源代码/**/*.ts  ./gulpfile.esm.js/**/*",
+        "检验所有代码": "npm         run  检验以下代码：原始的源文件                                         &    npm  run  检验以下代码：须发布的文件",
+        "构建所有须发布的文件": "npm  run  检验以下代码：原始的源文件    &&    gulp   --silent  buildOnce    &&    npm  run  检验以下代码：须发布的文件",
+        "start": "gulp  --silent",
+        "每当制作集得之版本之前": "npm  i    &&    npm  run  构建所有须发布的文件",
+        "prepublishOnly": "npm  run  构建所有须发布的文件"
+    },
+    "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
+    },
+    "bugs": {
+        "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
+    },
+    "peerDependencies": {
+        "echarts": "^5.3.2",
+        "vue": "^2.6.11"
+    },
+    "dependencies": {
+        "lodash.debounce": "^4.0.8",
+        "resize-detector": "^0.3.0",
+        "vue-property-decorator": "^9.1.2"
+    },
+    "devDependencies": {
+        "@types/lodash.debounce": "^4.0.7",
+        "@typescript-eslint/eslint-plugin": "^5.21.0",
+        "@typescript-eslint/parser": "^5.21.0",
+        "@vue/eslint-config-typescript": "^10.0.0",
+        "@wulechuan/cli-scripts--git-push": "^2.0.2",
+        "@wulechuan/css-stylus-markdown-themes": "^7.5.0",
+        "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
+        "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^0.5.1",
+        "cssnano": "^5.1.7",
+        "eslint": "^8.14.0",
+        "eslint-plugin-vue": "^8.7.1",
+        "esm": "^3.2.25",
+        "fs-extra": "^10.1.0",
+        "gulp-postcss": "^9.0.1",
+        "gulp-stylus": "^2.7.1",
+        "plugin-error": "^1.0.1",
+        "rimraf": "^3.0.2",
+        "through2": "^4.0.2",
+        "tslib": "^2.4.0",
+        "typescript": "^4.6.3"
+    },
     "keywords": [
         "vue",
         "vue2",
@@ -16,60 +74,5 @@
         "数据图",
         "图表绘制",
         "电子图表"
-    ],
-    "main": "source/index.vue",
-    "types": "types/index.d.ts",
-    "scripts": {
-        "remove-all-html-docs": "rimraf  ./ReadMe*.html  ./documents/**/*.html",
-        "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./documents/**/*.md  -E3  -C ./documents/wlc-md-to-html.config.js  --to '*'",
-        "_lint:source": "eslint  --fix  ./source/**/*  ./gulpfile.esm.js/**/*  ./tsconfig.js",
-        "_lint:dist": "eslint    --fix  ./dist/**/*",
-        "lint": "npm  run  _lint:source                                         &    npm  run  _lint:dist",
-        "dist": "npm  run  _lint:source    &&    gulp   --silent  buildOnce    &&    npm  run  _lint:dist",
-        "start": "gulp  --silent",
-        "before-git-commit": "npm  i    &&    npm  run  dist",
-        "prepublishOnly": "npm                     run  dist"
-    },
-    "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
-    },
-    "bugs": {
-        "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
-    },
-    "peerDependencies": {
-        "echarts": "^4.6.0",
-        "vue": "^2.6.11"
-    },
-    "dependencies": {
-        "@types/lodash.debounce": "^4.0.6",
-        "lodash.debounce": "^4.0.8",
-        "resize-detector": "^0.2.1",
-        "vue-property-decorator": "^8.4.1"
-    },
-    "devDependencies": {
-        "@types/echarts": "^4.6.4",
-        "@types/vue": "^2.0.0",
-        "@typescript-eslint/eslint-plugin": "^2.23.0",
-        "@typescript-eslint/parser": "^2.23.0",
-        "@vue/eslint-config-typescript": "^5.0.2",
-        "@wulechuan/css-stylus-markdown-themes": "^6.4.7",
-        "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
-        "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^0.1.9",
-        "cssnano": "^4.1.10",
-        "eslint": "^6.8.0",
-        "eslint-plugin-vue": "^6.2.2",
-        "esm": "^3.2.25",
-        "fs-extra": "^8.1.0",
-        "gulp-postcss": "^8.0.0",
-        "gulp-stylus": "^2.7.0",
-        "gulp-uglify-es": "^2.0.0",
-        "indent.js": "^0.3.5",
-        "plugin-error": "^1.0.1",
-        "rimraf": "^3.0.2",
-        "through2": "^3.0.1",
-        "tslib": "^1.11.1",
-        "typescript": "^3.9.7"
-    }
+    ]
 }
