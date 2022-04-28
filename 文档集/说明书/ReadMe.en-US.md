@@ -162,7 +162,7 @@ export default class MyEchartsDemo extends Vue {
 
 > ##### A Fully Functional Demo
 >
-> See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/).
+> See [../示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](../示范应用集/示范应用-1/采用-typescript-与-stylus-编写/).
 
 
 
@@ -212,7 +212,7 @@ export default {
 
 > ##### A Fully Functional Demo
 >
-> See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/](./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/).
+> See [../示范应用集/示范应用-1/采用-javascript-与-sass-编写/](../示范应用集/示范应用-1/采用-javascript-与-sass-编写/).
 
 
 ---
