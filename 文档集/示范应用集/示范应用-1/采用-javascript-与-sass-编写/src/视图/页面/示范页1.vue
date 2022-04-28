@@ -1,6 +1,5 @@
 <template>
     <div class="页面 页面--示范页1-折线图">
-        <!-- <p>仅加载了 echarts/lib/echarts 和 echarts/lib/chart/line。</p> -->
         <div class="echarts-皿">
             <WlcEcharts
                 class="echarts-根--某折线图"
@@ -13,6 +12,10 @@
 
 <script>
 import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
+
+
+
+
 
 import * as echarts from 'echarts/core'
 
@@ -34,7 +37,15 @@ echarts.use([
     EchartsRenderer,
 ])
 
+
+
+
+
 import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
+
+
+
+
 
 export default {
     name: 'Page示范页1_Echarts折线图',
