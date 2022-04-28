@@ -14,10 +14,27 @@
 <script>
 import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
-import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
+import * as echarts from 'echarts/core'
 
-import * as echarts from 'echarts'
-import 'echarts/lib/chart/line'
+import {
+    CanvasRenderer as EchartsRenderer,
+} from 'echarts/renderers'
+
+import {
+    LineChart,
+} from 'echarts/charts'
+
+import {
+    GridComponent,
+} from 'echarts/components'
+
+echarts.use([
+    LineChart,
+    GridComponent,
+    EchartsRenderer,
+])
+
+import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
 
 export default {
     name: 'Page示范页1_Echarts折线图',

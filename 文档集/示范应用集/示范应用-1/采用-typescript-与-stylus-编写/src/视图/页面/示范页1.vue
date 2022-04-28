@@ -17,9 +17,27 @@ import { Component } from 'vue-property-decorator'
 
 import WlcEcharts from '@wulechuan/echarts-vue2-component'
 
-import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
+import * as echarts from 'echarts/core'
 
-import * as echarts from 'echarts'
+import {
+    CanvasRenderer as EchartsRenderer,
+} from 'echarts/renderers'
+
+import {
+    LineChart,
+} from 'echarts/charts'
+
+import {
+    GridComponent,
+} from 'echarts/components'
+
+echarts.use([
+    LineChart,
+    GridComponent,
+    EchartsRenderer,
+])
+
+import { echarts之配置项集 } from '../../数据/echarts-配置项集--折线图'
 
 @Component({
     components: {

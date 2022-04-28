@@ -2,7 +2,7 @@
 export const echarts之配置项集 = {
     xAxis: {
         type: 'category',
-        data: [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun' ],
+        data: [ '一', '二', '三', '四', '五', '六', '日' ],
     },
     yAxis: {
         type: 'value',
