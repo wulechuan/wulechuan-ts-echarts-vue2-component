@@ -8,6 +8,7 @@ export type 范_Echarts工厂函数 = typeof echarts.init;
 /**
  * `范_Echarts工厂函数之配置项集` 官方原名为 `EChartsInitOpts` ，
  * 但官方代码并未将其【导出】（ export ）。
+ * 故本人手工作此增补定义。
  */
 // export type 范_Echarts工厂函数之配置项集 = Parameters<范_Echarts工厂函数>[2];
 export type 范_Echarts工厂函数之配置项集 = {
@@ -27,6 +28,7 @@ export type 范_Echarts工厂函数之配置项集 = {
 /**
  * `范_Echarts实例_渲染器类别名` 官方原名为 `RendererType` ，
  * 但官方代码并未将其【导出】（ export ）。
+ * 故本人手工作此增补定义。
  */
 export type 范_Echarts实例_渲染器类别名 = 'canvas' | 'svg';
 
@@ -37,14 +39,13 @@ export type 范_Echarts实例_渲染器类别名 = 'canvas' | 'svg';
 /**
  * `范_Echarts配色方案之配置项集` 官方原名为 `ThemeOption` ，
  * 但官方代码并未将其【导出】（ export ）。
- * 官方的定义即为 `Dictionary<any>` 。
- * 但这会令下文拼合得到的 `范_Echarts配色方案之配置` 变成 `any` 。
+ * 故本人手工作此增补定义。
  */
-export type 范_Echarts配色方案之配置项集 = Dictionary<any>;
-// export type 范_Echarts配色方案之配置项集 = {
-//     color: Array<string>;
-//     colorLayer: Array<Array<string>>;
-// };
+export type 范_Echarts配色方案之配置项集 = {
+    color?: Array<string>;
+    colorLayer?: Array<Array<string>>;
+    [key: string]: any;
+};
 
 export type 范_Echarts配色方案之配置 = (
     | string
@@ -58,6 +59,7 @@ export type 范_Echarts配色方案之配置 = (
 /**
  * `范_Echarts自然语言本地化配置项集` 官方原名为 `LocaleOption` ，
  * 但官方代码并未将其【导出】（ export ）。
+ * 故本人手工作此增补定义。
  */
 export type 范_Echarts自然语言本地化配置项集 = {
     time: {

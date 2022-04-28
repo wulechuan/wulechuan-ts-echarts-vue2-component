@@ -12,6 +12,10 @@ import {
     removeListener as  stopListeningToElementResizingEvent,
 } from 'resize-detector'
 
+import {
+    文本列表有重复条目,
+} from './辅助工具集'
+
 import type {
     ECharts,
     EChartsOption,
@@ -38,13 +42,13 @@ import {
 
 
 
-const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
+const _ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 
 
 
 
 
-const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之名称_Echarts实例[] = [
+const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_Echarts实例[] = [
     'legendselectchanged',
     'legendselected',
     'legendunselected',
@@ -87,14 +91,13 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之�
 
 
 
-const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_Echarts实例[] = [
+const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_Echarts实例[] = [
     'click',
     'dblclick',
     'mouseover',
     'mouseout',
     'mouseup',
     'mousedown',
-    'mousemove',
     'globalout',
     'contextmenu',
 
@@ -110,12 +113,12 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之�
 
 
 
-// const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
+// const _SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
 // ]
 
 
 
-// const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
+// const _SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
 //     'click',
 //     'dblclick',
 //     'mousewheel',
@@ -139,19 +142,27 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之�
 
 
 
-export const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL: 范_Echarts实例_可穿透本部件之事件之名称列表 = [
-    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5,
-    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_4,
+export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL: 范_Echarts实例_可穿透本部件之事件之名称列表 = [
+    ..._SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
+    ..._SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4,
 ]
 
 
 
-// export const SUPPORTED_ZRENDER_EVENT_TYPES_ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
-//     ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5,
+// export const SUPPORTED_ZRENDER_EVENT_NAMES__ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
+//     ..._SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5,
 
 //     /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
-//     // ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4,
+//     // ..._SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4,
 // ]
+
+
+
+const 部件名称 = 'wlc-echarts-vue-two-component'
+const echarts实例事件名称查重统计结果 = 文本列表有重复条目(SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)
+if (echarts实例事件名称查重统计结果) {
+    throw new Error(`${部件名称}：发现重复的事件名称。其中：\n\t${echarts实例事件名称查重统计结果.错误消息文本片断集.join('\n\t')}\n`)
+}
 
 
 
@@ -185,7 +196,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public readonly name:                string                      = 'wlc-echarts-vue-two-component'
+    public readonly name:                string                      = 部件名称
     public          chart:               ECharts              | null = null
     public          echartsCreatorToUse: 范_Echarts一切导出之根 | null = null
 
@@ -453,9 +464,9 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
         let namesOfEchartsInstanceEventsToTransfer: string[]
         if (this.shouldTransferEcharts4Events) {
-            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL
+            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL
         } else {
-            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5
+            namesOfEchartsInstanceEventsToTransfer = _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5
         }
 
         namesOfEchartsInstanceEventsToTransfer.forEach(eventType => {
@@ -464,10 +475,10 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             })
         })
 
-        // if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
+        // if (SUPPORTED_ZRENDER_EVENT_NAMES__ALL.length > 0) {
         //     const zrenderInstance = chart.getZr()
 
-        //     SUPPORTED_ZRENDER_EVENT_TYPES_ALL.forEach(eventType => {
+        //     SUPPORTED_ZRENDER_EVENT_NAMES__ALL.forEach(eventType => {
         //         zrenderInstance.on(eventType, (eventOpject: object) => {
         //             this.$emit(`zrender:${eventType}`, eventOpject)
         //         })
@@ -479,11 +490,11 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         const { chart } = this
         if (!chart) { return }
 
-        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL.forEach(eventType => {
+        SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL.forEach(eventType => {
             chart.off(eventType)
         })
 
-        // if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
+        // if (SUPPORTED_ZRENDER_EVENT_NAMES__ALL.length > 0) {
         //     const zrenderInstance = chart.getZr()
         //     // https://ecomfe.github.io/zrender-doc/public/api.html#zrendereventfulonevent-handler-context
         //     // https://github.com/ecomfe/zrender/blob/master/src/mixin/Eventful.js#L75
@@ -492,7 +503,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     }
 
     private $updateResizingDebouncingInterval(newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
-        let decidedInterval: number = ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
+        let decidedInterval: number = _ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
 
         if (newInterval && newInterval >= 10) {
             decidedInterval = + newInterval // In case the newInterval is a string, like '120'.
