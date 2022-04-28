@@ -13,7 +13,7 @@ import {
 } from 'resize-detector'
 
 import {
-    文本列表有重复条目,
+    文本列表查重,
 } from './辅助工具集'
 
 import type {
@@ -159,7 +159,7 @@ export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL: 范_Echarts实例_可�
 
 
 const 部件名称 = 'wlc-echarts-vue-two-component'
-const echarts实例事件名称查重统计结果 = 文本列表有重复条目(SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)
+const echarts实例事件名称查重统计结果 = 文本列表查重(SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)
 if (echarts实例事件名称查重统计结果) {
     throw new Error(`${部件名称}：发现重复的事件名称。其中：\n\t${echarts实例事件名称查重统计结果.错误消息文本片断集.join('\n\t')}\n`)
 }
