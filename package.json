@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
     "main": "./源代码/发布的源代码/typescript/index.vue",
+    "types": "./源代码/发布的源代码/typescript/index.d.ts",
     "directories": {
         "source": "源代码/原始的源代码",
         "dist": "源代码/发布的源代码",
@@ -18,8 +19,8 @@
         "检验以下代码：原始的源文件": "eslint  --fix  ./源代码/原始的源代码/**/*.vue  ./源代码/原始的源代码/**/*.ts  ./gulpfile.esm.js/**/*",
         "检验所有代码": "npm         run  检验以下代码：原始的源文件                                         &    npm  run  检验以下代码：须发布的文件",
         "构建所有须发布的文件": "npm  run  检验以下代码：原始的源文件    &&    gulp   --silent  buildOnce    &&    npm  run  检验以下代码：须发布的文件",
-        "start": "gulp  --silent",
         "每当制作集得之版本之前": "npm  i    &&    npm  run  构建所有须发布的文件",
+        "start": "gulp  --silent",
         "prepublishOnly": "npm  run  构建所有须发布的文件"
     },
     "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",

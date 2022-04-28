@@ -12,26 +12,27 @@ import {
     removeListener as  stopListeningToElementResizingEvent,
 } from 'resize-detector'
 
-import {
+import type {
     ECharts,
     EChartsOption,
-    ThemeOption,
-
-    // Augmentations by this package.
-    EChartsCreator,
-    EchartsInitializationOptions,
-    EChartsThemeConfig,
-} from 'echarts'
-
-import type {
-    SeriesModel,
-    EChartsType,
+    EChartsCoreOption,
 } from 'echarts'
 
 import {
-    SupportedZRenderEventTypes,
-    SupportedEChartsInstanceEventTypes,
-} from '@wulechuan/echarts-vue2-component'
+    范_Echarts_5_事件之名称_Echarts实例,
+    范_Echarts_4_事件之名称_Echarts实例,
+    范_Echarts_5_事件之名称_EchartsZRender,
+    // 范_Echarts_4_事件之名称_EchartsZRender,
+
+    范_Vue部件之专属事件之名称,
+
+    范_Echarts一切导出之根,
+    范_Echarts配色方案之配置,
+    范_Echarts实例_渲染器类别名,
+    范_Echarts工厂函数之配置项集,
+    范_EchartsZRender_可穿透本部件之事件之名称列表,
+    范_Echarts实例_可穿透本部件之事件之名称列表,
+} from '.'
 
 
 
@@ -39,16 +40,11 @@ import {
 
 const ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 
-const SUPPORTED_ZRENDER_EVENT_TYPES: SupportedZRenderEventTypes = [
-    'click',
-    'mousedown',
-    'mouseup',
-    'mousewheel',
-    'dblclick',
-    'contextmenu',
-]
 
-const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEChartsInstanceEventTypes = [
+
+
+
+const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之名称_Echarts实例[] = [
     'legendselectchanged',
     'legendselected',
     'legendunselected',
@@ -76,26 +72,92 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES: SupportedEChartsInstanceEventTypes
     'brushselected',
     'rendered',
     'finished',
+
+    /** 以下事件名与 Echarts5 支持的事件名重复了。 */
+    // 'click',
+    // 'dblclick',
+    // 'mouseover',
+    // 'mouseout',
+    // 'mouseup',
+    // 'mousedown',
+    // 'mousemove',
+    // 'globalout',
+    // 'contextmenu',
+]
+
+
+
+const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_Echarts实例[] = [
     'click',
     'dblclick',
     'mouseover',
     'mouseout',
-    'mousemove',
-    'mousedown',
     'mouseup',
+    'mousedown',
+    'mousemove',
     'globalout',
     'contextmenu',
+
+    'mousewheel',
+    'drag',
+    'dragstart',
+    'dragend',
+    'dragenter',
+    'dragleave',
+    'dragover',
+    'drop',
+]
+
+
+
+// const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
+//     'click',
+//     'dblclick',
+//     'mouseup',
+//     'mousedown',
+//     'contextmenu',
+//     'mousewheel',
+// ]
+
+
+
+const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
+    'click',
+    'dblclick',
+    'mousewheel',
+    'mouseout',
+    'mouseover',
+    'mouseup',
+    'mousedown',
+    'mousemove',
+    'contextmenu',
+    'drag',
+    'dragstart',
+    'dragend',
+    'dragenter',
+    'dragleave',
+    'dragover',
+    'drop',
+    'globalout',
 ]
 
 
 
 
 
-type EventNames = (
-    | 'resized'
-    | 'echart-instance-created'
-    | 'echart-instance-disposed'
-)
+export const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL: 范_Echarts实例_可穿透本部件之事件之名称列表 = [
+    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5,
+    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_4,
+]
+
+
+
+export const SUPPORTED_ZRENDER_EVENT_TYPES_ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
+    ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5,
+
+    /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
+    // ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4,
+]
 
 
 
@@ -111,24 +173,26 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    @Prop() public readonly echartsCreator?:                     EChartsCreator
-    @Prop() public readonly shouldManuallyRefreshEcharts?:       boolean
-    @Prop() public readonly shouldNotWatchEchartsOptionsDeeply?: boolean
-    @Prop() public readonly shouldNotAutoResizeEcharts?:         boolean
+    @Prop() public readonly echartsCreator?:                     范_Echarts一切导出之根
+    @Prop() public readonly echartsRendererType?:                范_Echarts实例_渲染器类别名
+    @Prop() public readonly echartsTheme?:                       范_Echarts配色方案之配置
+    @Prop() public readonly echartsInitializationOptions?:       范_Echarts工厂函数之配置项集
 
-    @Prop() public readonly echartsTheme?:                       EChartsThemeConfig
-    @Prop() public readonly echartsInitializationOptions?:       EchartsInitializationOptions
     @Prop() public readonly echartsOptions?:                     EChartsOption
     @Prop() public readonly echartsGroupingName?:                string
     @Prop() public readonly echartsResizingDebouncingInterval?:  number
 
+    @Prop() public readonly shouldManuallyRefreshEcharts?:       boolean
+    @Prop() public readonly shouldNotWatchEchartsOptionsDeeply?: boolean
+    @Prop() public readonly shouldNotAutoResizeEcharts?:         boolean
 
 
 
 
-    public readonly name:                string                = 'wlc-echarts-vue-two-component'
-    public          chart:               ECharts        | null = null
-    public          echartsCreatorToUse: EChartsCreator | null = null
+
+    public readonly name:                string                      = 'wlc-echarts-vue-two-component'
+    public          chart:               ECharts              | null = null
+    public          echartsCreatorToUse: 范_Echarts一切导出之根 | null = null
 
 
 
@@ -160,7 +224,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.isDisposed()
     }
 
-    private get echartComputedOptions(): null | EChartsOption<EChartsOption.Series> {
+    private get echartComputedOptions(): null | EChartsCoreOption {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -199,7 +263,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     }
 
     @Watch('echartsTheme', {})
-    private $onEChartsThemeChanged(newTheme: EChartsThemeConfig, oldTheme: EChartsThemeConfig): void {
+    private $onEChartsThemeChanged(newTheme: 范_Echarts配色方案之配置, oldTheme: 范_Echarts配色方案之配置): void {
         this.$recreateEChartInstance()
     }
 
@@ -392,16 +456,17 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         const { chart } = this
         if (!chart) { return }
 
-        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES.forEach(eventType => {
-            chart.on(eventType, (eventObject: object) => {
-                this.$emit(eventType, eventObject)
+        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL.forEach(eventType => {
+            chart.on(eventType, (...event) => {
+                console.log('this should be vue?', this)
+                this.$emit(eventType, ...event)
             })
         })
 
-        if (SUPPORTED_ZRENDER_EVENT_TYPES.length > 0) {
+        if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
             const zrenderInstance = chart.getZr()
 
-            SUPPORTED_ZRENDER_EVENT_TYPES.forEach(eventType => {
+            SUPPORTED_ZRENDER_EVENT_TYPES_ALL.forEach(eventType => {
                 zrenderInstance.on(eventType, (eventOpject: object) => {
                     this.$emit(`zrender:${eventType}`, eventOpject)
                 })
@@ -413,11 +478,11 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         const { chart } = this
         if (!chart) { return }
 
-        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES.forEach(eventType => {
+        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL.forEach(eventType => {
             chart.off(eventType)
         })
 
-        if (SUPPORTED_ZRENDER_EVENT_TYPES.length > 0) {
+        if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
             const zrenderInstance = chart.getZr()
             // https://ecomfe.github.io/zrender-doc/public/api.html#zrendereventfulonevent-handler-context
             // https://github.com/ecomfe/zrender/blob/master/src/mixin/Eventful.js#L75
@@ -525,7 +590,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.$recreateEChartInstance()
     }
 
-    private $emitEvent(eventName: EventNames, payload?: any): void {
+    private $emitEvent(eventName: 范_Vue部件之专属事件之名称, payload?: any): void {
         if (payload === undefined || payload === null) {
             this.$emit(eventName)
             return
