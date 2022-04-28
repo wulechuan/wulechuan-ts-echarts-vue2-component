@@ -173,7 +173,6 @@ export type 范_Echarts自然语言本地化配置项集 = {
 
 
 
-
 export type 范_Echarts_5_事件之名称_EchartsZRender = 范_Echarts_5_事件之名称_Echarts实例; // TODO 存疑。
 
 /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */

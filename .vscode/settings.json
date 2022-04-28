@@ -9,7 +9,7 @@
         // ".npmignore": true,
         // ".gitignore": true,
         // "tsconfig.js*": true,
-        // "源代码/发布的源代码": true
+        "源代码/发布的源代码": true
     },
     "search.exclude": {
         "**/node_modules": true,

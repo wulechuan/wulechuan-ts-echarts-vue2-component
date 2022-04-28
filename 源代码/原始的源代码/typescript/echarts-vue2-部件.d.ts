@@ -4,7 +4,7 @@
  *   - “.d” 则可有可无。
  * 有些奇怪。
  */
-export type * from './echarts5类型定义增补集.d'
+export type * from './echarts5类型定义增补集'
 
 import type {
     范_Echarts_5_事件之名称_Echarts实例,
@@ -12,12 +12,7 @@ import type {
 
     范_Echarts_5_事件之名称_EchartsZRender,
     // 范_Echarts_4_事件之名称_EchartsZRender,
-} from './echarts5类型定义增补集.d'
-
-export type * from './index.vue'
-
-import _WlcEchartsVueTwoComponent from './index.vue'
-export default WlcEchartsVueTwoComponent = _WlcEchartsVueTwoComponent
+} from './echarts5类型定义增补集'
 
 
 

@@ -32,7 +32,7 @@ import {
     范_Echarts工厂函数之配置项集,
     范_EchartsZRender_可穿透本部件之事件之名称列表,
     范_Echarts实例_可穿透本部件之事件之名称列表,
-} from '.'
+} from './echarts-vue2-部件'
 
 
 

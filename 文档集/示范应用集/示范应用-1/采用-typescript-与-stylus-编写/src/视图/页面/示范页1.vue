@@ -15,7 +15,8 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 
-import WlcEcharts from '@wulechuan/echarts-vue2-component'
+import WlcEcharts, {
+} from '@wulechuan/echarts-vue2-component'
 
 import * as echarts from 'echarts/core'
 
