@@ -10,7 +10,7 @@ import type {
     范_Echarts_5_事件之名称_Echarts实例,
     范_Echarts_4_事件之名称_Echarts实例,
 
-    范_Echarts_5_事件之名称_EchartsZRender,
+    // 范_Echarts_5_事件之名称_EchartsZRender,
     // 范_Echarts_4_事件之名称_EchartsZRender,
 } from './echarts5类型定义增补集'
 
@@ -19,7 +19,7 @@ import type {
 
 
 export declare const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL: 范_Echarts实例_可穿透本部件之事件之名称列表
-export declare const SUPPORTED_ZRENDER_EVENT_TYPES_ALL         : 范_EchartsZRender_可穿透本部件之事件之名称列表
+// export declare const SUPPORTED_ZRENDER_EVENT_TYPES_ALL         : 范_EchartsZRender_可穿透本部件之事件之名称列表
 
 
 
@@ -46,11 +46,11 @@ export type 范_Echarts实例_可穿透本部件之事件之名称 = (
 
 
 
-export type 范_EchartsZRender_可穿透本部件之事件之名称列表 = Array<范_EchartsZRender_可穿透本部件之事件之名称>;
+// export type 范_EchartsZRender_可穿透本部件之事件之名称列表 = Array<范_EchartsZRender_可穿透本部件之事件之名称>;
 
-export type 范_EchartsZRender_可穿透本部件之事件之名称 = (
-    | 范_Echarts_5_事件之名称_EchartsZRender
+// export type 范_EchartsZRender_可穿透本部件之事件之名称 = (
+//     | 范_Echarts_5_事件之名称_EchartsZRender
 
-    /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
-    // | 范_Echarts_4_事件之名称_EchartsZRender
-);
+//     /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
+//     // | 范_Echarts_4_事件之名称_EchartsZRender
+// );

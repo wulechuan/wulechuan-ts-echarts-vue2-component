@@ -21,7 +21,7 @@ import type {
 import {
     范_Echarts_5_事件之名称_Echarts实例,
     范_Echarts_4_事件之名称_Echarts实例,
-    范_Echarts_5_事件之名称_EchartsZRender,
+    // 范_Echarts_5_事件之名称_EchartsZRender,
     // 范_Echarts_4_事件之名称_EchartsZRender,
 
     范_Vue部件之专属事件之名称,
@@ -30,8 +30,8 @@ import {
     范_Echarts配色方案之配置,
     范_Echarts实例_渲染器类别名,
     范_Echarts工厂函数之配置项集,
-    范_EchartsZRender_可穿透本部件之事件之名称列表,
     范_Echarts实例_可穿透本部件之事件之名称列表,
+    // 范_EchartsZRender_可穿透本部件之事件之名称列表,
 } from './echarts-vue2-部件'
 
 
@@ -111,35 +111,29 @@ const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之�
 
 
 // const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
-//     'click',
-//     'dblclick',
-//     'mouseup',
-//     'mousedown',
-//     'contextmenu',
-//     'mousewheel',
 // ]
 
 
 
-const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
-    'click',
-    'dblclick',
-    'mousewheel',
-    'mouseout',
-    'mouseover',
-    'mouseup',
-    'mousedown',
-    'mousemove',
-    'contextmenu',
-    'drag',
-    'dragstart',
-    'dragend',
-    'dragenter',
-    'dragleave',
-    'dragover',
-    'drop',
-    'globalout',
-]
+// const SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
+//     'click',
+//     'dblclick',
+//     'mousewheel',
+//     'mouseout',
+//     'mouseover',
+//     'mouseup',
+//     'mousedown',
+//     'mousemove',
+//     'contextmenu',
+//     'drag',
+//     'dragstart',
+//     'dragend',
+//     'dragenter',
+//     'dragleave',
+//     'dragover',
+//     'drop',
+//     'globalout',
+// ]
 
 
 
@@ -152,12 +146,12 @@ export const SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL: 范_Echarts实例_可�
 
 
 
-export const SUPPORTED_ZRENDER_EVENT_TYPES_ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
-    ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5,
+// export const SUPPORTED_ZRENDER_EVENT_TYPES_ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
+//     ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_5,
 
-    /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
-    // ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4,
-]
+//     /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
+//     // ...SUPPORTED_ZRENDER_EVENT_TYPES_ECHARTS_4,
+// ]
 
 
 
@@ -182,6 +176,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     @Prop() public readonly echartsGroupingName?:                string
     @Prop() public readonly echartsResizingDebouncingInterval?:  number
 
+    @Prop() public readonly shouldTransferEcharts4Events?:       boolean
     @Prop() public readonly shouldManuallyRefreshEcharts?:       boolean
     @Prop() public readonly shouldNotWatchEchartsOptionsDeeply?: boolean
     @Prop() public readonly shouldNotAutoResizeEcharts?:         boolean
@@ -456,22 +451,28 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         const { chart } = this
         if (!chart) { return }
 
-        SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL.forEach(eventType => {
+        let namesOfEchartsInstanceEventsToTransfer: string[]
+        if (this.shouldTransferEcharts4Events) {
+            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ALL
+        } else {
+            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_TYPES_ECHARTS_5
+        }
+
+        namesOfEchartsInstanceEventsToTransfer.forEach(eventType => {
             chart.on(eventType, (...event) => {
-                console.log('this should be vue?', this)
                 this.$emit(eventType, ...event)
             })
         })
 
-        if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
-            const zrenderInstance = chart.getZr()
+        // if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
+        //     const zrenderInstance = chart.getZr()
 
-            SUPPORTED_ZRENDER_EVENT_TYPES_ALL.forEach(eventType => {
-                zrenderInstance.on(eventType, (eventOpject: object) => {
-                    this.$emit(`zrender:${eventType}`, eventOpject)
-                })
-            })
-        }
+        //     SUPPORTED_ZRENDER_EVENT_TYPES_ALL.forEach(eventType => {
+        //         zrenderInstance.on(eventType, (eventOpject: object) => {
+        //             this.$emit(`zrender:${eventType}`, eventOpject)
+        //         })
+        //     })
+        // }
     }
 
     private $stopListeningToAllEChartsEvents(): void {
@@ -482,12 +483,12 @@ export default class WlcEchartsVueTwoComponent extends Vue {
             chart.off(eventType)
         })
 
-        if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
-            const zrenderInstance = chart.getZr()
-            // https://ecomfe.github.io/zrender-doc/public/api.html#zrendereventfulonevent-handler-context
-            // https://github.com/ecomfe/zrender/blob/master/src/mixin/Eventful.js#L75
-            zrenderInstance.off()
-        }
+        // if (SUPPORTED_ZRENDER_EVENT_TYPES_ALL.length > 0) {
+        //     const zrenderInstance = chart.getZr()
+        //     // https://ecomfe.github.io/zrender-doc/public/api.html#zrendereventfulonevent-handler-context
+        //     // https://github.com/ecomfe/zrender/blob/master/src/mixin/Eventful.js#L75
+        //     zrenderInstance.off()
+        // }
     }
 
     private $updateResizingDebouncingInterval(newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
