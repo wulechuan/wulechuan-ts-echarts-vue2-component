@@ -11,6 +11,7 @@
     },
     "dependencies": {
         "@wulechuan/echarts-vue2-component": "file:../../../..",
+        "echarts": "^5.3.2",
         "vue": "^2.6.14",
         "vue-class-component": "^7.2.3",
         "vue-property-decorator": "^9.1.2",
