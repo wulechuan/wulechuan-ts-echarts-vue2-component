@@ -179,7 +179,6 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
     @Prop() public readonly echartsCreator?:                     范_Echarts一切导出之根
-    @Prop() public readonly echartsRendererType?:                范_Echarts实例_渲染器类别名
     @Prop() public readonly echartsTheme?:                       范_Echarts配色方案之配置
     @Prop() public readonly echartsInitializationOptions?:       范_Echarts工厂函数之配置项集
 
@@ -212,25 +211,25 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    private get echartWidth(): number {
+    public get echartWidth(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getWidth()
     }
 
-    private get echartHeight(): number {
+    public get echartHeight(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getHeight()
     }
 
-    private get echartIsDisposed(): boolean {
+    public get echartIsDisposed(): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    private get echartComputedOptions(): null | EChartsCoreOption {
+    public get echartComputedOptions(): null | EChartsCoreOption {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -325,7 +324,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     // }
 
     // static registerTheme(themeName: string, theme: object): void {
-    //     echarts.registerTheme(name, theme)
+    //     echarts.registerTheme(themeName, theme)
     // }
 
     // static getMap(mapName: string): MapObj {

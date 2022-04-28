@@ -268,6 +268,18 @@ This prop is a required one. Thus has no default value.
 
 
 
+#### Prop `shouldTransferEcharts4Events`
+
+```ts
+shouldTransferEcharts4Events?: boolean;
+```
+
+The kebab format is `should-transfer-echarts4-events`.
+
+The default value is `undefined`, which means `false`.
+
+
+
 #### Prop `shouldManuallyRefreshEcharts`
 
 ```ts
@@ -315,7 +327,7 @@ The kebab format is `echarts-initialization-options`.
 
 The default value is `undefined`.
 
-See [the related part in the official documentations](https://www.echartsjs.com/en/api.html#echarts.init).
+See [the related part in the official documentations](https://echarts.apache.org/en/api.html#echarts.init).
 
 
 
@@ -330,7 +342,7 @@ The kebab format is `echarts-options`.
 
 The default value is `undefined`.
 
-See [the related part in the official documentations](https://www.echartsjs.com/en/option.html).
+See [the related part in the official documentations](https://echarts.apache.org/en/option.html).
 
 
 
@@ -345,7 +357,7 @@ The kebab format is `echarts-grouping-name`.
 
 The default value is `undefined`.
 
-See [the related part in the official documentations](https://www.echartsjs.com/en/api.html#echartsInstance.group).
+See [the related part in the official documentations](https://echarts.apache.org/en/api.html#echartsInstance.group).
 
 
 
@@ -384,7 +396,7 @@ References:
 
 ### The `data`
 
-#### data: `name`
+#### datum: `name`
 
 ```ts
 public readonly name: string = 'wlc-echarts-vue-two-component';
@@ -395,7 +407,7 @@ The name of this Vuejs component class.
 
 
 
-#### data: `chart`
+#### datum: `chart`
 
 ```ts
 public chart: ECharts | null = null;
@@ -407,28 +419,6 @@ The eChart instance object, or `null`.
 
 
 
-### data: `echartsGraphic`
-
-The static property, named `graphic`, of the echarts constructor.
-
-See [the related part in the official documentations](https://www.echartsjs.com/en/api.html#echarts.graphic).
-
-The related snippet in the source code:
-
-```ts
-import echarts from 'echarts'
-
-// ......
-export default class WlcEchartsVueTwoComponent extends Vue {
-    // ......
-
-    public echartsGraphic = echarts.graphic
-
-    // ......
-}
-```
-
-
 ### Getters (aka `computed` properties)
 
 The related snippet in the source code:
@@ -438,25 +428,25 @@ The related snippet in the source code:
 export default class WlcEchartsVueTwoComponent extends Vue {
     // ......
 
-    get echartWidth(): number {
+    public get echartWidth(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getWidth()
     }
 
-    get echartHeight(): number {
+    public get echartHeight(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getHeight()
     }
 
-    get echartIsDisposed(): boolean {
+    public get echartIsDisposed(): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
+    public get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -475,20 +465,20 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 Force the eCharts instance to re-draw its content once.
 
 ```ts
-refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
 
 
-#### Method: `updateECharts` (DEPRECATED)
+#### ~~Method: `updateECharts`~~ (DEPRECATED)
 
 Force the eCharts instance to re-draw its content once.
 
 > This is an alias of the `refreshECharts` method. And this alias has deprecated. So please turn to use `refreshECharts` instead.
 
 ```ts
-updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -503,7 +493,7 @@ These methods below do exist, but are **not** recommended to invoke.
 #### Method: `$startListeningToAllEChartsEvents`
 
 ```ts
-$startListeningToAllEChartsEvents(): void
+private $startListeningToAllEChartsEvents(): void
 ```
 
 
@@ -512,7 +502,7 @@ $startListeningToAllEChartsEvents(): void
 #### Method: `$stopListeningToAllEChartsEvents`
 
 ```ts
-$stopListeningToAllEChartsEvents(): void
+private $stopListeningToAllEChartsEvents(): void
 ```
 
 
@@ -521,7 +511,7 @@ $stopListeningToAllEChartsEvents(): void
 #### Method: `$updateResizingDebouncingInterval`
 
 ```ts
-$updateResizingDebouncingInterval(newInterval?: number): void
+private $updateResizingDebouncingInterval(newInterval?: number): void
 ```
 
 
@@ -532,7 +522,7 @@ $updateResizingDebouncingInterval(newInterval?: number): void
 > Note that in v0.1.0, this method was named `enableAutoResizing`. As of v0.2.0, this method has renamed to `$enableAutoResizing`, and the old name is no longer available.
 
 ```ts
-$enableAutoResizing(): void
+private $enableAutoResizing(): void
 ```
 
 
@@ -543,7 +533,7 @@ $enableAutoResizing(): void
 
 
 ```ts
-$disableAutoResizing(): void
+private $disableAutoResizing(): void
 ```
 
 
@@ -552,7 +542,7 @@ $disableAutoResizing(): void
 #### Method: `$resize`
 
 ```ts
-$resize(): void
+private $resize(): void
 ```
 
 
@@ -561,7 +551,7 @@ $resize(): void
 #### Method: `$createEchartInstance`
 
 ```ts
-$createEchartInstance(): void
+private $createEchartInstance(): void
 ```
 
 
@@ -569,7 +559,7 @@ $createEchartInstance(): void
 #### Method: `$disposeEchartInstance`
 
 ```ts
-$disposeEchartInstance(): void
+private $disposeEchartInstance(): void
 ```
 
 
@@ -578,30 +568,30 @@ $disposeEchartInstance(): void
 #### Method: `$recreateEChartInstance`
 
 ```ts
-$recreateEChartInstance(): void
+private $recreateEChartInstance(): void
 ```
 
 
 
 
-#### Method: `$dispose` (DEPRECATED)
+#### ~~Method: `$dispose`~~ (DEPRECATED)
 
 > This is an alias of the `$disposeEchartInstance` method. And this alias has deprecated. So please turn to use `disposeEchartInstance` instead.
 > Note that in v0.1.0, this method was named `dispose`. As of v0.2.0, this method has renamed to `$dispose`, and the old name is no longer available.
 
 ```ts
-$dispose(): void
+private $dispose(): void
 ```
 
 
 
 
-#### Method: `$recreateEChart` (DEPRECATED)
+#### ~~Method: `$recreateEChart`~~ (DEPRECATED)
 
 > This is an alias of the `$recreateEChartInstance` method. And this alias has deprecated. So please turn to use `recreateEChartInstance` instead.
 
 ```ts
-$recreateEChart(): void
+private $recreateEChart(): void
 ```
 
 
@@ -687,7 +677,7 @@ clear(): void
 
 ### Events
 
-#### Native Events of This Vue Component
+#### "Original" Vue Element Events of This Vue Component
 
 ##### `resized`
 

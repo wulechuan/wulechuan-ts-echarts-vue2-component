@@ -289,7 +289,7 @@ export default {
 
 ### 输入项（即 Vuejs 部件的 Props）
 
-#### Prop `echartsCreator`
+#### 输入项 `echartsCreator`
 
 ```ts
 echartsCreator: Function;
@@ -297,10 +297,25 @@ echartsCreator: Function;
 
 葫芦串（所谓 kebab）记法：`echarts-creator`。
 
-> 本部件自 `v0.3.0-beta7` 始，**故意不再包含 echarts**。故使用本部件须另行引入 echarts 本身，并将 echarts 的**工厂函数**经由本部件的 “`echartsCreator`” 接口项，以代入本部件。**该项为必须项，故无默认值为。**
+本部件自 `v0.3.0-beta7` 始，**故意不再包含 echarts**。故使用本部件须另行引入 echarts 本身，并将 echarts 的**工厂函数**经由本部件的 “`echartsCreator`” 接口项，以代入本部件。**该项为必须项，故无默认值为。**
 
 
-#### Prop `shouldManuallyRefreshEcharts`
+#### 输入项 `shouldTransferEcharts4Events`
+
+```ts
+shouldTransferEcharts4Events?: boolean;
+```
+
+葫芦串（所谓 kebab）记法：`should-transfer-echarts4-events`。
+
+默认值为 `undefined`，于是默认功效等同于取 `false`。
+
+本部件在每次构建内嵌之 echarts 实例对象伊始，都会成批接管该 echarts 实例对象的各种事件，并以同名的 Vue 部件事件对外开放。不妨暂称这种做法为“事件传递”或“事件穿透”。
+
+然而，自本部件之 `v1.0.0` 版本始，默认仅传递 echarts 5 推荐采用的各种 echarts 实例事件（不妨称“新种类的事件”），并不传递 echarts 4 特有的、且被废弃的事件（不妨称“旧总类事件”）。若该值取 `true`，则本部件不但会传递 echart 实例对象的新种类的事件，同时也会传递其旧种类的事件。
+
+
+#### 输入项 `shouldManuallyRefreshEcharts`
 
 ```ts
 shouldManuallyRefreshEcharts?: boolean;
@@ -314,7 +329,7 @@ shouldManuallyRefreshEcharts?: boolean;
 
 
 
-#### Prop `shouldNotWatchEchartsOptionsDeeply`
+#### 输入项 `shouldNotWatchEchartsOptionsDeeply`
 
 ```ts
 shouldNotWatchEchartsOptionsDeeply?: boolean;
@@ -326,7 +341,7 @@ shouldNotWatchEchartsOptionsDeeply?: boolean;
 
 
 
-#### Prop `shouldNotAutoResizeEcharts`
+#### 输入项 `shouldNotAutoResizeEcharts`
 
 ```ts
 shouldNotAutoResizeEcharts?: boolean;
@@ -336,12 +351,12 @@ shouldNotAutoResizeEcharts?: boolean;
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-当 eCharts 之容器 DOM 的尺寸变化时，如果允许（默认即允许）eCharts 自动重绘，则会使 eCharts 的画面总是自动充满 echarts 的外层容器，既不被裁剪，也不留有多余的空白。而允许自动重绘与否，则取决于该 Prop 参数（指 `shouldNotAutoResizeEchart` ），其取`falsy` 值，则代表允许 eCharts 在容器尺寸变更时自动重绘；反之。
+当 eCharts 之容器 DOM 的尺寸变化时，如果允许（默认即允许）eCharts 自动重绘，则会使 eCharts 的画面总是自动充满 echarts 的外层容器，既不被裁剪，也不留有多余的空白。而允许自动重绘与否，则取决于该输入项（即指 `shouldNotAutoResizeEchart` ），其取`falsy` 值，则代表允许 eCharts 在容器尺寸变更时自动重绘；反之。
 
 
 
 
-#### Prop `echartsInitializationOptions`
+#### 输入项 `echartsInitializationOptions`
 
 ```ts
 echartsInitializationOptions?: EchartsInitializationOptions;
@@ -351,12 +366,12 @@ echartsInitializationOptions?: EchartsInitializationOptions;
 
 默认值为 `undefined`。
 
-参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echarts.init)》。
+参阅 《[eCharts 文档的相关部分](https://echarts.apache.org/zh/api.html#echarts.init)》。
 
 
 
 
-#### Prop `echartsOptions`
+#### 输入项 `echartsOptions`
 
 ```ts
 echartsOptions?: EChartOption;
@@ -366,12 +381,12 @@ echartsOptions?: EChartOption;
 
 默认值为 `undefined`。
 
-参阅 《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/option.html)》。
+参阅 《[eCharts 文档的相关部分](https://echarts.apache.org/zh/option.html)》。
 
 
 
 
-#### Prop `echartsGroupingName`
+#### 输入项 `echartsGroupingName`
 
 ```ts
 echartsGroupingName?: string;
@@ -381,12 +396,12 @@ echartsGroupingName?: string;
 
 默认值为 `undefined`。
 
-参阅《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echartsInstance.group)》。
+参阅《[eCharts 文档的相关部分](https://echarts.apache.org/zh/api.html#echartsInstance.group)》。
 
 
 
 
-#### Prop `echartsResizingDebouncingInterval`
+#### 输入项 `echartsResizingDebouncingInterval`
 
 ```ts
 echartsResizingDebouncingInterval?: number;
@@ -395,7 +410,7 @@ echartsResizingDebouncingInterval?: number;
 葫芦串（所谓 kebab）记法：`echarts-resizing-debouncing-interval`。
 
 当 eCharts 之外层容器之尺寸变化时，echarts 可能自动重绘。重绘与否取决于名为 `shouldNotAutoResizeEchart` 的
-Prop 参数（见上文）。如果用户正在交互式的动态改变 eCharts 容器之尺寸，那么毫无疑问，eCharts
+输入项（见上文）。如果用户正在交互式的动态改变 eCharts 容器之尺寸，那么毫无疑问，eCharts
 须在交互过程中反复重绘多次，以使得 eCharts 是在视觉上尺寸总是瞬时跟随容器变化。然而，反复重绘
 eCharts 的代价可能很大，于是本部件借助 `lodash.debounce` 来“减缓” eCharts 重绘之步调。该参数（指
 `echartsResizingDebouncingInterval`）即是 `debounce` 触发重绘动作之时间间隔，单位是毫秒。取值不允许小于
@@ -403,7 +418,7 @@ eCharts 的代价可能很大，于是本部件借助 `lodash.debounce` 来“�
 
 
 
-#### Prop `echartsTheme`
+#### 输入项 `echartsTheme`
 
 ```ts
 echartsTheme?: EChartsTheme;
@@ -417,15 +432,15 @@ echartsTheme?: EChartsTheme;
 
 参阅 eCharts 文档的相关部分：
 
-- [预先设计好一个主题对象，并向 eCharts 注册该主题对象之名称](https://www.echartsjs.com/zh/api.html#echarts.registerTheme)。
+- [预先设计好一个主题对象，并向 eCharts 注册该主题对象之名称](https://echarts.apache.org/zh/api.html#echarts.registerTheme)。
 - [官方主题构建工具](https://echarts.baidu.com/theme-builder/)。
 
 
 
 
-### 数据属性（即 Vuejs 部件实例的 `data`）
+### 主动数据（即 Vuejs 部件实例的 `data`）
 
-#### data: `name`
+#### 主动数据: `name`
 
 ```ts
 public readonly name: string = 'wlc-echarts-vue-two-component';
@@ -436,7 +451,7 @@ public readonly name: string = 'wlc-echarts-vue-two-component';
 
 
 
-#### data: `chart`
+#### 主动数据: `chart`
 
 ```ts
 public chart: ECharts | null = null;
@@ -448,55 +463,36 @@ public chart: ECharts | null = null;
 
 
 
-### data: `echartsGraphic`
 
-echarts 构造函数上携带的静态对象 `graphic`。
+### 衍生数据（即 Vuejs 所谓计算属性 `computed`）
 
-参阅《[eCharts 文档的相关部分](https://www.echartsjs.com/zh/api.html#echarts.graphic)》。
+本 Vue 部件的衍生数据均采用【取值器】（getters）之写法，
 
-与之相关的源代码片段如下：
-
-```ts
-import echarts from 'echarts'
-
-// ......
-export default class WlcEchartsVueTwoComponent extends Vue {
-    // ......
-
-    public echartsGraphic = echarts.graphic
-
-    // ......
-}
-```
-
-
-### 取值器（getters），即计算属性（`computed`）
-
-与取值器相关的源代码片段如下：
+与衍生数据相关的源代码片段如下：
 
 ```ts
 export default class WlcEchartsVueTwoComponent extends Vue {
     // ......
 
-    get echartWidth(): number {
+    public get echartWidth(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getWidth()
     }
 
-    get echartHeight(): number {
+    public get echartHeight(): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getHeight()
     }
 
-    get echartIsDisposed(): boolean {
+    public get echartIsDisposed(): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
+    public get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -518,7 +514,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 强制 eCharts 实例重绘一次。
 
 ```ts
-refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -526,14 +522,14 @@ refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 
 
 
-#### 方法函数 `updateECharts` （已弃用）
+#### ~~方法函数 `updateECharts`~~ （已弃用）
 
 强制 eCharts 实例重绘一次。
 
 > 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用新名称 `refreshECharts`。
 
 ```ts
-updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -551,7 +547,7 @@ updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 #### 方法函数 `$startListeningToAllEChartsEvents`
 
 ```ts
-$startListeningToAllEChartsEvents(): void
+private $startListeningToAllEChartsEvents(): void
 ```
 
 
@@ -560,7 +556,7 @@ $startListeningToAllEChartsEvents(): void
 #### 方法函数 `$stopListeningToAllEChartsEvents`
 
 ```ts
-$stopListeningToAllEChartsEvents(): void
+private $stopListeningToAllEChartsEvents(): void
 ```
 
 
@@ -569,7 +565,7 @@ $stopListeningToAllEChartsEvents(): void
 #### 方法函数 `$updateResizingDebouncingInterval`
 
 ```ts
-$updateResizingDebouncingInterval(newInterval?: number): void
+private $updateResizingDebouncingInterval(newInterval?: number): void
 ```
 
 
@@ -581,7 +577,7 @@ $updateResizingDebouncingInterval(newInterval?: number): void
 > 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `enableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
 
 ```ts
-$enableAutoResizing(): void
+private $enableAutoResizing(): void
 ```
 
 
@@ -593,7 +589,7 @@ $enableAutoResizing(): void
 > 注意： v0.1.0 版中曾将其命名为未冠以美元符号的 `disableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
 
 ```ts
-$disableAutoResizing(): void
+private $disableAutoResizing(): void
 ```
 
 
@@ -603,7 +599,7 @@ $disableAutoResizing(): void
 #### 方法函数 `$resize`
 
 ```ts
-$resize(): void
+private $resize(): void
 ```
 
 
@@ -614,7 +610,7 @@ $resize(): void
 #### 方法函数 `$createEchartInstance`
 
 ```ts
-$createEchartInstance(): void
+private $createEchartInstance(): void
 ```
 
 
@@ -624,7 +620,7 @@ $createEchartInstance(): void
 #### 方法函数 `$disposeEchartInstance`
 
 ```ts
-$disposeEchartInstance(): void
+private $disposeEchartInstance(): void
 ```
 
 
@@ -633,18 +629,18 @@ $disposeEchartInstance(): void
 #### 方法函数 `$recreateEChartInstance`
 
 ```ts
-$recreateEChartInstance(): void
+private $recreateEChartInstance(): void
 ```
 
 
 
-#### 方法函数 `$dispose` （已弃用）
+#### ~~方法函数 `$dispose`~~ （已弃用）
 
 > 该方法函数为 `$disposeEchartInstance` 之别名，并已弃用。请改用新名称 `$disposeEchartInstance`。
 > 另，本部件之 v0.1.0 版中曾将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称（指 `dispose`）已经不可使用。
 
 ```ts
-$dispose(): void
+private $dispose(): void
 ```
 
 
@@ -652,12 +648,12 @@ $dispose(): void
 
 
 
-#### 方法函数 `$recreateEChart` （已弃用）
+#### ~~方法函数 `$recreateEChart`~~ （已弃用）
 
 > 该方法函数为 `$recreateEChartInstance` 之别名，并已弃用。请改用新名称 `$recreateEChartInstance`。
 
 ```ts
-$recreateEChart(): void
+private $recreateEChart(): void
 ```
 
 
@@ -748,7 +744,7 @@ function clear(): void
 
 ### 事件
 
-#### 本部件原生的事件
+#### 本 Vue 部件所谓“原发”的 Vue 事件
 
 ##### `resized`
 
