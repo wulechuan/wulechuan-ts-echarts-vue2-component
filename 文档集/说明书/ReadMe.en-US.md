@@ -29,16 +29,18 @@
 
 ## Introduction
 
-This component is heavly inspired by the long existing component written by someone else, named "[vue-echarts](https://www.npmjs.com/package/vue-echarts)". While that `vue-echarts` does not support TypeScript. Thus this component is made.
+This is a Vuejs 2.x component, internally utilizing eCharts.
+
+> It is supposed to support Vuejs 3 as well, but none tests have been run to support the conclusion.
+
+This component is heavly inspired by the long existing component written by someone else, named "[vue-echarts](https://www.npmjs.com/package/vue-echarts)". While that `vue-echarts` does not support TypeScript at the time I began this project. Thus this component is made. While the latest version of vue-echarts DOES support TypeScript as well.
 
 
 ## Usage
 
-### For TypeScript Developers
+### Templating and Styling
 
-See the example below.
-
-See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/) also.
+#### Templating
 
 ```html
 <template>
@@ -50,7 +52,7 @@ See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编
 </template>
 ```
 
-> Note that **this component carries no CSS**, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
+#### Styling
 
 ```css
 <style>
@@ -61,28 +63,74 @@ See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编
 </style>
 ```
 
+#### Notice
 
-> Note that when working with TypeScript, for the `import` statement in your app, the `from` part points to the npm package name of `@wulechuan/echarts-vue2-component`, aka the `main` file metioned in the `package.json` of its. To be specific, the main file is `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue`.
+> Note that **this component delebrately carries no CSS, nor any CSS class names.**
+>
+> While an eCharts instance requires its container DOM to have specific width and height. **So you need to setup the size of the container, aka the root element of this component, yourself.**
+>
+> As shown in the example above, I setup the width and height with the help of the **CSS class name** "`my-echarts`".
 
+
+
+
+### Scripting
+
+#### Common Points
+
+> ##### DO Remember to Import Echarts
+>
+> As of `v0.3.0-beta7`, this component no longer includes the echarts itself. So any program that utilizes this component, must not only import this component, but also import the echarts. And it must pass the echarts **Factory Function** to the `echartsCreator` prop of this component of mine.
+
+> ##### Package Size Reduction Oriented Optimization
+>
+> If you import everything from echarts, like so:
+>
+> ```js
+> import * as echarts from 'echarts'
+> ```
+>
+> the package of your app could be way too large in bytes. 
+>
+> -----
+>
+> If you are for sure that your app needs only small feature sets of echarts, you might import only those interesed parts of echarts, so as to minimize the finally packaged codes size, like so:
+>
+> ```js
+> // Notice the "/core" at the end.
+> import * as echarts from 'echarts/core'
+>
+> import {
+>     CanvasRenderer as EchartsRenderer,
+> } from 'echarts/renderers'
+>
+> import {
+>     LineChart,
+> } from 'echarts/charts'
+>
+> import {
+>     GridComponent,
+> } from 'echarts/components'
+>
+> echarts.use([
+>     LineChart,       // Import as needed.
+>     GridComponent,   // MUST import. This part is required.
+>     EchartsRenderer, // MUST import. This part is required.
+> ])
+> ```
+>
+> See: Section "**Importing required charts and components to have minimal bundle**", Chapter [Use ECharts with bundler and NPM](https://echarts.apache.org/en/tutorial.html#Use%20ECharts%20with%20bundler%20and%20NPM), Echarts official documentation.
+
+
+#### Working with TypeScript
 
 ```ts
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Component } from 'vue-property-decorator'
 
 import WlcEcharts from '@wulechuan/echarts-vue2-component'
 
-/**
- * As of v0.3.0-beta7, this component no longer includes the echarts itself.
- * So, any program that utilizes this component, must not only import this component,
- * but also import the echarts. And the echarts default export,
- * which is the factory function of eCharts instances,
- * must set to the `echartsCreator` prop of this component of mine.
- */
-
-// By the way, to minimize the codes get imported,
-// I suggest one to import echarts code as shown by the 2 lines below.
-import * as echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/line'
+import * as echarts from 'echarts'
 
 @Component({
     components: {
@@ -107,52 +155,28 @@ export default class MyEchartsDemo extends Vue {
 }
 ```
 
+> ##### Notice 1
+>
+> Note that when working with TypeScript, for the `import` statement in your app, the `from` part points to the npm package name of `@wulechuan/echarts-vue2-component`, aka the `main` file metioned in the `package.json` of its. To be specific, the main file is\
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue`.
 
-### For JavaScript (ECMAScript) Developers
-
-See the example below.
-
-See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/](./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/) also.
+> ##### A Fully Functional Demo
+>
+> See [./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/](./文档集/示范应用集/示范应用-1/采用-typescript-与-stylus-编写/).
 
 
-```html
-<template>
-    <vue-echarts
-        class="my-echarts"
-        :echarts-creator="echartsCreator"
-        :echarts-options="echartsOptions"
-    ></vue-echarts>
-</template>
-```
 
-> Note that **this component carries no CSS**, nor any CSS class names. While an eCharts instance requires its container DOM to have specific width and height. So you need to setup the size of the container, aka the root element of this component, yourself. As shown the example here, I setup the width and height with the help of the CSS class name "my-echarts".
 
-```css
-<style>
-    .my-echarts {
-        width:  790px;
-        height: 515px;
-    }
-</style>
-```
 
-> Note that when working with JavaScript(ECMAScript), for the `import` statement in your app, the `from` part points to `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue`.
+### Working with JavaScript (ECMAScript)
+
+
+
 
 ```js
 import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
-/**
- * As of v0.3.0-beta7, this component no longer includes the echarts itself.
- * So, any program that utilizes this component, must not only import this component,
- * but also import the echarts. And the echarts default export,
- * which is the factory function of eCharts instances,
- * must set to the `echartsCreator` prop of this component of mine.
- */
-
-// By the way, to minimize the codes get imported,
-// I suggest one to import echarts code as shown by the 2 lines below.
-import * as echarts from 'echarts/lib/echarts'
-import 'echarts/lib/chart/line'
+import * as echarts from 'echarts'
 
 export default {
     name: 'my-echarts-demo',
@@ -179,6 +203,16 @@ export default {
     },
 }
 ```
+
+> ##### Notice 2
+>
+> Note that when working with JavaScript(ECMAScript), for the `import` statement in your app, the `from` part needs to point to\
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue`.
+
+
+> ##### A Fully Functional Demo
+>
+> See [./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/](./文档集/示范应用集/示范应用-1/采用-javascript-与-sass-编写/).
 
 
 ---
@@ -228,11 +262,7 @@ echartsCreator: Function;
 
 The kebab format is `echarts-creator`.
 
-**As of v0.3.0-beta7, this component no longer includes the `echarts` itself.
-So, any program that utilizes this component, must not only import this component,
-but also import the `echarts`. And the `echarts` default export,
-which is the factory function of echarts instances,
-must set to the `echartsCreator` prop of this component of mine.**
+> As of `v0.3.0-beta7`, this component no longer includes the `echarts` itself. So, any program that utilizes this component, must not only import this component, but also import the `echarts`. And it must pass the echarts **Factory Function** to the `echartsCreator` prop of this component of mine.
 
 This prop is a required one. Thus has no default value.
 

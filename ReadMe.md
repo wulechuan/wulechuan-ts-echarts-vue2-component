@@ -32,7 +32,9 @@
 
 ### 功用
 
-本工具系一个 Vuejs 2.x 之部件。理论上也适用于 Vuejs 3.x ，但未验证。本部件产生的网页片断中“包裹”着 eCharts ，使得程序员在遵循 Vue 框架的网页编程环境中，较简便可靠的采用 eCharts 图表。
+本工具系一个 Vuejs 2.x 之部件。本部件产生的网页片断中“包裹”着 eCharts ，使得程序员在遵循 Vue 框架的网页编程环境中，较简便可靠的采用 eCharts 图表。
+
+> 本工具理论上也适用于 Vuejs 3.x ，但未验证。
 
 亮点功能
 
@@ -100,27 +102,27 @@
 
 ### 脚本语言的示范
 
-本节分之主体分两小节：《[采用 TypeScript 语言编程的示范](#%E9%87%87%E7%94%A8%20TypeScript%20%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E7%9A%84%E7%A4%BA%E8%8C%83)》和《[采用 JavaScript 语言编程的示范](#%E9%87%87%E7%94%A8%20JavaScript%20%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E7%9A%84%E7%A4%BA%E8%8C%83)》。在这两小节之前，还有《[无关乎编程语言的公共注意事项](#无关乎编程语言的公共注意事项)》。
+本节分之主体分两小节：《[采用 TypeScript 语言编程的示范](#%E9%87%87%E7%94%A8%20TypeScript%20%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E7%9A%84%E7%A4%BA%E8%8C%83)》和《[采用 JavaScript 语言编程的示范](#%E9%87%87%E7%94%A8%20JavaScript%20%E8%AF%AD%E8%A8%80%E7%BC%96%E7%A8%8B%E7%9A%84%E7%A4%BA%E8%8C%83)》。在这两小节之前，还有《[无关乎编程语言的公共注意事项](#无关乎编程语言的公共注意事项)》一节。
 
 #### 无关乎编程语言的公共注意事项
 
 > ##### 须另行引入 echarts 本身
 >
-> 本部件自 `v0.3.0-beta7` 始，故意不再包含 echarts 。故在你的应用代码中使用本部件时，除须引入本部件之外，还须另行引入 echarts 本身，并交由本部件的 “ `echartsCreator` ” 接口项，以代入本部件。
+> 本部件自 `v0.3.0-beta7` 始，**故意不再包含 echarts**。故使用本部件须另行引入 echarts 本身，并将 echarts 的**工厂函数**经由本部件的 “`echartsCreator`” 接口项，以代入本部件。
 
 > ##### 通用的优化做法
 >
 > 在你的应用代码中**一股脑引入整个 echarts**（如下例）虽然简便易行，但会造成最终打包的应用较大。
 >
-> ```ts
+> ```js
 > import * as echarts from 'echarts'
 > ```
 >
->
+> -----
 >
 > 如果在你的应用中已知仅需采用 echarts 之少许功能，不须囊括完整的 echarts ，那么，为节省你的应用引入的代码量，从而减小最终打包的应用之字节数，应借鉴下方写法之思路：
 >
-> ```ts
+> ```js
 > // 注意下方的导入源包含 “ /core ” 字样。
 > import * as echarts from 'echarts/core'
 >
@@ -170,7 +172,7 @@ export default class WlcEcharts部件应用示范 extends Vue {
     echartsOptions = {
         xAxis: {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: [ '一', '二', '三', '四', '五', '六', '日' ],
         },
         yAxis: {
             type: 'value',
@@ -184,7 +186,7 @@ export default class WlcEcharts部件应用示范 extends Vue {
 ```
 
 
-> ##### 注意
+> ##### 注意 1
 >
 > 采用本 Vuejs 部件之 TypeScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 指向 npm 包名\
 > `@wulechuan/echarts-vue2-component`，即指向 npm 包的 `main` 文件。实际上，指向的是\
@@ -218,7 +220,7 @@ export default {
             echartsOptions: {
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    data: [ '一', '二', '三', '四', '五', '六', '日' ],
                 },
                 yAxis: {
                     type: 'value',
@@ -235,7 +237,9 @@ export default {
 
 
 
-> 注意！采用本 Vuejs 部件之 JavaScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 须明确指向\
+> ##### 注意 2
+>
+> 采用本 Vuejs 部件之 JavaScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 须明确指向\
 > `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue` 这一文件。
 
 
@@ -293,8 +297,7 @@ echartsCreator: Function;
 
 葫芦串（所谓 kebab）记法：`echarts-creator`。
 
-本部件自 v0.3.0-beta7 始，**故意不再包含 `echarts`**。故使用本部件须另行引入 `echarts` 本身，并经由本部件的“echartsCreator”接口项，以代入本部件。
-**该项为必须项，故无默认值为。**
+> 本部件自 `v0.3.0-beta7` 始，**故意不再包含 echarts**。故使用本部件须另行引入 echarts 本身，并将 echarts 的**工厂函数**经由本部件的 “`echartsCreator`” 接口项，以代入本部件。**该项为必须项，故无默认值为。**
 
 
 #### Prop `shouldManuallyRefreshEcharts`
