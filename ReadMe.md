@@ -146,8 +146,8 @@
 > } from 'echarts/components'
 >
 > echarts.use([
->     LineChart, // 此乃按需索取之项。
->     GridComponent, // 此乃必须项。切勿省略。
+>     LineChart,       // 此乃按需索取之项。
+>     GridComponent,   // 此乃必须项。切勿省略。
 >     EchartsRenderer, // 此乃必须项。切勿省略。
 > ])
 > ```
