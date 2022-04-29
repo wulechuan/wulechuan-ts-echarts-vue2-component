@@ -171,8 +171,6 @@ export default class MyEchartsDemo extends Vue {
 ### Working with JavaScript (ECMAScript)
 
 
-
-
 ```js
 import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 

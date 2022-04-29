@@ -157,8 +157,6 @@
 
 #### 采用 TypeScript 语言编程的示范
 
-见下例。
-
 
 
 ```ts
@@ -206,8 +204,6 @@ export default class WlcEcharts部件应用示范 extends Vue {
 
 
 ### 采用 JavaScript 语言编程的示范
-
-见下例。
 
 
 
