@@ -296,7 +296,7 @@ export default {
 #### 输入项 `echartsCreator`
 
 ```ts
-echartsCreator: Function;
+echartsCreator: typeof echarts
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-creator`。
@@ -307,7 +307,7 @@ echartsCreator: Function;
 #### 输入项 `shouldTransferEcharts4Events`
 
 ```ts
-shouldTransferEcharts4Events?: boolean;
+shouldTransferEcharts4Events?: boolean
 ```
 
 葫芦串（所谓 kebab）记法：`should-transfer-echarts4-events`。
@@ -322,7 +322,7 @@ shouldTransferEcharts4Events?: boolean;
 #### 输入项 `shouldManuallyRefreshEcharts`
 
 ```ts
-shouldManuallyRefreshEcharts?: boolean;
+shouldManuallyRefreshEcharts?: boolean
 ```
 
 葫芦串（所谓 kebab）记法：`should-manually-refresh-echarts`。
@@ -336,7 +336,7 @@ shouldManuallyRefreshEcharts?: boolean;
 #### 输入项 `shouldNotWatchEchartsOptionsDeeply`
 
 ```ts
-shouldNotWatchEchartsOptionsDeeply?: boolean;
+shouldNotWatchEchartsOptionsDeeply?: boolean
 ```
 
 葫芦串（所谓 kebab）记法：`should-not-watch-echarts-options-deeply`。
@@ -348,7 +348,7 @@ shouldNotWatchEchartsOptionsDeeply?: boolean;
 #### 输入项 `shouldNotAutoResizeEcharts`
 
 ```ts
-shouldNotAutoResizeEcharts?: boolean;
+shouldNotAutoResizeEcharts?: boolean
 ```
 
 葫芦串（所谓 kebab）记法：`should-not-auto-resize-echarts`。
@@ -363,12 +363,15 @@ shouldNotAutoResizeEcharts?: boolean;
 #### 输入项 `echartsInitializationOptions`
 
 ```ts
-echartsInitializationOptions?: EchartsInitializationOptions;
+// echartsInitializationOptions?: Parameters<echarts.init>[2]
+echartsInitializationOptions?: 范_Echarts工厂函数之配置项集
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-initialization-options`。
 
 默认值为 `undefined`。
+
+> 于其 TypeScript 之类型定义，我并未采用 `Parameters<echarts.init>[2]`，而是采用了我手工复刻之得到的名为 `范_Echarts工厂函数之配置项集` 的类型。原因是官方的 `echarts.init` 之类型定义的第三位参数带有问号 `?`，于是这个参数的类型“参杂”了 `undefined` 。
 
 参阅 《[eCharts 文档的相关部分](https://echarts.apache.org/zh/api.html#echarts.init)》。
 
@@ -378,7 +381,7 @@ echartsInitializationOptions?: EchartsInitializationOptions;
 #### 输入项 `echartsOptions`
 
 ```ts
-echartsOptions?: EChartOption;
+echartsOptions?: EChartsOption
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-options`。
@@ -393,7 +396,7 @@ echartsOptions?: EChartOption;
 #### 输入项 `echartsGroupingName`
 
 ```ts
-echartsGroupingName?: string;
+echartsGroupingName?: string
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-grouping-name`。
@@ -408,7 +411,7 @@ echartsGroupingName?: string;
 #### 输入项 `echartsResizingDebouncingInterval`
 
 ```ts
-echartsResizingDebouncingInterval?: number;
+echartsResizingDebouncingInterval?: number
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-resizing-debouncing-interval`。
@@ -425,7 +428,7 @@ eCharts 的代价可能很大，于是本部件借助 `lodash.debounce` 来“�
 #### 输入项 `echartsTheme`
 
 ```ts
-echartsTheme?: EChartsTheme;
+echartsTheme?: 范_Echarts配色方案之配置
 ```
 
 葫芦串（所谓 kebab）记法：`echarts-theme`。
@@ -447,7 +450,7 @@ echartsTheme?: EChartsTheme;
 #### 主动数据: `name`
 
 ```ts
-public readonly name: string = 'wlc-echarts-vue-two-component';
+public readonly name: string = 'wlc-echarts-vue-two-component'
 ```
 
 为本部件之名称。该值视为只读属性，取值为 `'wlc-echarts-vue-two-component'`。

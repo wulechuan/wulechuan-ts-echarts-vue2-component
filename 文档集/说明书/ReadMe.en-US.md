@@ -256,7 +256,7 @@ export default {
 #### Prop `echartsCreator`
 
 ```ts
-echartsCreator: Function;
+echartsCreator: typeof echarts
 ```
 
 The kebab format is `echarts-creator`.
@@ -270,7 +270,7 @@ This prop is a required one. Thus has no default value.
 #### Prop `shouldTransferEcharts4Events`
 
 ```ts
-shouldTransferEcharts4Events?: boolean;
+shouldTransferEcharts4Events?: boolean
 ```
 
 The kebab format is `should-transfer-echarts4-events`.
@@ -282,7 +282,7 @@ The default value is `undefined`, which means `false`.
 #### Prop `shouldManuallyRefreshEcharts`
 
 ```ts
-shouldManuallyRefreshEcharts?: boolean;
+shouldManuallyRefreshEcharts?: boolean
 ```
 
 The kebab format is `should-manually-refresh-echarts`.
@@ -294,7 +294,7 @@ The default value is `undefined`, which means `false`.
 #### Prop `shouldNotWatchEchartsOptionsDeeply`
 
 ```ts
-shouldNotWatchEchartsOptionsDeeply?: boolean;
+shouldNotWatchEchartsOptionsDeeply?: boolean
 ```
 
 The kebab format is `should-not-watch-echarts-options-deeply`.
@@ -306,7 +306,7 @@ The default value is `undefined`, which means `false`.
 #### Prop `shouldNotAutoResizeEcharts`
 
 ```ts
-shouldNotAutoResizeEcharts?: boolean;
+shouldNotAutoResizeEcharts?: boolean
 ```
 
 The kebab format is `should-not-auto-resize-echarts`.
@@ -319,7 +319,8 @@ The default value is `undefined`, which means `false`.
 #### Prop `echartsInitializationOptions`
 
 ```ts
-echartsInitializationOptions?: EchartsInitializationOptions;
+// echartsInitializationOptions?: Parameters<echarts.init>[2]
+echartsInitializationOptions?: 范_Echarts工厂函数之配置项集
 ```
 
 The kebab format is `echarts-initialization-options`.
@@ -334,7 +335,7 @@ See [the related part in the official documentations](https://echarts.apache.org
 #### Prop `echartsOptions`
 
 ```ts
-echartsOptions?: EChartOption;
+echartsOptions?: EChartsOption
 ```
 
 The kebab format is `echarts-options`.
@@ -349,7 +350,7 @@ See [the related part in the official documentations](https://echarts.apache.org
 #### Prop `echartsGroupingName`
 
 ```ts
-echartsGroupingName?: string;
+echartsGroupingName?: string
 ```
 
 The kebab format is `echarts-grouping-name`.
@@ -363,7 +364,7 @@ See [the related part in the official documentations](https://echarts.apache.org
 #### Prop `echartsResizingDebouncingInterval`
 
 ```ts
-echartsResizingDebouncingInterval?: number;
+echartsResizingDebouncingInterval?: number
 ```
 
 The kebab format is `echarts-resizing-debouncing-interval`.
@@ -376,7 +377,7 @@ Unit in milliseconds, not allow to be lower than `10`. The default value is `200
 #### Prop `echartsTheme`
 
 ```ts
-echartsTheme?: EChartsTheme;
+echartsTheme?: 范_Echarts配色方案之配置
 ```
 
 The kebab format is `echarts-theme`.
@@ -398,7 +399,7 @@ References:
 #### datum: `name`
 
 ```ts
-public readonly name: string = 'wlc-echarts-vue-two-component';
+public readonly name: string = 'wlc-echarts-vue-two-component'
 ```
 
 The name of this Vuejs component class.
@@ -409,7 +410,7 @@ The name of this Vuejs component class.
 #### datum: `chart`
 
 ```ts
-public chart: ECharts | null = null;
+public chart: ECharts | null = null
 ```
 
 The eChart instance object, or `null`.
