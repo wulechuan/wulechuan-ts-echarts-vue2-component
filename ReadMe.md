@@ -705,74 +705,65 @@ private $recreateEChart (): void
 已映射的同名方法函数如下：
 
 ```ts
-function dispatchAction (payload: object): void
-```
-
-```ts
-function resize (
-    resizingOptions?: EChartsResizeOption
+public dispatchAction (
+    ...options: Parameters<ECharts['dispatchAction']>
 ): void
 ```
 
 ```ts
-function convertToPixel (
-    finder: EChartsConvertFinder,
-    value: string | any[]
-): string | any[]
+public resize (
+    ...options: Parameters<ECharts['resize']>
+): void
 ```
 
 ```ts
-function convertFromPixel (
-    finder: EChartsConvertFinder,
-    value: any[] | string
-) : any[] | string
+public convertToPixel (
+    ...options: Parameters<ECharts['convertToPixel']>
+): ReturnType<ECharts['convertToPixel']>
 ```
 
 ```ts
-function containPixel (
-    finder: EChartsConvertFinder,
-    value: any[]
+public convertFromPixel (
+    ...options: Parameters<ECharts['convertFromPixel']>
+): ReturnType<ECharts['convertFromPixel']>
+```
+
+```ts
+public containPixel (
+    ...options: Parameters<ECharts['containPixel']>
 ): boolean
 ```
 
 ```ts
-function showLoading (
-    type?: string,
-    options?: EChartsLoadingOption
+public showLoading (
+    ...options: Parameters<ECharts['showLoading']>
 ): void
 ```
 
 ```ts
-function hideLoading (): void
+public hideLoading (): void
 ```
 
 ```ts
-function getDataURL (options: {
-    type?: string,
-    pixelRatio?: number,
-    backgroundColor?: string,
-    excludeComponents?: string[]
-}): string
+public getDataURL (
+    ...options: Parameters<ECharts['getDataURL']>
+): ReturnType<ECharts['getDataURL']>
 ```
 
 ```ts
-function getConnectedDataURL (options: {
-    type: string,
-    pixelRatio: number,
-    backgroundColor: string,
-    excludeComponents?: string[]
-}): string
+public getConnectedDataURL (
+    ...options: Parameters<ECharts['getConnectedDataURL']>
+): ReturnType<ECharts['getConnectedDataURL']>
 ```
 
 ```ts
-function appendData (options: {
-    seriesIndex?: string,
-    data?: any[] | TypedArray,
-}): void
+public appendData (
+    ...options: Parameters<ECharts['appendData']>
+): void
 ```
 
 ```ts
-function clear (): void
+public clear (): void
 ```
 
 
