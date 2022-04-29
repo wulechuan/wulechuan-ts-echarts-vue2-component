@@ -23,14 +23,6 @@
         "start": "gulp  --silent",
         "prepublishOnly": "npm  run  构建所有须发布的文件"
     },
-    "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
-    },
-    "bugs": {
-        "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
-    },
     "peerDependencies": {
         "echarts": "^5.3.2",
         "vue": "^2.6.14"
@@ -63,6 +55,14 @@
         "through2": "^4.0.2",
         "typescript": "^4.6.4"
     },
+    "homepage": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git"
+    },
+    "bugs": {
+        "url": "https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component/issues"
+    },
     "keywords": [
         "vue",
         "vue2",
@@ -74,6 +74,8 @@
         "图表",
         "数据图",
         "图表绘制",
-        "电子图表"
+        "电子图表",
+        "自动改变尺寸",
+        "autoresize"
     ]
 }
