@@ -49,7 +49,7 @@ export default {
     height: 100%;
     overflow: auto;
     position: relative;
-    background-color: #999;
+    background-color: #888;
 
     > h2 {
         z-index: 51;

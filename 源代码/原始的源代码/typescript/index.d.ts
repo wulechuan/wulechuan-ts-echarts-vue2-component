@@ -3,4 +3,4 @@ export type * from './echarts-vue2-部件'
 
 import WlcEchartsVueTwoComponent from './index.vue'
 export default WlcEchartsVueTwoComponent
-export type * from './index.vue'
+export * from './index.vue'

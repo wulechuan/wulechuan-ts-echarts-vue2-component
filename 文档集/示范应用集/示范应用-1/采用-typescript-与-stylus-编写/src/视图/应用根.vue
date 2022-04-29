@@ -48,7 +48,7 @@ export default class App根 extends Vue {}
     flex-direction column
     height 100%
     overflow auto
-    background-color #999
+    background-color #888
 
     > h2 {
         z-index 51

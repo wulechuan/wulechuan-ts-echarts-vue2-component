@@ -1,6 +1,6 @@
 import { EChartsOption } from 'echarts'
 
-export const echarts之配置项集: EChartsOption = {
+export const echarts之配置项集: EChartsOption = Object.seal({
     xAxis: {
         type: 'category',
         data: [ '一', '二', '三', '四', '五', '六', '日' ],
@@ -12,4 +12,4 @@ export const echarts之配置项集: EChartsOption = {
         data: [ 820, 932, 901, 934, 1290, 1330, 1320 ],
         type: 'line',
     }],
-}
+})
