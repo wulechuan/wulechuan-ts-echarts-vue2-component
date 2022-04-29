@@ -47,7 +47,7 @@ const _ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL = 200
 
 
 
-const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_Echarts实例[] = [
+export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_Echarts实例[] = [
     'legendselectchanged',
     'legendselected',
     'legendunselected',
@@ -90,7 +90,7 @@ const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件�
 
 
 
-const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_Echarts实例[] = [
+export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_Echarts实例[] = [
     'click',
     'dblclick',
     'mouseover',
@@ -112,12 +112,12 @@ const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件�
 
 
 
-// const _SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
+// export const SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4: 范_Echarts_4_事件之名称_EchartsZRender[] = [
 // ]
 
 
 
-// const _SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
+// export const SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件之名称_EchartsZRender[] = [
 //     'click',
 //     'dblclick',
 //     'mousewheel',
@@ -142,17 +142,17 @@ const _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: 范_Echarts_5_事件�
 
 
 export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL: 范_Echarts实例_可穿透本部件之事件之名称列表 = [
-    ..._SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
-    ..._SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4,
+    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
+    ...SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4,
 ]
 
 
 
 // export const SUPPORTED_ZRENDER_EVENT_NAMES__ALL: 范_EchartsZRender_可穿透本部件之事件之名称列表 = [
-//     ..._SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5,
+//     ...SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5,
 
 //     /** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
-//     // ..._SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4,
+//     // ...SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4,
 // ]
 
 
@@ -194,9 +194,10 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public readonly name:                string                      = 部件名称
-    public          chart:               ECharts              | null = null
-    public          echartsCreatorToUse: 范_Echarts一切导出之根 | null = null
+    public readonly name:                           string                                 = 部件名称
+    public          chart:                          ECharts              | null            = null
+    public          echartsCreatorToUse:            范_Echarts一切导出之根 | null            = null
+    public          namesOfAllHandledEchartsEvents: 范_Echarts实例_可穿透本部件之事件之名称列表 = []
 
 
 
@@ -210,25 +211,25 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public get echartWidth(): number {
+    public get echartWidth (): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getWidth()
     }
 
-    public get echartHeight(): number {
+    public get echartHeight (): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getHeight()
     }
 
-    public get echartIsDisposed(): boolean {
+    public get echartIsDisposed (): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    public get echartComputedOptions(): null | EChartsCoreOption {
+    public get echartComputedOptions (): null | EChartsCoreOption {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -238,27 +239,41 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
+    @Watch('shouldTransferEcharts4Events', { immediate: true })
+    private $onTransferEcharts4EventsMarkChanged (newMark: boolean, oldMark: boolean): void {
+        if (this.shouldTransferEcharts4Events) {
+            this.namesOfAllHandledEchartsEvents = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL
+        } else {
+            this.namesOfAllHandledEchartsEvents = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5
+        }
+    }
+
+    @Watch('namesOfAllHandledEchartsEvents', { immediate: false })
+    private $onNamesOfAllHandledEchartsEventsChanged (newListOfEventNames: 范_Echarts实例_可穿透本部件之事件之名称列表, oldListOfEventNames: 范_Echarts实例_可穿透本部件之事件之名称列表): void {
+        this.$rehandleAllEchartsEvents(oldListOfEventNames)
+    }
+
     @Watch('echartsResizingDebouncingInterval', {})
-    private $onResizingDebouncingIntervalChanged(newInterval: number, oldInterval: number): void {
+    private $onResizingDebouncingIntervalChanged (newInterval: number, oldInterval: number): void {
         this.$updateResizingDebouncingInterval(newInterval)
     }
 
     @Watch('shouldManuallyRefreshEcharts', {})
-    private $onManuallyRefreshingMarkChanged(newMark: boolean, oldMark: boolean): void {
+    private $onManuallyRefreshingMarkChanged (newMark: boolean, oldMark: boolean): void {
         this.$stopWatchingIncomingEChartsOptions()
         this.$startWatchingIncomingEChartsOptions()
         this.refreshECharts() // Always take this opportunity to refresh echarts once.
     }
 
     @Watch('shouldNotWatchEchartsOptionsDeeply', {})
-    private $onEChartsOptionsWatchingDepthMarkChanged(newMark: boolean, oldMark: boolean): void {
+    private $onEChartsOptionsWatchingDepthMarkChanged (newMark: boolean, oldMark: boolean): void {
         this.$stopWatchingIncomingEChartsOptions()
         this.$startWatchingIncomingEChartsOptions()
         this.refreshECharts() // Always take this opportunity to refresh echarts once.
     }
 
     @Watch('shouldNotAutoResizeEcharts', {})
-    private $onEChartsAutoReszingMarkChanged(newMark: boolean, oldMark: boolean): void {
+    private $onEChartsAutoReszingMarkChanged (newMark: boolean, oldMark: boolean): void {
         if (newMark) {
             this.$disableAutoResizing()
         } else {
@@ -267,12 +282,12 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     }
 
     @Watch('echartsTheme', {})
-    private $onEChartsThemeChanged(newTheme: 范_Echarts配色方案之配置, oldTheme: 范_Echarts配色方案之配置): void {
+    private $onEChartsThemeChanged (newTheme: 范_Echarts配色方案之配置, oldTheme: 范_Echarts配色方案之配置): void {
         this.$recreateEChartInstance()
     }
 
     @Watch('echartsGroupingName', {})
-    private onEChartsGroupingNameChanged(newGroupingName: string, oldGroupingName: string): void {
+    private onEChartsGroupingNameChanged (newGroupingName: string, oldGroupingName: string): void {
         const { chart } = this
         if (chart) { chart.group = newGroupingName }
     }
@@ -281,12 +296,12 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public updateECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
+    public updateECharts (shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
         console.warn('The "updateECharts" method is a deprecated alias of "refreshECharts". So use "refreshECharts" instead.')
         this.refreshECharts(shouldNotMerge, lazyUpdate)
     }
 
-    public refreshECharts(shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
+    public refreshECharts (shouldNotMerge?: boolean, lazyUpdate?: boolean): void {
         /**
          * This method is to update echarts according to current "echartsOptions" within
          * the props of this Vue component.
@@ -306,15 +321,15 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     // --- echarts static methods: start ------------
 
-    // static connect(group: string | ECharts[]): void {
+    // static connect (group: string | ECharts[]): void {
     //     echarts.connect(group)
     // }
 
-    // static disConnect(group: string): void {
+    // static disConnect (group: string): void {
     //     echarts.disConnect(group)
     // }
 
-    // static registerMap(
+    // static registerMap (
     //     mapName: string,
     //     geoJSON: object,
     //     specialAreas?: object
@@ -322,11 +337,11 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     //     echarts.registerMap(mapName, geoJSON, specialAreas)
     // }
 
-    // static registerTheme(themeName: string, theme: object): void {
+    // static registerTheme (themeName: string, theme: object): void {
     //     echarts.registerTheme(themeName, theme)
     // }
 
-    // static getMap(mapName: string): MapObj {
+    // static getMap (mapName: string): MapObj {
     //     return echarts.getMap(mapName)
     // }
 
@@ -338,21 +353,21 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     // --- eCharts instance methods: start ----------
 
-    public dispatchAction(
+    public dispatchAction (
         ...options: Parameters<ECharts['dispatchAction']>
     ): void {
         const { chart } = this
         if (chart) { chart.dispatchAction(...options) }
     }
 
-    public resize(
+    public resize (
         ...options: Parameters<ECharts['resize']>
     ): void {
         const { chart } = this
         if (chart) { chart.resize(...options) }
     }
 
-    public convertToPixel(
+    public convertToPixel (
         ...options: Parameters<ECharts['convertToPixel']>
     ): ReturnType<ECharts['convertToPixel']> {
         const { chart } = this
@@ -360,7 +375,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.convertToPixel(...options)
     }
 
-    public convertFromPixel(
+    public convertFromPixel (
         ...options: Parameters<ECharts['convertFromPixel']>
     ): ReturnType<ECharts['convertFromPixel']> {
         const { chart } = this
@@ -368,7 +383,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.convertFromPixel(...options)
     }
 
-    public containPixel(
+    public containPixel (
         ...options: Parameters<ECharts['containPixel']>
     ): boolean {
         const { chart } = this
@@ -376,19 +391,19 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.containPixel(...options)
     }
 
-    public showLoading(
+    public showLoading (
         ...options: Parameters<ECharts['showLoading']>
     ): void {
         const { chart } = this
         if (chart) { chart.showLoading(...options) }
     }
 
-    public hideLoading(): void {
+    public hideLoading (): void {
         const { chart } = this
         if (chart) { chart.hideLoading() }
     }
 
-    public getDataURL(
+    public getDataURL (
         ...options: Parameters<ECharts['getDataURL']>
     ): ReturnType<ECharts['getDataURL']> {
         const { chart } = this
@@ -396,7 +411,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.getDataURL(...options)
     }
 
-    public getConnectedDataURL(
+    public getConnectedDataURL (
         ...options: Parameters<ECharts['getConnectedDataURL']>
     ): ReturnType<ECharts['getConnectedDataURL']> {
         const { chart } = this
@@ -404,14 +419,14 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         return chart.getConnectedDataURL(...options)
     }
 
-    public appendData(
+    public appendData (
         ...options: Parameters<ECharts['appendData']>
     ): void {
         const { chart } = this
         if (chart) { chart.appendData(...options) }
     }
 
-    public clear(): void {
+    public clear (): void {
         const { chart } = this
         if (chart) { chart.clear() }
     }
@@ -422,7 +437,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    private $decideEchartsCreatorToUse(): void {
+    private $decideEchartsCreatorToUse (): void {
         const providedEchartsCreator = this.echartsCreator
 
         let echartsCreatorToUse
@@ -439,7 +454,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.echartsCreatorToUse = echartsCreatorToUse
     }
 
-    private $startWatchingIncomingEChartsOptions(): void {
+    private $startWatchingIncomingEChartsOptions (): void {
         const { chart } = this
         if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
             this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
@@ -448,7 +463,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $stopWatchingIncomingEChartsOptions(): void {
+    private $stopWatchingIncomingEChartsOptions (): void {
         const { $toUnwatchEChartsOptions } = this
         if ($toUnwatchEChartsOptions) {
             $toUnwatchEChartsOptions()
@@ -456,40 +471,38 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $startListeningToAllEChartsEvents(): void {
+    private $rehandleAllEchartsEvents (oldListOfNamesOfHandledEvents: 范_Echarts实例_可穿透本部件之事件之名称列表): void {
+        this.$stopListeningToAllEChartsEvents(oldListOfNamesOfHandledEvents)
+        this.$startListeningToAllEChartsEvents()
+    }
+
+    private $startListeningToAllEChartsEvents (): void {
         const { chart } = this
         if (!chart) { return }
 
-        let namesOfEchartsInstanceEventsToTransfer: string[]
-        if (this.shouldTransferEcharts4Events) {
-            namesOfEchartsInstanceEventsToTransfer = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL
-        } else {
-            namesOfEchartsInstanceEventsToTransfer = _SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5
-        }
-
-        namesOfEchartsInstanceEventsToTransfer.forEach(eventType => {
-            chart.on(eventType, (...event) => {
-                this.$emit(eventType, ...event)
+        this.namesOfAllHandledEchartsEvents.forEach(eventName => {
+            chart.on(eventName, (...event) => {
+                this.$emit(eventName, ...event)
             })
         })
 
         // if (SUPPORTED_ZRENDER_EVENT_NAMES__ALL.length > 0) {
         //     const zrenderInstance = chart.getZr()
 
-        //     SUPPORTED_ZRENDER_EVENT_NAMES__ALL.forEach(eventType => {
-        //         zrenderInstance.on(eventType, (eventOpject: object) => {
-        //             this.$emit(`zrender:${eventType}`, eventOpject)
+        //     SUPPORTED_ZRENDER_EVENT_NAMES__ALL.forEach(eventName => {
+        //         zrenderInstance.on(eventName, (eventOpject: object) => {
+        //             this.$emit(`zrender:${eventName}`, eventOpject)
         //         })
         //     })
         // }
     }
 
-    private $stopListeningToAllEChartsEvents(): void {
+    private $stopListeningToAllEChartsEvents (namesOfEventsToStopListeningTo: 范_Echarts实例_可穿透本部件之事件之名称列表): void {
         const { chart } = this
         if (!chart) { return }
 
-        SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL.forEach(eventType => {
-            chart.off(eventType)
+        namesOfEventsToStopListeningTo.forEach(eventName => {
+            chart.off(eventName)
         })
 
         // if (SUPPORTED_ZRENDER_EVENT_NAMES__ALL.length > 0) {
@@ -500,7 +513,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         // }
     }
 
-    private $updateResizingDebouncingInterval(newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
+    private $updateResizingDebouncingInterval (newInterval?: number, eChartInstanceIsJustBuilt?: boolean): void {
         let decidedInterval: number = _ECHARTS_RESIZING_DEBOUNCING_DEFAULT_INTERVAL
 
         if (newInterval && newInterval >= 10) {
@@ -529,7 +542,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $enableAutoResizing(): void {
+    private $enableAutoResizing (): void {
         const el = this.$el
         const handler = this.$rootElementResizeEventHandler
         if (el instanceof HTMLElement && typeof handler === 'function') {
@@ -537,7 +550,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $disableAutoResizing(): void {
+    private $disableAutoResizing (): void {
         const el = this.$el
         const handler = this.$rootElementResizeEventHandler
         if (el instanceof HTMLElement && typeof handler === 'function') {
@@ -545,7 +558,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $resize(): void {
+    private $resize (): void {
         const { chart } = this
         if (chart) {
             chart.resize()
@@ -553,7 +566,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         }
     }
 
-    private $createEchartInstance(): void {
+    private $createEchartInstance (): void {
         if (this.chart) { return }
 
         const { echartsCreatorToUse } = this
@@ -576,31 +589,31 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         this.$emitEvent('echart-instance-created', this.chart)
     }
 
-    private $disposeEchartInstance(): void {
+    private $disposeEchartInstance (): void {
         const { chart } = this
         if (chart) {
             this.$disableAutoResizing()
-            // this.$stopListeningToAllEChartsEvents() // I think the echartsInstance.dispose() will do the job automatically.
+            // this.$stopListeningToAllEChartsEvents(this.namesOfAllHandledEchartsEvents) // I think the echartsInstance.dispose() will do the job automatically.
             chart.dispose()
             this.chart = null
             this.$emitEvent('echart-instance-disposed')
         }
     }
 
-    private $recreateEChartInstance(): void {
+    private $recreateEChartInstance (): void {
         this.$disposeEchartInstance()
         this.$createEchartInstance()
     }
 
-    private $dispose(): void { // Deprecated! Use "$disposeEchartInstance" instead.
+    private $dispose (): void { // Deprecated! Use "$disposeEchartInstance" instead.
         this.$disposeEchartInstance()
     }
 
-    private $recreateEChart(): void { // Deprecated! Use "$recreateEChartInstance" instead.
+    private $recreateEChart (): void { // Deprecated! Use "$recreateEChartInstance" instead.
         this.$recreateEChartInstance()
     }
 
-    private $emitEvent(eventName: 范_Vue部件之专属事件之名称, payload?: any): void {
+    private $emitEvent (eventName: 范_Vue部件之专属事件之名称, payload?: any): void {
         if (payload === undefined || payload === null) {
             this.$emit(eventName)
             return
@@ -615,16 +628,16 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     // --- Vue component life cycle hooks -----------
 
-    private created(): void {
+    private created (): void {
         this.$decideEchartsCreatorToUse()
     }
 
-    private mounted(): void {
+    private mounted (): void {
         this.$createEchartInstance()
         this.$startWatchingIncomingEChartsOptions()
     }
 
-    private activated(): void {
+    private activated (): void {
         // I think we should take this opportunity to auto-resize the echart once.
         this.$resize()
 
@@ -633,7 +646,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
         // }
     }
 
-    private beforeDestroy(): void {
+    private beforeDestroy (): void {
         // this.$stopWatchingIncomingEChartsOptions() // I think Vue will do this itself automatically.
         this.$disposeEchartInstance()
     }

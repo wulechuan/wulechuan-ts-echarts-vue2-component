@@ -7,7 +7,7 @@
                     <li
                         v-for="某事件记录 in 最末的若干条事件记载之列表"
                         :key="某事件记录.唯一标识"
-                    ><em>&lt;WlcEcharts /&gt; 部件</em>于<time>{{ 某事件记录.时间戳 }}</time>发布了名为<strong>{{ 某事件记录.事件记载.type }}</strong>的事件</li>
+                    ><em>&lt;WlcEcharts /&gt; 部件</em>于<time>{{ 某事件记录.时间戳 }}</time>发布了名为<strong>{{ 某事件记录.事件名称 }}</strong>的事件</li>
                 </ol>
             </div>
             <footer v-if="最末的若干条事件记载之列表.length > 0"><p>浏览器控制台（console）中也留有所有事件之记录。</p></footer>
@@ -18,6 +18,7 @@
                 class="echarts-根--某折线图"
                 :echarts-creator="echarts之工厂函数"
                 :echarts-options="echarts之配置项集"
+                :should-transfer-echarts4-events="应故意启用Echarts4的事件"
                 v-on="wlcEcharts可成批绑定之事件处理程序集"
             ></WlcEcharts>
         </div>
@@ -47,7 +48,10 @@ import { Component } from 'vue-property-decorator'
  */
 import WlcEcharts, {
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL,
+    SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
 } from '../../../../../../../'
+
+
 
 /**
  * 若写作
@@ -67,7 +71,7 @@ import WlcEcharts, {
  * 则应当改为 '@wulechuan/echarts-vue2-component' 。
  */
 import type {
-    // 范_Echarts实例_可穿透本部件之事件之名称,
+    范_Echarts实例_可穿透本部件之事件之名称,
     范_Echarts_5_事件之名称_Echarts实例,
 } from '../../../../../../../'
 
@@ -105,17 +109,18 @@ import { echarts之配置项集 } from '../../数据/echarts-配置项集--折�
 
 
 
-type 范_Echarts事件之记载 = {
+type 范_Echarts5_Echarts实例事件之记载 = { // Echarts4 的实例的事件结构未必如此。
     event: Event;
     type: 范_Echarts_5_事件之名称_Echarts实例;
 };
 
-type 范_wlcEcharts可成批绑定之事件处理程序集 = { [事件名称: string]: (事件记载: 范_Echarts事件之记载) => any; };
+type 范_wlcEcharts可成批绑定之事件处理程序集 = { [事件名称: string]: (事件记载: 范_Echarts5_Echarts实例事件之记载) => any; };
 
 type 范_Echarts部件之事件记录 = {
     唯一标识: string;
+    事件名称: string;
     时间戳: string;
-    事件记载: 范_Echarts事件之记载;
+    事件记载?: 范_Echarts5_Echarts实例事件之记载 | any;
 };
 
 
@@ -130,28 +135,13 @@ type 范_Echarts部件之事件记录 = {
 export default class Page示范页1_Echarts折线图 extends Vue {
     echarts之工厂函数 = echarts
     echarts之配置项集 = echarts之配置项集
+    应故意启用Echarts4的事件 = false
     wlcEcharts可成批绑定之事件处理程序集: 范_wlcEcharts可成批绑定之事件处理程序集 | null = null
     最末的若干条事件记载之列表: 范_Echarts部件之事件记录[] = []
 
     constructor () {
         super()
-        if (Array.isArray(SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)) {
-            this.wlcEcharts可成批绑定之事件处理程序集 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL.reduce((事件处理程序集, 事件名称) => {
-                事件处理程序集[事件名称] = (事件记载: 范_Echarts事件之记载) => {
-                    const 事件记录: 范_Echarts部件之事件记录 = {
-                        唯一标识: `${Math.random().toFixed(16)}`,
-                        时间戳: new Date().toLocaleString(),
-                        事件记载,
-                    }
-
-                    this.追加事件记录(事件记录)
-                }
-
-                return 事件处理程序集
-            }, {} as 范_wlcEcharts可成批绑定之事件处理程序集)
-        } else {
-            console.error('SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL 不是列表（Array）。', SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)
-        }
+        this.wlcEcharts可成批绑定之事件处理程序集 = this.构建可成批对接的Echarts实例之事件之处理程序之配置项集()
     }
 
     get WlcEcharts事件记录区标题之措辞 (): string {
@@ -164,12 +154,45 @@ export default class Page示范页1_Echarts折线图 extends Vue {
         }
     }
 
+    构建可成批对接的Echarts实例之事件之处理程序之配置项集 (): null | 范_wlcEcharts可成批绑定之事件处理程序集 {
+        let 应采纳的事件名称列表: 范_Echarts实例_可穿透本部件之事件之名称[]
+
+        if (this.应故意启用Echarts4的事件 || true) { // eslint-disable-line no-constant-condition
+            应采纳的事件名称列表 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL
+        } else {
+            应采纳的事件名称列表 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5
+        }
+
+        if (Array.isArray(应采纳的事件名称列表)) {
+            const wlcEcharts可成批绑定之事件处理程序集: 范_wlcEcharts可成批绑定之事件处理程序集 = 应采纳的事件名称列表.reduce((事件处理程序集, 事件名称) => {
+                事件处理程序集[事件名称] = (事件记载: 范_Echarts5_Echarts实例事件之记载) => {
+                    const 事件记录: 范_Echarts部件之事件记录 = {
+                        唯一标识: `${Math.random().toFixed(16)}`,
+                        事件名称,
+                        时间戳: new Date().toLocaleString(),
+                        事件记载,
+                    }
+
+                    this.追加事件记录(事件记录)
+                }
+
+                return 事件处理程序集
+            }, {} as 范_wlcEcharts可成批绑定之事件处理程序集)
+
+            return wlcEcharts可成批绑定之事件处理程序集
+        } else {
+            console.error('应采纳的事件名称列表 不是列表（Array）。', 应采纳的事件名称列表)
+            return null
+        }
+    }
+
     追加事件记录 (欲追加之事件记录: 范_Echarts部件之事件记录): void {
         const {
+            事件名称,
             事件记载,
         } = 欲追加之事件记录
 
-        console.log(`<WlcEcharts> 发布的“${事件记载.type}”事件。`, '事件之记载如下：', 事件记载)
+        console.log(`<WlcEcharts> 发布了 “ ${事件名称} ” 事件。`, '事件之记载如下：', 事件记载)
 
         const 最末的若干条事件记载之列表: 范_Echarts部件之事件记录[] = [
             欲追加之事件记录,
@@ -178,6 +201,16 @@ export default class Page示范页1_Echarts折线图 extends Vue {
 
         this.最末的若干条事件记载之列表 = 最末的若干条事件记载之列表
     }
+
+    // mounted (): void {
+    //     setTimeout(() => {
+    //         this.应故意启用Echarts4的事件 = true
+    //     }, 4000)
+
+    //     setTimeout(() => {
+    //         this.应故意启用Echarts4的事件 = false
+    //     }, 12000)
+    // }
 }
 </script>
 

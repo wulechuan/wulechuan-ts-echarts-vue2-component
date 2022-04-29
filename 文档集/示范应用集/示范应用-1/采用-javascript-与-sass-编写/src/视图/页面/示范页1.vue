@@ -7,7 +7,7 @@
                     <li
                         v-for="某事件记录 in 最末的若干条事件记载之列表"
                         :key="某事件记录.唯一标识"
-                    ><em>&lt;WlcEcharts /&gt; 部件</em>于<time>{{ 某事件记录.时间戳 }}</time>发布了名为<strong>{{ 某事件记录.事件记载.type }}</strong>的事件</li>
+                    ><em>&lt;WlcEcharts /&gt; 部件</em>于<time>{{ 某事件记录.时间戳 }}</time>发布了名为<strong>{{ 某事件记录.事件名称 }}</strong>的事件</li>
                 </ol>
             </div>
             <footer v-if="最末的若干条事件记载之列表.length > 0"><p>浏览器控制台（console）中也留有所有事件之记录。</p></footer>
@@ -18,6 +18,7 @@
                 class="echarts-根--某折线图"
                 :echarts-creator="echarts之工厂函数"
                 :echarts-options="echarts之配置项集"
+                :should-transfer-echarts4-events="应故意启用Echarts4的事件"
                 v-on="wlcEcharts可成批绑定之事件处理程序集"
             ></WlcEcharts>
         </div>
@@ -27,6 +28,7 @@
 <script>
 import WlcEcharts, {
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL,
+    SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
 } from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
 
 
@@ -80,25 +82,26 @@ import { echarts之配置项集 } from '../../数据/echarts-配置项集--折�
  * 注意！如果该示范项目移出 '@wulechuan/echarts-vue2-component' 的项目文件夹单独存放，
  * 则应当改为 import('@wulechuan/echarts-vue2-component').范_XXXXX 。
  *
- * @typedef {import('../../../../../../../').范_Echarts_5_事件之名称_Echarts实例} 范_Echarts_5_事件之名称_Echarts实例
  * @typedef {import('../../../../../../../').范_Echarts实例_可穿透本部件之事件之名称} 范_Echarts实例_可穿透本部件之事件之名称
+ * @typedef {import('../../../../../../../').范_Echarts_5_事件之名称_Echarts实例} 范_Echarts_5_事件之名称_Echarts实例
  */
 
 /**
- * @typedef {object} 范_Echarts事件之记载
+ * @typedef {object} 范_Echarts5_Echarts实例事件之记载
  * @property {Event} event
  * @property {范_Echarts_5_事件之名称_Echarts实例} type
  */
 
 /**
- * @typedef {{ [事件名称: string]: (事件记载: 范_Echarts事件之记载) => any; }} 范_wlcEcharts可成批绑定之事件处理程序集
+ * @typedef {{ [事件名称: string]: (事件记载: 范_Echarts5_Echarts实例事件之记载) => any; }} 范_wlcEcharts可成批绑定之事件处理程序集
  */
 
 /**
  * @typedef {object} 范_Echarts部件之事件记录
  * @property {string} 唯一标识
+ * @property {string} 事件名称
  * @property {string} 时间戳
- * @property {范_Echarts事件之记载} 事件记载
+ * @property {?(范_Echarts5_Echarts实例事件之记载 | any)} 事件记载
  */
 
 
@@ -113,9 +116,14 @@ export default {
     },
 
     data: function () {
+        const 应故意启用Echarts4的事件 = false
+
         return {
             echarts之工厂函数: echarts,
             echarts之配置项集,
+
+            /** @type {boolean} */
+            应故意启用Echarts4的事件,
 
             /** @type {范_wlcEcharts可成批绑定之事件处理程序集} */
             wlcEcharts可成批绑定之事件处理程序集: this.构建可成批对接的Echarts实例之事件之处理程序之配置项集(),
@@ -141,11 +149,22 @@ export default {
     },
 
     methods: {
+        /**
+         * @returns {null | 范_wlcEcharts可成批绑定之事件处理程序集}
+         */
         构建可成批对接的Echarts实例之事件之处理程序之配置项集 () {
-            if (Array.isArray(SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)) {
+            /** @type {范_Echarts实例_可穿透本部件之事件之名称[]} */
+            let 应采纳的事件名称列表
 
+            if (this.应故意启用Echarts4的事件 || true) { // eslint-disable-line no-constant-condition
+                应采纳的事件名称列表 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL
+            } else {
+                应采纳的事件名称列表 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5
+            }
+
+            if (Array.isArray(应采纳的事件名称列表)) {
                 /** @type {范_wlcEcharts可成批绑定之事件处理程序集} */
-                const wlcEcharts可成批绑定之事件处理程序集 = SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL.reduce((
+                const wlcEcharts可成批绑定之事件处理程序集 = 应采纳的事件名称列表.reduce((
                     /** @type {范_wlcEcharts可成批绑定之事件处理程序集} */
                     事件处理程序集,
 
@@ -153,12 +172,13 @@ export default {
                     事件名称
                 ) => {
                     事件处理程序集[事件名称] = (
-                        /** @type {范_Echarts事件之记载} */
+                        /** @type {范_Echarts5_Echarts实例事件之记载} */
                         事件记载
                     ) => {
                         /** @type {范_Echarts部件之事件记录} */
                         const 事件记录 = {
                             唯一标识: `${Math.random().toFixed(16)}`,
+                            事件名称,
                             时间戳: new Date().toLocaleString(),
                             事件记载,
                         }
@@ -171,7 +191,7 @@ export default {
 
                 return wlcEcharts可成批绑定之事件处理程序集
             } else {
-                console.error('SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL 不是列表（Array）。', SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL)
+                console.error('应采纳的事件名称列表 不是列表（Array）。', 应采纳的事件名称列表)
                 return null
             }
         },
@@ -181,10 +201,11 @@ export default {
          */
         追加事件记录 (欲追加之事件记录) {
             const {
+                事件名称,
                 事件记载,
             } = 欲追加之事件记录
 
-            console.log(`<WlcEcharts> 发布的“${事件记载.type}”事件。`, '事件之记载如下：', 事件记载)
+            console.log(`<WlcEcharts> 发布了 “ ${事件名称} ” 事件。`, '事件之记载如下：', 事件记载)
 
             /** @type {范_Echarts部件之事件记录[]} */
             const 最末的若干条事件记载之列表 = [
@@ -195,6 +216,16 @@ export default {
             this.最末的若干条事件记载之列表 = 最末的若干条事件记载之列表
         },
     },
+
+    // mounted () {
+    //     setTimeout(() => {
+    //         this.应故意启用Echarts4的事件 = true
+    //     }, 4000)
+
+    //     setTimeout(() => {
+    //         this.应故意启用Echarts4的事件 = false
+    //     }, 12000)
+    // },
 }
 </script>
 

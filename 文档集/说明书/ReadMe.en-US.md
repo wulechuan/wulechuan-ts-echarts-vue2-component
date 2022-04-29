@@ -228,6 +228,7 @@ export default {
         class="my-echarts"
         :echarts-creator="TheOfficialFactoryFunctionOfEcharts"
         :echarts-options="YourEchartsOptionsHere"
+        :should-transfer-echarts4-events="false"
         :should-manually-refresh-echarts="false"
         :should-not-watch-echarts-options-deeply="false"
         :should-not-auto-resize-echarts="false"
@@ -417,6 +418,15 @@ The eChart instance object, or `null`.
 
 
 
+#### datum: `namesOfAllHandledEchartsEvents`
+
+```ts
+public namesOfAllHandledEchartsEvents: 范_Echarts实例_可穿透本部件之事件之名称列表 = []
+```
+
+This datum is always decided by the value of prop `shouldTransferEcharts4Events`. If  `shouldTransferEcharts4Events` is truthy, then the `namesOfAllHandledEchartsEvents` is a list combining both eCharts 4 instance event names and eCharts 5 ones; otherwise, `namesOfAllHandledEchartsEvents` is just a list of all eCharts 5 event names.
+
+
 
 
 ### Getters (aka `computed` properties)
@@ -428,25 +438,25 @@ The related snippet in the source code:
 export default class WlcEchartsVueTwoComponent extends Vue {
     // ......
 
-    public get echartWidth(): number {
+    public get echartWidth (): number {
         const { chart } = this
         if (!chart) { return NaN }
-        return chart.getWidth()
+        return chart.getWidth ()
     }
 
-    public get echartHeight(): number {
+    public get echartHeight (): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getHeight()
     }
 
-    public get echartIsDisposed(): boolean {
+    public get echartIsDisposed (): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    public get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
+    public get echartComputedOptions (): null | echarts.EChartOption<EChartOption.Series> {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -465,7 +475,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 Force the eCharts instance to re-draw its content once.
 
 ```ts
-public refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public refreshECharts (shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -478,7 +488,7 @@ Force the eCharts instance to re-draw its content once.
 > This is an alias of the `refreshECharts` method. And this alias has deprecated. So please turn to use `refreshECharts` instead.
 
 ```ts
-public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public updateECharts (shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -490,10 +500,22 @@ public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): 
 
 These methods below do exist, but are **not** recommended to invoke.
 
+
+
+#### Method: `$rehandleAllEchartsEvents`
+
+```ts
+private $rehandleAllEchartsEvents (): void
+```
+
+Whenever the value of `namesOfAllHandledEchartsEvents` changes, this method invokes once.
+
+
+
 #### Method: `$startListeningToAllEChartsEvents`
 
 ```ts
-private $startListeningToAllEChartsEvents(): void
+private $startListeningToAllEChartsEvents (): void
 ```
 
 
@@ -502,7 +524,7 @@ private $startListeningToAllEChartsEvents(): void
 #### Method: `$stopListeningToAllEChartsEvents`
 
 ```ts
-private $stopListeningToAllEChartsEvents(): void
+private $stopListeningToAllEChartsEvents (): void
 ```
 
 
@@ -511,7 +533,7 @@ private $stopListeningToAllEChartsEvents(): void
 #### Method: `$updateResizingDebouncingInterval`
 
 ```ts
-private $updateResizingDebouncingInterval(newInterval?: number): void
+private $updateResizingDebouncingInterval (newInterval?: number): void
 ```
 
 
@@ -522,7 +544,7 @@ private $updateResizingDebouncingInterval(newInterval?: number): void
 > Note that in v0.1.0, this method was named `enableAutoResizing`. As of v0.2.0, this method has renamed to `$enableAutoResizing`, and the old name is no longer available.
 
 ```ts
-private $enableAutoResizing(): void
+private $enableAutoResizing (): void
 ```
 
 
@@ -533,7 +555,7 @@ private $enableAutoResizing(): void
 
 
 ```ts
-private $disableAutoResizing(): void
+private $disableAutoResizing (): void
 ```
 
 
@@ -542,7 +564,7 @@ private $disableAutoResizing(): void
 #### Method: `$resize`
 
 ```ts
-private $resize(): void
+private $resize (): void
 ```
 
 
@@ -551,7 +573,7 @@ private $resize(): void
 #### Method: `$createEchartInstance`
 
 ```ts
-private $createEchartInstance(): void
+private $createEchartInstance (): void
 ```
 
 
@@ -559,7 +581,7 @@ private $createEchartInstance(): void
 #### Method: `$disposeEchartInstance`
 
 ```ts
-private $disposeEchartInstance(): void
+private $disposeEchartInstance (): void
 ```
 
 
@@ -568,7 +590,7 @@ private $disposeEchartInstance(): void
 #### Method: `$recreateEChartInstance`
 
 ```ts
-private $recreateEChartInstance(): void
+private $recreateEChartInstance (): void
 ```
 
 
@@ -580,7 +602,7 @@ private $recreateEChartInstance(): void
 > Note that in v0.1.0, this method was named `dispose`. As of v0.2.0, this method has renamed to `$dispose`, and the old name is no longer available.
 
 ```ts
-private $dispose(): void
+private $dispose (): void
 ```
 
 
@@ -591,7 +613,7 @@ private $dispose(): void
 > This is an alias of the `$recreateEChartInstance` method. And this alias has deprecated. So please turn to use `recreateEChartInstance` instead.
 
 ```ts
-private $recreateEChart(): void
+private $recreateEChart (): void
 ```
 
 
@@ -603,49 +625,49 @@ private $recreateEChart(): void
 Each method below, of a given instance of this Vuejs component, is mapped from a method of the eChart instance the Vuejs component holds. Mapped method names are identical to their source methods'.
 
 ```ts
-function dispatchAction(payload: object): void
+function dispatchAction (payload: object): void
 ```
 
 ```ts
-function resize(
+function resize (
     resizingOptions?: EChartsResizeOption
 ): void
 ```
 
 ```ts
-function convertToPixel(
+function convertToPixel (
     finder: EChartsConvertFinder,
     value: string | any[]
 ): string | any[]
 ```
 
 ```ts
-function convertFromPixel(
+function convertFromPixel (
     finder: EChartsConvertFinder,
     value: any[] | string
 ) : any[] | string
 ```
 
 ```ts
-function containPixel(
+function containPixel (
     finder: EChartsConvertFinder,
     value: any[]
 ): boolean
 ```
 
 ```ts
-function showLoading(
+function showLoading (
     type?: string,
     options?: EChartsLoadingOption
 ): void
 ```
 
 ```ts
-function hideLoading(): void
+function hideLoading (): void
 ```
 
 ```ts
-function getDataURL(options: {
+function getDataURL (options: {
     type?: string,
     pixelRatio?: number,
     backgroundColor?: string,
@@ -654,7 +676,7 @@ function getDataURL(options: {
 ```
 
 ```ts
-function getConnectedDataURL(options: {
+function getConnectedDataURL (options: {
     type: string,
     pixelRatio: number,
     backgroundColor: string,
@@ -663,14 +685,14 @@ function getConnectedDataURL(options: {
 ```
 
 ```ts
-function appendData(options: {
+function appendData (options: {
     seriesIndex?: string,
     data?: any[] | TypedArray,
 }): void
 ```
 
 ```ts
-clear(): void
+clear (): void
 ```
 
 

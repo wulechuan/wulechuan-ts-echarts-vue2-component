@@ -18,8 +18,12 @@ import type {
 
 
 
-export declare const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL: 范_Echarts实例_可穿透本部件之事件之名称列表
-// export declare const SUPPORTED_ZRENDER_EVENT_NAMES__ALL         : 范_EchartsZRender_可穿透本部件之事件之名称列表
+export declare const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL       : 范_Echarts实例_可穿透本部件之事件之名称列表
+export declare const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_4 : 范_Echarts_4_事件之名称_Echarts实例[]
+export declare const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5 : 范_Echarts_5_事件之名称_Echarts实例[]
+// export declare const SUPPORTED_ZRENDER_EVENT_NAMES__ALL                : 范_EchartsZRender_可穿透本部件之事件之名称列表
+// export declare const SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_4          : 范_Echarts_4_事件之名称_EchartsZRender[]
+// export declare const SUPPORTED_ZRENDER_EVENT_NAMES__ECHARTS_5          : 范_Echarts_5_事件之名称_EchartsZRender[]
 
 
 

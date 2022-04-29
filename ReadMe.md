@@ -6,7 +6,7 @@
 
 ## Multilingual Editions of this Article
 
-- [English version of this ReadMe](./文档集/说明书/ReadMe.en-US.md)
+- [English edition of this ReadMe](./文档集/说明书/ReadMe.en-US.md)
 
 
 
@@ -266,6 +266,7 @@ export default {
     <WlcEcharts
         class="my-echarts"
         :echarts-creatror="echarts官方代码曝露的工厂函数"
+        :should-transfer-echarts4-events="false"
         :should-manually-refresh-echarts="false"
         :should-not-watch-echarts-options-deeply="false"
         :should-not-auto-resize-echarts="false"
@@ -461,10 +462,21 @@ public readonly name: string = 'wlc-echarts-vue-two-component';
 #### 主动数据: `chart`
 
 ```ts
-public chart: ECharts | null = null;
+public chart: ECharts | null = null
 ```
 
 或为本部件业已构建、正在使用的 eCharts 实例对象；或为 `null` 值。
+
+
+
+#### 主动数据: `namesOfAllHandledEchartsEvents`
+
+```ts
+public namesOfAllHandledEchartsEvents: 范_Echarts实例_可穿透本部件之事件之名称列表 = []
+```
+
+该值受输入项 `shouldTransferEcharts4Events` 左右。若 `shouldTransferEcharts4Events` 等效为真（`true`），则该值为所有 Echarts 4 和 Echarts 5 之实例对象之事件名称之**并集**；否则，该值为 Echarts 5 之实例对象之事件名称之列表，本质上为一个字符串列表，但须注意其类型不是 `string[]`， 而是 `范_Echarts实例_可穿透本部件之事件之名称列表`。
+
 
 
 
@@ -481,25 +493,25 @@ public chart: ECharts | null = null;
 export default class WlcEchartsVueTwoComponent extends Vue {
     // ......
 
-    public get echartWidth(): number {
+    public get echartWidth (): number {
         const { chart } = this
         if (!chart) { return NaN }
         return chart.getWidth()
     }
 
-    public get echartHeight(): number {
+    public get echartHeight (): number {
         const { chart } = this
         if (!chart) { return NaN }
-        return chart.getHeight()
+        return chart.getHeight ()
     }
 
-    public get echartIsDisposed(): boolean {
+    public get echartIsDisposed (): boolean {
         const { chart } = this
         if (!chart) { return false }
         return chart.isDisposed()
     }
 
-    public get echartComputedOptions(): null | echarts.EChartOption<EChartOption.Series> {
+    public get echartComputedOptions (): null | echarts.EChartOption<EChartOption.Series> {
         const { chart } = this
         if (!chart) { return null }
         return chart.getOption()
@@ -521,7 +533,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 强制 eCharts 实例重绘一次。
 
 ```ts
-public refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+public refreshECharts (shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
 ```
 
 
@@ -536,7 +548,11 @@ public refreshECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean):
 > 该方法函数为 `refreshECharts` 之别名，并已弃用。请改用新名称 `refreshECharts`。
 
 ```ts
-public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): void;
+// 已弃用。
+public updateECharts (
+    shouldNotMerge?: boolean,
+    shouldMakeUpdateLaze?: boolean
+): void;
 ```
 
 
@@ -551,10 +567,20 @@ public updateECharts(shouldNotMerge?: boolean, shouldMakeUpdateLaze?: boolean): 
 
 
 
+#### 方法函数 `$rehandleAllEchartsEvents`
+
+```ts
+private $rehandleAllEchartsEvents (): void
+```
+
+每当主动数据 `namesOfAllHandledEchartsEvents` 之值变动后，该方法函数会自动运行。
+
+
+
 #### 方法函数 `$startListeningToAllEChartsEvents`
 
 ```ts
-private $startListeningToAllEChartsEvents(): void
+private $startListeningToAllEChartsEvents (): void
 ```
 
 
@@ -563,7 +589,9 @@ private $startListeningToAllEChartsEvents(): void
 #### 方法函数 `$stopListeningToAllEChartsEvents`
 
 ```ts
-private $stopListeningToAllEChartsEvents(): void
+private $stopListeningToAllEChartsEvents (
+    oldListOfNamesOfHandledEvents: 范_Echarts实例_可穿透本部件之事件之名称列表
+): void
 ```
 
 
@@ -572,7 +600,7 @@ private $stopListeningToAllEChartsEvents(): void
 #### 方法函数 `$updateResizingDebouncingInterval`
 
 ```ts
-private $updateResizingDebouncingInterval(newInterval?: number): void
+private $updateResizingDebouncingInterval (newInterval?: number): void
 ```
 
 
@@ -584,7 +612,7 @@ private $updateResizingDebouncingInterval(newInterval?: number): void
 > 注意： v0.1.0 版中层将其命名为未冠以美元符号的 `enableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
 
 ```ts
-private $enableAutoResizing(): void
+private $enableAutoResizing (): void
 ```
 
 
@@ -596,7 +624,7 @@ private $enableAutoResizing(): void
 > 注意： v0.1.0 版中曾将其命名为未冠以美元符号的 `disableAutoResizing`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称已经不可使用。
 
 ```ts
-private $disableAutoResizing(): void
+private $disableAutoResizing (): void
 ```
 
 
@@ -606,7 +634,7 @@ private $disableAutoResizing(): void
 #### 方法函数 `$resize`
 
 ```ts
-private $resize(): void
+private $resize (): void
 ```
 
 
@@ -617,7 +645,7 @@ private $resize(): void
 #### 方法函数 `$createEchartInstance`
 
 ```ts
-private $createEchartInstance(): void
+private $createEchartInstance (): void
 ```
 
 
@@ -627,7 +655,7 @@ private $createEchartInstance(): void
 #### 方法函数 `$disposeEchartInstance`
 
 ```ts
-private $disposeEchartInstance(): void
+private $disposeEchartInstance (): void
 ```
 
 
@@ -636,19 +664,20 @@ private $disposeEchartInstance(): void
 #### 方法函数 `$recreateEChartInstance`
 
 ```ts
-private $recreateEChartInstance(): void
+private $recreateEChartInstance (): void
 ```
 
 
 
 #### ~~方法函数 `$dispose`~~ （已弃用）
 
+```ts
+// 已弃用。
+private $dispose (): void
+```
+
 > 该方法函数为 `$disposeEchartInstance` 之别名，并已弃用。请改用新名称 `$disposeEchartInstance`。
 > 另，本部件之 v0.1.0 版中曾将其命名为未冠以美元符号的 `dispose`。自 v0.2.0 版始，该函数已更名。因此，未冠以美元符号的函数名称（指 `dispose`）已经不可使用。
-
-```ts
-private $dispose(): void
-```
 
 
 
@@ -657,12 +686,12 @@ private $dispose(): void
 
 #### ~~方法函数 `$recreateEChart`~~ （已弃用）
 
-> 该方法函数为 `$recreateEChartInstance` 之别名，并已弃用。请改用新名称 `$recreateEChartInstance`。
-
 ```ts
-private $recreateEChart(): void
+// 已弃用。
+private $recreateEChart (): void
 ```
 
+> 该方法函数为 `$recreateEChartInstance` 之别名，并已弃用。请改用新名称 `$recreateEChartInstance`。
 
 
 
@@ -676,49 +705,49 @@ private $recreateEChart(): void
 已映射的同名方法函数如下：
 
 ```ts
-function dispatchAction(payload: object): void
+function dispatchAction (payload: object): void
 ```
 
 ```ts
-function resize(
+function resize (
     resizingOptions?: EChartsResizeOption
 ): void
 ```
 
 ```ts
-function convertToPixel(
+function convertToPixel (
     finder: EChartsConvertFinder,
     value: string | any[]
 ): string | any[]
 ```
 
 ```ts
-function convertFromPixel(
+function convertFromPixel (
     finder: EChartsConvertFinder,
     value: any[] | string
 ) : any[] | string
 ```
 
 ```ts
-function containPixel(
+function containPixel (
     finder: EChartsConvertFinder,
     value: any[]
 ): boolean
 ```
 
 ```ts
-function showLoading(
+function showLoading (
     type?: string,
     options?: EChartsLoadingOption
 ): void
 ```
 
 ```ts
-function hideLoading(): void
+function hideLoading (): void
 ```
 
 ```ts
-function getDataURL(options: {
+function getDataURL (options: {
     type?: string,
     pixelRatio?: number,
     backgroundColor?: string,
@@ -727,7 +756,7 @@ function getDataURL(options: {
 ```
 
 ```ts
-function getConnectedDataURL(options: {
+function getConnectedDataURL (options: {
     type: string,
     pixelRatio: number,
     backgroundColor: string,
@@ -736,14 +765,14 @@ function getConnectedDataURL(options: {
 ```
 
 ```ts
-function appendData(options: {
+function appendData (options: {
     seriesIndex?: string,
     data?: any[] | TypedArray,
 }): void
 ```
 
 ```ts
-function clear(): void
+function clear (): void
 ```
 
 
