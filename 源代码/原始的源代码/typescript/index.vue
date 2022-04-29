@@ -32,7 +32,6 @@ import {
 
     范_Echarts一切导出之根,
     范_Echarts配色方案之配置,
-    范_Echarts实例_渲染器类别名,
     范_Echarts工厂函数之配置项集,
     范_Echarts实例_可穿透本部件之事件之名称列表,
     // 范_EchartsZRender_可穿透本部件之事件之名称列表,

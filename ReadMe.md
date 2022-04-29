@@ -32,14 +32,14 @@
 
 ### 功用
 
-本工具系一个 Vuejs 2.x 之部件。本部件产生的网页片断中“包裹”着 eCharts ，使得程序员在遵循 Vue 框架的网页编程环境中，较简便可靠的采用 eCharts 图表。
+本工具系一个 Vuejs 2.x 之部件。本部件产生的网页片断中“包裹”着 eCharts 功能。本工具可助程序员在遵循 Vuejs 框架的网页编程环境中较简便可靠地采用 eCharts 图表。
 
 > 本工具理论上也适用于 Vuejs 3.x ，但未验证。
 
 亮点功能
 
-1.  默认令 eCharts 图表占据之区域相应容器尺寸之变动，以期总是恰好填满容器。
-2.  同时支持 TypeScript 和 JavaScript 语法。
+1.  默认令 eCharts 图表占据之区域即时响应图表排版容器尺寸之变动，以期总是恰好填满排版容器。
+2.  同时支持 TypeScript 和 JavaScript 语言。
 3.  较为完善的【事件】（Events）集。
 
 ### 由来
@@ -58,6 +58,13 @@
 | 码云           | 中华人民共和国 | [https://gitee.com/nanchang-wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://gitee.com/nanchang-wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
 | 阿里云之代码仓库 | 中华人民共和国 | [https://code.aliyun.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://code.aliyun.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
 | GitHub         | 美           | [https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git](https://github.com/wulechuan/wulechuan-typescript-echarts-vue2-component.git) |
+
+
+-----
+
+## 重要版本
+
+-   2022 年 4 月 29 日， `v1.0.0` 版。完善对 echarts 版本 5 的支持。虽主体代码（部件之类（class）定义）并未汉化，但“周边”各类型（type）之定义已悉数汉化。
 
 
 -----
