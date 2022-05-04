@@ -101,7 +101,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     private $oldResizingDebouncingInterval: number                = NaN
     private $rootElementResizeEventHandler: ResizeCallback | null = null
-    private $toUnwatchEChartsOptions:       Function       | null = null
+    private $toUnwatchEchartsOptions:       Function       | null = null
 
 
 
@@ -189,7 +189,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
     }
 
     @Watch('echartsGroupingName', {})
-    private onEChartsGroupingNameChanged (newGroupingName: string, oldGroupingName: string): void {
+    private $onEchartsGroupingNameChanged (newGroupingName: string, oldGroupingName: string): void {
         const { chart } = this
         if (chart) { chart.group = newGroupingName }
     }
@@ -363,18 +363,18 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
     private $startWatchingIncomingEchartsOptions (): void {
         const { chart } = this
-        if (chart && !this.$toUnwatchEChartsOptions && !this.shouldManuallyRefreshEcharts) {
-            this.$toUnwatchEChartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
+        if (chart && !this.$toUnwatchEchartsOptions && !this.shouldManuallyRefreshEcharts) {
+            this.$toUnwatchEchartsOptions = this.$watch('echartsOptions', (newOptions, oldOptions) => {
                 this.refreshEcharts(newOptions !== oldOptions)
             }, { deep: !this.shouldNotWatchEchartsOptionsDeeply })
         }
     }
 
     private $stopWatchingIncomingEchartsOptions (): void {
-        const { $toUnwatchEChartsOptions } = this
-        if ($toUnwatchEChartsOptions) {
-            $toUnwatchEChartsOptions()
-            this.$toUnwatchEChartsOptions = null
+        const { $toUnwatchEchartsOptions } = this
+        if ($toUnwatchEchartsOptions) {
+            $toUnwatchEchartsOptions()
+            this.$toUnwatchEchartsOptions = null
         }
     }
 
