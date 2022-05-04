@@ -1,4 +1,4 @@
-export type 范_Echarts一切导出之根 = typeof echarts;
+export type 范_Echarts模块导出之根 = typeof echarts;
 export type 范_Echarts工厂函数 = typeof echarts.init;
 
 
@@ -175,19 +175,10 @@ export type 范_Echarts自然语言本地化配置项集 = {
 
 
 
-export type 范_Echarts_5_事件之名称_EchartsZRender = 范_Echarts_5_事件之名称_Echarts实例; // TODO 存疑。
+export type 范_Echarts_事件之名称_Echarts_5_之实例 = (
 
-/** Echarts4 的 ZRender 的所有事件名都与 Echarts5 的 ZRender 的重复了。 */
-// export type 范_Echarts_4_事件之名称_EchartsZRender = (
-//     | 'click'
-//     | 'dblclick'
-//     | 'mouseup'
-//     | 'mousedown'
-//     | 'mousewheel'
-//     | 'contextmenu'
-// );
+    /** 参阅《 https://echarts.apache.org/zh/api.html#events 》。 */
 
-export type 范_Echarts_5_事件之名称_Echarts实例 = (
     | 'click'
     | 'dblclick'
     | 'mousewheel'
@@ -196,8 +187,8 @@ export type 范_Echarts_5_事件之名称_Echarts实例 = (
     | 'mouseup'
     | 'mousedown'
     | 'mousemove'
-    | 'contextmenu'
     | 'globalout'
+
     | 'drag'
     | 'dragstart'
     | 'dragend'
@@ -205,12 +196,16 @@ export type 范_Echarts_5_事件之名称_Echarts实例 = (
     | 'dragleave'
     | 'dragover'
     | 'drop'
-);
 
-export type 范_Echarts_4_事件之名称_Echarts实例 = (
+    | 'contextmenu'
+    | 'highlight'
+    | 'downplay'
+    | 'selectchanged'
     | 'legendselectchanged'
     | 'legendselected'
     | 'legendunselected'
+    | 'legendselectall'
+    | 'legendinverseselect'
     | 'legendscroll'
     | 'datazoom'
     | 'datarangeselected'
@@ -222,28 +217,128 @@ export type 范_Echarts_4_事件之名称_Echarts实例 = (
     | 'geoselectchanged'
     | 'geoselected'
     | 'geounselected'
+    | 'axisareaselected'
+    | 'brush'
+    | 'brushEnd'
+    | 'brushselected'
+    | 'globalcursortaken'
+    | 'rendered'
+    | 'finished'
+);
+
+
+
+export type 范_Echarts_事件之名称_Echarts_4_之实例 = (
+
+    /** 参阅《 https://echarts.apache.org/handbook/zh/basics/release-note/v5-upgrade-guide/#%E4%B8%8D%E5%86%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8%E7%9A%84-api 》。 */
+
     | 'pieselectchanged'
     | 'pieselected'
     | 'pieunselected'
     | 'mapselectchanged'
     | 'mapselected'
     | 'mapunselected'
-    | 'axisareaselected'
     | 'focusnodeadjacency'
     | 'unfocusnodeadjacency'
-    | 'brush'
-    | 'brushselected'
-    | 'rendered'
-    | 'finished'
+
+
 
     /** 以下 Echarts4 实例的事件名与 Echarts5 实例的事件名重复了。 */
+
     // | 'click'
     // | 'dblclick'
-    // | 'mouseout'
     // | 'mouseover'
+    // | 'mouseout'
     // | 'mouseup'
     // | 'mousedown'
     // | 'mousemove'
-    // | 'contextmenu'
     // | 'globalout'
+    // | 'contextmenu'
+    // | 'legendselectchanged'
+    // | 'legendselected'
+    // | 'legendunselected'
+    // | 'legendscroll'
+    // | 'datazoom'
+    // | 'datarangeselected'
+    // | 'timelinechanged'
+    // | 'timelineplaychanged'
+    // | 'restore'
+    // | 'dataviewchanged'
+    // | 'magictypechanged'
+    // | 'geoselectchanged'
+    // | 'geoselected'
+    // | 'geounselected'
+    // | 'axisareaselected'
+    // | 'brush'
+    // | 'brushselected'
+    // | 'rendered'
+    // | 'finished'
 );
+
+
+
+
+
+export type 范_Echarts_事件之名称_Echarts_任何版本之实例 = (
+    | 范_Echarts_事件之名称_Echarts_5_之实例
+    | 范_Echarts_事件之名称_Echarts_4_之实例
+);
+
+
+
+
+
+/**
+ * https://echarts.apache.org/handbook/zh/concepts/event/#%E7%9B%91%E5%90%AC%E2%80%9C%E7%A9%BA%E7%99%BD%E5%A4%84%E2%80%9D%E7%9A%84%E4%BA%8B%E4%BB%B6
+ */
+
+import type {
+    ElementEvent,
+} from 'zrender'
+
+export type 范_Zrender_事件之名称 = ElementEvent['type'];
+
+// export type 范_Zrender_事件之名称 = (
+//     | 'click'
+//     | 'dblclick'
+//     | 'mousewheel'
+//     | 'mouseout'
+//     | 'mouseover'
+//     | 'mouseup'
+//     | 'mousedown'
+//     | 'mousemove'
+//     | 'contextmenu'
+
+//     | 'drag'
+//     | 'dragstart'
+//     | 'dragend'
+//     | 'dragenter'
+//     | 'dragleave'
+//     | 'dragover'
+//     | 'drop'
+//     | 'globalout'
+// )
+
+
+export type 范_Zrender_事件穿透本部件后之名称 = `zrender:${范_Zrender_事件之名称}`
+
+// export type 范_Zrender_事件穿透本部件后之名称 = (
+//     | 'zrender:click'
+//     | 'zrender:dblclick'
+//     | 'zrender:mousewheel'
+//     | 'zrender:mouseout'
+//     | 'zrender:mouseover'
+//     | 'zrender:mouseup'
+//     | 'zrender:mousedown'
+//     | 'zrender:mousemove'
+//     | 'zrender:contextmenu'
+
+//     | 'zrender:drag'
+//     | 'zrender:dragstart'
+//     | 'zrender:dragend'
+//     | 'zrender:dragenter'
+//     | 'zrender:dragleave'
+//     | 'zrender:dragover'
+//     | 'zrender:drop'
+//     | 'zrender:globalout'
+// )

@@ -153,6 +153,34 @@ const 任务闭环之将所有独立于Vue文件的Typescript文件复制到发�
 
 
 
+const 任务闭环之将所有Typescript类型声明文件复制到发布文件夹内 = 构建一个任务闭环用以复制一组文件或文件夹({
+    descriptionOfCoreTask: '将所有 TypeScript 类型声明文件复制到发布文件夹中去',
+    descriptionOfInputsOfCoreTask: '.d.ts 文件',
+
+    sourceGlobs: {
+        rootFolderPath: './源代码/原始的源代码/types',
+
+        relativeGlobsSpecificallyForThisTaskCycle: [
+            '**/*.d.ts',
+        ],
+
+        extraSourceGlobsToWatch: [
+        ],
+    },
+
+    outputFiles: {
+        rootFolderPath: './源代码/发布的源代码/types',
+
+        forBatchOutputFiles: {
+            relativeGlobsOfAllPossibleOutputs: [
+                '**/*.d.ts',
+            ],
+        },
+    },
+})
+
+
+
 const 任务闭环之将所有独立于Vue文件的Typescript文件各自转译成Javascript文件 = 构建一个任务闭环用以将一组独立于Vue文件的Typescript文件各自转译成Javascript文件({
     descriptionOfCoreTask: '将所有独立的（即不在 .vue 文件中的）TypeScript 编译为 JavaScript',
     descriptionOfInputsOfCoreTask: '独立的 .ts 文件',
@@ -292,6 +320,7 @@ const {
     taskCyclesInPallarel: [
         任务闭环之将所有Vue文件以Typescript加Css的形式到发布到发布文件夹内,
         任务闭环之将所有独立于Vue文件的Typescript文件复制到发布文件夹内,
+        任务闭环之将所有Typescript类型声明文件复制到发布文件夹内,
         任务闭环之处理和编译所有的Vue文件,
         任务闭环之将所有独立于Vue文件的Typescript文件各自转译成Javascript文件,
 
