@@ -473,7 +473,7 @@ shouldManuallyRefreshEcharts?: boolean
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-若取 `true`，那么即便本部件之输入项 `echartsOptions` 发生变化，本部件内部的 eCharts 实例亦不会重绘。除非部代码随后明确调用本部件的 `refreshECharts` 方法函数。
+若取 `true`，那么即便本部件之输入项 `echartsOptions` 发生变化，本部件内部的 eCharts 实例亦不会重绘。除非所谓“外部”代码随后明确调用本部件的 `refreshECharts` 方法函数。
 
 
 
