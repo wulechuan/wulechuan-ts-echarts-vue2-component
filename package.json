@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
@@ -39,7 +39,7 @@
         "@typescript-eslint/parser": "^5.22.0",
         "@vue/eslint-config-typescript": "^10.0.0",
         "@wulechuan/cli-scripts--git-push": "^2.0.3",
-        "@wulechuan/css-stylus-markdown-themes": "^7.6.2",
+        "@wulechuan/css-stylus-markdown-themes": "^7.7.0",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
         "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^0.5.6",
         "cssnano": "^5.1.7",
