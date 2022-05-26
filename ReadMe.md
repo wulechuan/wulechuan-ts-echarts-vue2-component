@@ -569,7 +569,7 @@ shouldTransferEventOfEchartsRendered?: boolean
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-ECharts 的诸种事件中，名为 `rendered` 的事件触发极为频繁。且多数情形并不实用。为节省开销，本部件允许外界决定是否接管此种事件。默认为**不接管**此种事件。 
+ECharts 的诸种事件中，名为 `rendered` 的一类事件触发极为频繁。且多数情形并不实用。为节省开销，本部件允许外界决定是否接管此种事件。默认为**不接管**此种事件。 
 
 
 
@@ -1039,7 +1039,6 @@ Charts 实例对象会像外界发布各种事件，不妨统称为“*eCharts �
 
 ```ts
 export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: Array<范_Echarts_事件之名称_Echarts_5_之实例> = [
-
     'click',
     'dblclick',
     'mousewheel',
@@ -1089,7 +1088,7 @@ export const SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5: Array<范_Echart
 ]
 ```
 
-> 其中，于名为 `rendered` 之事件，本部件还提供了额外的单独开关项。见上文《[`shouldTransferEventOfEchartsRendered`](#输入项%20shouldTransferEventOfEchartsRendered)》。
+> 其中，于名为 `rendered` 之事件类别，本部件还提供了额外的单独开关项。见上文《[`shouldTransferEventOfEchartsRendered`](#输入项%20shouldTransferEventOfEchartsRendered)》。
 
 > 参阅 eCharts 官方《配置项手册》中《[events](https://echarts.apache.org/zh/api.html#events)》一章。
 
