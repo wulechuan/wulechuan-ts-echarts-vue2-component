@@ -1,8 +1,8 @@
 <script lang="ts">
-import Vue, { CreateElement } from 'vue'
+import { CreateElement } from 'vue'
 import type { VNode } from 'vue'
 
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 import debounce from 'lodash.debounce'
 
@@ -18,6 +18,7 @@ import {
 
 import type {
     ECharts,
+    EChartsType,
     EChartsOption,
     EChartsCoreOption,
 } from 'echarts'
@@ -91,7 +92,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public chart:                          ECharts              | null            = null
+    public chart:                          EChartsType          | null            = null
     public echartsModuleToUse:             范_Echarts模块导出之根 | null            = null
     public namesOfAllHandledEchartsEvents: 范_可穿透本部件之事件名称之列表_Echarts_任何版本之实例 = []
 

@@ -185,8 +185,8 @@ export default class MyEchartsDemo extends Vue {
 
 > ###### Notice 1
 >
-> Note that when working with TypeScript, for the `import` statement in your app, the `from` part must points to this file\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue`.
+> Note that when working with TypeScript, for the `import` statement in your app, the `from` part might point to this file\
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.ts`.
 
 > ###### A Fully Functional Demo
 >
@@ -233,9 +233,9 @@ export default {
 > ###### Notice 2
 >
 > Note that when working with JavaScript, for the `import` statement in your app, the `from` part points to the *npm module id* `@wulechuan/echarts-vue2-component`. Internally with the help of the `main` property metioned in the `package.json` of its, that statement in fact points to this file:\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue`.
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js`.
 >
-> But there're still some differences between the two. The *npm module id* exports not only the `class` and the constants, but also a implicit TypeScript namespace. While the `.../javascript/index.vue` exports **NO** namespaces. So if your don't import the *npm module id*, but import the javascript edition `index.vue` file instead, then your code editor might miss some Types defintions, therefore you are facing the lack of some Type inferences. Since most of us are happy to work with Types declarations alongside pure JavaScript codes, I suggest you always import the *npm module id*. That is, do this:
+> But there're still some differences between the two. The *npm module id* exports not only the `class` and the constants, but also a implicit TypeScript namespace. While the `.../javascript/index.js` exports **NO** namespaces. So if your don't import the *npm module id*, but import the javascript edition `index.js` file instead, then your code editor might miss some Types defintions, therefore you are facing the lack of some Type inferences. Since most of us are happy to work with Types declarations alongside pure JavaScript codes, I suggest you always import the *npm module id*. That is, do this:
 >
 > ```js
 > import WlcEcharts from '@wulechuan/echarts-vue2-component'
@@ -244,7 +244,7 @@ export default {
 > Don't do this:
 >
 > ```js
-> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
+> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js'
 > ```
 
 
@@ -549,7 +549,7 @@ public readonly name: string = 'wlc-echarts-vue-two-component'
 ##### datum: `chart`
 
 ```ts
-public chart: ECharts | null = null
+public chart: EChartsType | null = null
 ```
 
 The eChart instance object, or `null`.

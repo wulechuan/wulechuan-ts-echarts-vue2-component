@@ -83,7 +83,7 @@
     1.  将输入项 `echartsCreator` 更名为 `echartsModuleExportsRoot` 。旧名称仍然保留，以确保向下兼容性。
 
     1.  若干方法函数中的 `ECharts` 字样统一修改为 `Echarts` 字样，**其中的字母 c 已改为小写。** 其中，
-    
+
         -   凡更名的**私有**方法函数**均激进的删除了旧名称的版本，仅保留新名称的版本。**
         -   而**公开**的方法函数（目前实际上仅有一个）则同时保留了新旧两种名称的版本，以确保向下兼容性。
 
@@ -236,7 +236,7 @@ export default class WlcEcharts部件应用示范 extends Vue {
 > ###### 注意 1
 >
 > 采用本 Vuejs 部件之 TypeScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 不妨明确指向\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue` 这一文件。
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.ts` 这一文件。
 >
 > 其实指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）也无妨。只是，如此一来，你的 TypeScript 程序利用的是本部件的 JavaScript 版本的代码与 types 类型声明之组合，而非利用原版的 TypeScript 代码。**殊途同归。**
 
@@ -287,9 +287,9 @@ export default {
 > ###### 注意 2
 >
 > 采用本部件之 JavaScript 语言写就之版本时，在所谓“外部”的应用代码中，用以引入本部件之 `import` 语句的 `from` 应指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）。其本质上是凭借本 npm 包的 `package.json` 中的 `main` 字段，找到\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue` 这一文件。
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js` 这一文件。
 >
-> **但是，上述两种 `import` 之写法并非完全等价，而是有些许不同**。若采取引入 *npm 模块 id* 之写法，不光可以获得所谓“核心”的类（class）、常量等，还额外获得一个“隐式的” TypeScript 【名称空间】（namespace）。而引入纯 JavaScript 语言版本的 `index.vue` 文件则不可能获得那样的【名称空间】。由此，倘若引入的是 `……/javascript/index.vue` 文件，你的编程环境可能缺失部分类型定义，进而你的编程工具会缺少部分的【类型推断】和【代码提示】功能。
+> **但是，上述两种 `import` 之写法并非完全等价，而是有些许不同**。若采取引入 *npm 模块 id* 之写法，不光可以获得所谓“核心”的类（class）、常量等，还额外获得一个“隐式的” TypeScript 【名称空间】（namespace）。而引入纯 JavaScript 语言版本的 `index.js` 文件则不可能获得那样的【名称空间】。由此，倘若引入的是 `……/javascript/index.js` 文件，你的编程环境可能缺失部分类型定义，进而你的编程工具会缺少部分的【类型推断】和【代码提示】功能。
 >
 > 总之，**应当这样**：
 >
@@ -300,7 +300,7 @@ export default {
 > 而不应这样：
 >
 > ```js
-> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
+> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js'
 > ```
 
 > ###### 完整示范
@@ -569,7 +569,7 @@ shouldTransferEventOfEchartsRendered?: boolean
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-ECharts 的诸种事件中，名为 `rendered` 的一类事件触发极为频繁。且多数情形并不实用。为节省开销，本部件允许外界决定是否接管此种事件。默认为**不接管**此种事件。 
+ECharts 的诸种事件中，名为 `rendered` 的一类事件触发极为频繁。且多数情形并不实用。为节省开销，本部件允许外界决定是否接管此种事件。默认为**不接管**此种事件。
 
 
 
@@ -584,7 +584,7 @@ shouldTransferEventsOfZrender?: boolean
 
 默认值为 `undefined`，于是默认功效等同于取 `false`。
 
-ECharts 的幕后渲染引擎系名为 *ZRender* 的独立工具。ZRender 亦会对外发布诸种事件，且发布之频度极高。又，平时多数情形这些事件并不实用。为节省开销，本部件允许外界决定是否接管 ZRender 的任何事件。默认为**不接管**任何 ZRender 之事件。 
+ECharts 的幕后渲染引擎系名为 *ZRender* 的独立工具。ZRender 亦会对外发布诸种事件，且发布之频度极高。又，平时多数情形这些事件并不实用。为节省开销，本部件允许外界决定是否接管 ZRender 的任何事件。默认为**不接管**任何 ZRender 之事件。
 
 
 
@@ -607,7 +607,7 @@ public readonly name: string = 'wlc-echarts-vue-two-component'
 ##### 主动数据: `chart`
 
 ```ts
-public chart: ECharts | null = null
+public chart: EChartsType | null = null
 ```
 
 或为本部件业已构建、正在使用的 eCharts 实例对象；或为 `null` 值。
@@ -1171,6 +1171,43 @@ export const SUPPORTED_ZRENDER_EVENT_NAMES__FROM_VUE_COMPONENT: Array<范_Zrende
 
 
 
+
+
+-----
+
+## 已知问题集
+
+-   2022 年 7 月 4 日。分支 `dev/v1`。
+
+    此时，`v2.0.0` 刚刚在分支 `dev/v2` 发布。
+
+    在构建并发布 `v2.0.0` 之前，原封未动的 `mater` 分支的代码已经变得无法运转了。具体表现为 `npm start` 报错：
+
+    ```bash
+    ... A dynamic import callback was not specified.
+    ```
+
+    解决此问题之办法：
+
+    - PowerShell: 
+        
+        ```ps1
+        $DISABLE_V8_COMPILE_CACHE=$true
+        ```
+
+    - 类 Bash: 
+    
+        ```bash
+        DISABLE_V8_COMPILE_CACHE=true
+        ```
+
+    采取上述办法之后，`npm start` 开始报另一种错误，**故仍无法运行**。报错如下：
+
+    ```bash
+    TypeError: Invalid host defined options
+    ```
+
+    暂无找到解决办法。由于 `master` 分支的代码原封未动也会遭遇上述错误。故怀疑是计算机环境更新了 nodejs 或 npmjs 所致。
 
 
 -----

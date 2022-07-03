@@ -30,13 +30,13 @@ export type 范_事件穿透本部件后之名称之列表_Zrender = Array<范_Z
 
 
 
-import _唯一的Vue部件类 from '../源代码/发布的源代码/typescript/index.vue'
+import _唯一的Vue部件类 from '../typescript/index.ts'
 export default _唯一的Vue部件类
 
 /**
- * 下面这条语句无法将非 default 之条目输出。
+ * 下面这条语句无法将 ../typescript/index.ts 中的 “非 default” 之条目输出。
  */
-// export * from '../源代码/发布的源代码/typescript/index.vue'
+// export * from '../typescript/index.ts'
 
 /**
  * 上面的语句无效。故下方的 6 条语句不可省略。
