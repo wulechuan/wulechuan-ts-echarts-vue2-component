@@ -1,20 +1,21 @@
 import path from 'path'
+import fse from 'fs-extra'
 
 import {
     构建一个任务闭环用以处理和编译一组Vue文件,
-} from './各种任务闭环之构建器/构建一个任务闭环以处理和编译一组-vue-文件'
+} from './各种任务闭环之构建器/构建一个任务闭环以处理和编译一组-vue-文件.js'
 
 import {
     构建一个任务闭环用以将一组独立于Vue文件的Typescript文件各自转译成Javascript文件,
-} from './各种任务闭环之构建器/构建一个任务闭环以将一组独立于-vue-文件的-typescript-文件各自转译为-javascript-文件'
+} from './各种任务闭环之构建器/构建一个任务闭环以将一组独立于-vue-文件的-typescript-文件各自转译为-javascript-文件.js'
 
 import {
     构建一个任务闭环用以将一组独立于Vue文件的Stylus文件各自编译成Css文件,
-} from './各种任务闭环之构建器/构建一个任务闭环以将一组独立于-vue-文件的-stylus-文件各自编译成-css-文件'
+} from './各种任务闭环之构建器/构建一个任务闭环以将一组独立于-vue-文件的-stylus-文件各自编译成-css-文件.js'
 
 import {
     构建一个任务闭环用以复制一组文件或文件夹,
-} from './各种任务闭环之构建器/构建一个任务闭环以将复制一批文件或文件夹'
+} from './各种任务闭环之构建器/构建一个任务闭环以将复制一批文件或文件夹.js'
 
 import {
     create3HighOrderTasksUponMultipleTaskCycles,
@@ -22,7 +23,10 @@ import {
 
 
 
-import tsconfig from '../tsconfig.json'
+// import tsconfig from '../tsconfig.json'
+const tsconfigBuffer = fse.readFileSync('./tsconfig.json')
+const tsconfig = JSON.parse(tsconfigBuffer.toString())
+const __dirname = '.'
 
 const 输出诸文件中采用的缩进形式 = ' '.repeat(4)
 const resolvePath = path.resolve
@@ -67,7 +71,7 @@ const 任务闭环之处理和编译所有的Vue文件 = 构建一个任务闭�
 
             cssStylus语言的编译配置项集: {
                 paths: [
-                    resolvePath(__dirname, '../源代码/原始的源代码/stylus'),
+                    resolvePath(__dirname, '源代码/原始的源代码/stylus'),
                 ],
             },
 

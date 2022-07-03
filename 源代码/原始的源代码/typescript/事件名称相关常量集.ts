@@ -7,7 +7,7 @@ import type {
     范_Zrender_事件穿透本部件后之名称,
 
     范_本部件之原发事件之名称,
-} from '../types'
+} from '../types/index.js'
 
 
 

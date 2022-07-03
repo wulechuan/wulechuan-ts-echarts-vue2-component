@@ -6,7 +6,7 @@ import {
 } from '@wulechuan/gulp-classical-task-cycle'
 
 import 为PostCss插件构建配置项集
-    from '../辅助工具集/为-postcss-构建器配置项集'
+    from '../辅助工具集/为-postcss-构建器配置项集.js'
 
 /**
  * @param {object} taskCycleConfig

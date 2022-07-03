@@ -59,10 +59,13 @@ import { Component } from 'vue-property-decorator'
 
 
 import WlcEcharts, {
+} from '@wulechuan/echarts-vue2-component'
+
+import {
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL,
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ECHARTS_5,
     SUPPORTED_ZRENDER_EVENT_NAMES__FROM_VUE_COMPONENT,
-} from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript'
+} from '@wulechuan/echarts-vue2-component'
 
 import type {
     范_Echarts_事件之名称_Echarts_任何版本之实例,

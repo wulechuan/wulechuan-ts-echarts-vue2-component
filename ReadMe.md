@@ -71,12 +71,16 @@
 
 ## 重要版本
 
+-   2022 年 7 月 4 日， `v2.0.0` 版。改为采用 ES Module 的写法。
+
+    > 已有意图在下一版本（理应为 3.0.0 版）令接口彻底抛弃外国语。但无具体计划。
+
 -   2022 年 4 月 29 日， `v1.0.0` 版。
 
     1.  已完善对 echarts 版本 5 的支持。
     1.  虽主体代码——即本部件之类（class）之定义——并未汉化，但“周边”各类型（type）之定义已悉数汉化。暂不汉化其类（class），是为了姑且保证应用编程接口无重大变化。
 
-        > 已有意图在下一版本（理应为 2.0.0 版）令接口彻底抛弃外国语。但无具体计划。
+        > ~~已有意图在下一版本（理应为 2.0.0 版）令接口彻底抛弃外国语。但无具体计划。~~
 
 -   2022 年 5 月 4 日， `v1.2.0` 版。
 
@@ -236,9 +240,11 @@ export default class WlcEcharts部件应用示范 extends Vue {
 > ###### 注意 1
 >
 > 采用本 Vuejs 部件之 TypeScript 语言写就之版本时，应用代码中的 `import` 语句的 `from` 不妨明确指向\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.vue` 这一文件。
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.ts` 这一文件。
 >
 > 其实指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）也无妨。只是，如此一来，你的 TypeScript 程序利用的是本部件的 JavaScript 版本的代码与 types 类型声明之组合，而非利用原版的 TypeScript 代码。**殊途同归。**
+>
+> 但本工具自 `v2.0.0` 版本始，改为严格采用 ES Module 的写法。因此，上述指向具体 ts 文件的写法会报错。
 
 
 
@@ -286,10 +292,10 @@ export default {
 
 > ###### 注意 2
 >
-> 采用本部件之 JavaScript 语言写就之版本时，在所谓“外部”的应用代码中，用以引入本部件之 `import` 语句的 `from` 应指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）。其本质上是凭借本 npm 包的 `package.json` 中的 `main` 字段，找到\
-> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue` 这一文件。
+> 采用本部件之 JavaScript 语言写就之版本时，在所谓“外部”的应用代码中，用以引入本部件之 `import` 语句的 `from` 应指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）。其本质上是凭借本 npm 包的 `package.json` 中的 `exports` 字段，找到\
+> `@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js` 这一文件。
 >
-> **但是，上述两种 `import` 之写法并非完全等价，而是有些许不同**。若采取引入 *npm 模块 id* 之写法，不光可以获得所谓“核心”的类（class）、常量等，还额外获得一个“隐式的” TypeScript 【名称空间】（namespace）。而引入纯 JavaScript 语言版本的 `index.vue` 文件则不可能获得那样的【名称空间】。由此，倘若引入的是 `……/javascript/index.vue` 文件，你的编程环境可能缺失部分类型定义，进而你的编程工具会缺少部分的【类型推断】和【代码提示】功能。
+> **但是，上述两种 `import` 之写法并非完全等价，而是有些许不同**。若采取引入 *npm 模块 id* 之写法，不光可以获得所谓“核心”的类（class）、常量等，还额外获得一个“隐式的” TypeScript 【名称空间】（namespace）。而引入纯 JavaScript 语言版本的 `index.js` 文件则不可能获得那样的【名称空间】。由此，倘若引入的是 `……/javascript/index.js` 文件，你的编程环境可能缺失部分类型定义，进而你的编程工具会缺少部分的【类型推断】和【代码提示】功能。
 >
 > 总之，**应当这样**：
 >
@@ -300,7 +306,7 @@ export default {
 > 而不应这样：
 >
 > ```js
-> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.vue'
+> import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/javascript/index.js'
 > ```
 
 > ###### 完整示范
@@ -607,7 +613,7 @@ public readonly name: string = 'wlc-echarts-vue-two-component'
 ##### 主动数据: `chart`
 
 ```ts
-public chart: ECharts | null = null
+public chart: EChartsType | null = null
 ```
 
 或为本部件业已构建、正在使用的 eCharts 实例对象；或为 `null` 值。

@@ -1,8 +1,8 @@
 <script lang="ts">
-import Vue, { CreateElement } from 'vue'
+import { CreateElement } from 'vue'
 import type { VNode } from 'vue'
 
-import { Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 import debounce from 'lodash.debounce'
 
@@ -14,10 +14,11 @@ import {
 
 import {
     文本列表查重,
-} from './辅助工具集'
+} from './辅助工具集.js'
 
 import type {
     ECharts,
+    EChartsType,
     EChartsOption,
     EChartsCoreOption,
 } from 'echarts'
@@ -31,7 +32,7 @@ import type {
     范_可穿透本部件之事件名称之列表_Echarts_任何版本之实例,
     // 范_可穿透本部件之事件名称之列表_Zrender,
     // 范_事件穿透本部件后之名称之列表_Zrender,
-} from '../types'
+} from '../types/index.js'
 
 import {
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL,
@@ -56,6 +57,7 @@ const echarts实例事件名称查重统计结果 = 文本列表查重(SUPPORTED
 if (echarts实例事件名称查重统计结果) {
     throw new Error(`${部件名称}：发现重复的事件名称。其中：\n\t${echarts实例事件名称查重统计结果.错误消息文本片断集.join('\n\t')}\n`)
 }
+
 
 
 
@@ -91,7 +93,7 @@ export default class WlcEchartsVueTwoComponent extends Vue {
 
 
 
-    public chart:                          ECharts              | null            = null
+    public chart:                          EChartsType          | null            = null
     public echartsModuleToUse:             范_Echarts模块导出之根 | null            = null
     public namesOfAllHandledEchartsEvents: 范_可穿透本部件之事件名称之列表_Echarts_任何版本之实例 = []
 
