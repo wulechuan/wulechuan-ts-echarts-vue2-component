@@ -1184,7 +1184,7 @@ export const SUPPORTED_ZRENDER_EVENT_NAMES__FROM_VUE_COMPONENT: Array<范_Zrende
     在构建并发布 `v2.0.0` 之前，原封未动的 `mater` 分支的代码已经变得无法运转了。具体表现为 `npm start` 报错：
 
     ```bash
-    ... A dynamic import callback was not specified.
+    TypeError [ERR_VM_DYNAMIC_IMPORT_CALLBACK_MISSING]: A dynamic import callback was not specified.
     ```
 
     解决此问题之办法：
