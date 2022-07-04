@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
