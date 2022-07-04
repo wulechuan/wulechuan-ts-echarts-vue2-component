@@ -69,7 +69,7 @@
 -----
 
 
-## 重要版本
+## 诸重要版本之说明
 
 -   2022 年 4 月 29 日， `v1.0.0` 版。
 
@@ -1207,7 +1207,9 @@ export const SUPPORTED_ZRENDER_EVENT_NAMES__FROM_VUE_COMPONENT: Array<范_Zrende
     TypeError: Invalid host defined options
     ```
 
-    暂无找到解决办法。由于 `master` 分支的代码原封未动也会遭遇上述错误。故怀疑是计算机环境更新了 nodejs 或 npmjs 所致。
+    暂无找到解决办法。`dev/v1` 分支在 `master` 分支的基础上未作实质性变动，也有上述报错。这两个分支目前都不敢发布。
+    
+    > 由于 `master` 分支的代码原封未动也会遭遇上述错误。故怀疑是计算机环境更新了 nodejs 或 npmjs 所致。
 
 
 -----
