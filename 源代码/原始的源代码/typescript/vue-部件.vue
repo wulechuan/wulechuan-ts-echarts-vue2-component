@@ -14,7 +14,7 @@ import {
 
 import {
     文本列表查重,
-} from './辅助工具集.js'
+} from './辅助工具集'
 
 import type {
     ECharts,
@@ -32,7 +32,7 @@ import type {
     范_可穿透本部件之事件名称之列表_Echarts_任何版本之实例,
     // 范_可穿透本部件之事件名称之列表_Zrender,
     // 范_事件穿透本部件后之名称之列表_Zrender,
-} from '../types/index.js'
+} from '../types'
 
 import {
     SUPPORTED_ECHARTS_INSTANCE_EVENT_NAMES__ALL,

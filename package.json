@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
@@ -8,7 +8,10 @@
     "engines": {
         "node": ">=14.16"
     },
-    "exports": "./源代码/发布的源代码/javascript/index.js",
+    "exports": {
+        ".": "./源代码/发布的源代码/javascript/index.js",
+        "./源代码/发布的源代码/*": "./源代码/发布的源代码/*"
+    },
     "main": "./源代码/发布的源代码/javascript/index.js",
     "types": "./源代码/发布的源代码/types/index.d.ts",
     "directories": {
@@ -40,18 +43,18 @@
     },
     "devDependencies": {
         "@types/lodash.debounce": "^4.0.7",
-        "@typescript-eslint/eslint-plugin": "^5.30.4",
-        "@typescript-eslint/parser": "^5.30.4",
+        "@typescript-eslint/eslint-plugin": "^5.30.5",
+        "@typescript-eslint/parser": "^5.30.5",
         "@vue/eslint-config-typescript": "^11.0.0",
         "@wulechuan/cli-scripts--git-push": "^6.0.10",
         "@wulechuan/cli-scripts--npm-project-helpers": "^2.0.3",
-        "@wulechuan/css-stylus-markdown-themes": "^7.8.2",
+        "@wulechuan/css-stylus-markdown-themes": "^7.8.3",
         "@wulechuan/gulp-classical-task-cycle": "^0.3.0",
         "@wulechuan/vue2-sfc-from-typescript-to-javascript": "^1.0.3",
         "chalk": "^5.0.1",
         "cssnano": "^5.1.12",
         "eslint": "^8.19.0",
-        "eslint-plugin-vue": "^9.1.1",
+        "eslint-plugin-vue": "^9.2.0",
         "fs-extra": "^10.1.0",
         "gulp-postcss": "^9.0.1",
         "gulp-stylus": "^2.7.1",

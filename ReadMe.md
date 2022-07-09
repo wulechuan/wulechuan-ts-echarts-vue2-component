@@ -104,6 +104,9 @@
     1.  增添了名为 `shouldTransferEventsOfZrender` 的输入项。
 
 
+-   本部件自 `v0.3.0-beta7` 版始，**故意不再包含 echarts**。故使用本部件须另行引入 echarts 本身，并将 echarts 的【**模块导出之根**】经由本部件的 “`echartsCreator`” 输入项代入本部件。
+
+
 -----
 
 ## 用法
@@ -211,10 +214,9 @@ echarts.use([
 
 
 ```ts
-import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
-import WlcEcharts from '@wulechuan/echarts-vue2-component'
+import WlcEcharts from '@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript'
 
 import * as echarts from 'echarts' // 为简便，故意未采用优化方案。
 
@@ -248,8 +250,8 @@ export default class WlcEcharts部件应用示范 extends Vue {
 > `@wulechuan/echarts-vue2-component/源代码/发布的源代码/typescript/index.ts` 这一文件。
 >
 > 其实指向 “ *npm 模块 id* ”（即 `@wulechuan/echarts-vue2-component`）也无妨。只是，如此一来，你的 TypeScript 程序利用的是本部件的 JavaScript 版本的代码与 types 类型声明之组合，而非利用原版的 TypeScript 代码。**殊途同归。**
->
-> 但本工具自 `v2.0.0` 版本始，改为严格采用 ES Module 的写法。因此，上述指向具体 ts 文件的写法会报错。
+<!-- >
+> 但本工具自 `v2.0.0` 版本始，改为严格采用 ES Module 的写法。因此，上述指向具体 ts 文件的写法会报错。 -->
 
 
 
