@@ -25,7 +25,8 @@ package-lock.json
 *.sh
 *.ps1
 用于研发阶段的命令行工具
-gulpfile.esm.js
+gulp-任务集
+gulpfile*
 
 
 

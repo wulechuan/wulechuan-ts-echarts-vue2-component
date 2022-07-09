@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "version": "2.0.4",
+    "version": "2.0.5",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
@@ -24,7 +24,7 @@
         "remove-all-html-docs": "rimraf  ./ReadMe*.html  ./文档集/说明书/**/*.html",
         "generate-html-docs": "npm  run  remove-all-html-docs    &&    wlc-md-to-html  -i ./*.md,./文档集/说明书/**/*.md  -E3  -C ./文档集/说明书/wlc-md-to-html.config.js  --to '*'",
         "检验以下代码：须发布的文件": "eslint  --fix  ./源代码/发布的源代码/**/*.vue  ./源代码/发布的源代码/**/*.js",
-        "检验以下代码：原始的源文件": "eslint  --fix  ./源代码/原始的源代码/**/*.vue  ./源代码/原始的源代码/**/*.ts  ./gulpfile.esm.js/**/*",
+        "检验以下代码：原始的源文件": "eslint  --fix  ./源代码/原始的源代码/**/*.vue  ./源代码/原始的源代码/**/*.ts  ./gulp-任务集/**/*",
         "检验所有代码": "npm         run  检验以下代码：原始的源文件                                         &    npm  run  检验以下代码：须发布的文件",
         "从简构建所有须发布的文件": "gulp   --silent  buildOnce    &&    npm  run  检验以下代码：须发布的文件",
         "构建所有须发布的文件": "npm  run  检验以下代码：原始的源文件    &&    npm  run  从简构建所有须发布的文件",
