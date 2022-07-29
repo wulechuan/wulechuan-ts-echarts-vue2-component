@@ -1,6 +1,6 @@
 {
     "name": "@wulechuan/echarts-vue2-component",
-    "version": "2.0.6",
+    "version": "2.0.7",
     "author": "吴乐川 <wulechuan@live.com>",
     "license": "WTFPL",
     "description": "此为吴乐川的《适配 Vuejs 2 的 eCharts “包裹”部件》，并支持 TypeScript 语法。",
@@ -37,12 +37,12 @@
         "vue": "^2.6.14"
     },
     "dependencies": {
+        "@types/lodash.debounce": "^4.0.7",
         "lodash.debounce": "^4.0.8",
         "resize-detector": "^0.3.0",
         "vue-property-decorator": "^9.1.2"
     },
     "devDependencies": {
-        "@types/lodash.debounce": "^4.0.7",
         "@typescript-eslint/eslint-plugin": "^5.31.0",
         "@typescript-eslint/parser": "^5.31.0",
         "@vue/eslint-config-typescript": "^11.0.0",

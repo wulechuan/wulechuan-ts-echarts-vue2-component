@@ -91,6 +91,7 @@ PROCESS {
                     # 如果 @wulechuan/cli-scripts--npm-project-helpers 工具集随附的 JavaScript 程序运行如期，
                     # 其将在此处插入当前 npm 项目的【产品级】依赖包的列表。    另，切勿改动该行。该行之部分文字是供 JavaScript 程序识别的特殊记号。
 
+                    '@types/lodash.debounce' = $null
                     'lodash.debounce'        = $null
                     'resize-detector'        = $null
                     'vue-property-decorator' = $null
@@ -109,7 +110,6 @@ PROCESS {
                     # 如果 @wulechuan/cli-scripts--npm-project-helpers 工具集随附的 JavaScript 程序运行如期，
                     # 其将在此处插入当前 npm 项目的【研发级】依赖包的列表。    另，切勿改动该行。该行之部分文字是供 JavaScript 程序识别的特殊记号。
 
-                    '@types/lodash.debounce'                            = $null
                     '@typescript-eslint/eslint-plugin'                  = $null
                     '@typescript-eslint/parser'                         = $null
                     '@vue/eslint-config-typescript'                     = $null
