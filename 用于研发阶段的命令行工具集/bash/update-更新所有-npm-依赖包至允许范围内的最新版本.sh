@@ -77,10 +77,10 @@ function 完整流程 {
     # 其将在此后插入当前 npm 项目的依赖包之列表。    另，切勿改动该行。该行之部分文字是供 JavaScript 程序识别的特殊记号。
 
     Update-吴乐川更新当前_npm_项目的所有依赖包 \
+        --某产品级依赖包之版本配置 "                           @types/lodash.debounce   |:|   latest   |:|" \
         --某产品级依赖包之版本配置 "                                  lodash.debounce   |:|   latest   |:|" \
         --某产品级依赖包之版本配置 "                                  resize-detector   |:|   latest   |:|" \
         --某产品级依赖包之版本配置 "                           vue-property-decorator   |:|   latest   |:|" \
-        --某研发级依赖包之版本配置 "                           @types/lodash.debounce   |:|   latest   |:|" \
         --某研发级依赖包之版本配置 "                 @typescript-eslint/eslint-plugin   |:|   latest   |:|" \
         --某研发级依赖包之版本配置 "                        @typescript-eslint/parser   |:|   latest   |:|" \
         --某研发级依赖包之版本配置 "                    @vue/eslint-config-typescript   |:|   latest   |:|" \
